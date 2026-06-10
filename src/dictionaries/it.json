@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Negozio",
+    "wishlist": "Lista dei Desideri",
+    "cart": "Carrello",
+    "admin": "Admin",
+    "contact": "Contatti"
+  },
+  "hero": {
+    "title": "Eleganza Etnica, Minimalismo Italiano",
+    "subtitle": "Una fusione esclusiva di pregiata manifattura artigianale indiana e design contemporaneo. Scopri la collezione Sita & Seta.",
+    "cta": "Esplora il Negozio"
+  },
+  "categories": {
+    "title": "Sfoglia per Categoria",
+    "subtitle": "Seleziona una delle nostre collezioni curate per trovare il capo perfetto.",
+    "kurtis": "Kurtis Etniche",
+    "kurtis_desc": "Tuniche eleganti in seta e cotone per occasioni speciali.",
+    "dailywear": "Abbigliamento Quotidiano",
+    "dailywear_desc": "Comfort traspirante per lo stile di tutti i giorni.",
+    "modern": "Moda Fusion",
+    "modern_desc": "Linee moderne con dettagli drappeggiati orientali.",
+    "jewelry": "Gioielli Ossidati",
+    "jewelry_desc": "Girocolli e orecchini jhumka rifiniti a mano."
+  },
+  "featured": {
+    "title": "Pezzi in Evidenza",
+    "subtitle": "I capi più amati scelti per te per questa stagione."
+  },
+  "newsletter": {
+    "title": "Iscriviti alla Nostra Newsletter",
+    "subtitle": "Resta aggiornata sulle nuove collezioni, eventi esclusivi e promozioni per l'Italia.",
+    "placeholder": "Inserisci la tua email",
+    "subscribe": "Iscriviti",
+    "success": "Grazie per esserti iscritta!",
+    "error": "Si è verificato un errore. Riprova."
+  },
+  "shop": {
+    "title": "La Collezione",
+    "search_placeholder": "Cerca prodotti (es. seta, cotone, jhumka)...",
+    "filter_category": "Categoria",
+    "filter_material": "Materiale",
+    "filter_price": "Prezzo Massimo",
+    "sort": "Ordina per",
+    "sort_featured": "In Evidenza",
+    "sort_price_asc": "Prezzo: Crescente",
+    "sort_price_desc": "Prezzo: Decrescente",
+    "all_categories": "Tutte le categorie",
+    "no_products": "Nessun prodotto trovato. Prova a modificare i filtri.",
+    "add_to_cart": "Aggiungi al Carrello",
+    "add_to_wishlist": "Lista Desideri",
+    "all_materials": "Tutti i materiali"
+  },
+  "product": {
+    "materials_label": "Materiali",
+    "sizes_label": "Taglie Disponibili",
+    "size_guide": "Guida alle Taglie",
+    "sku": "SKU",
+    "stock": "Disponibilità",
+    "in_stock": "In magazzino",
+    "out_of_stock": "Esaurito",
+    "size_chart_title": "Conversione Taglie Italia / India",
+    "size_chart_it": "Taglia Italiana",
+    "size_chart_in": "Taglia Indiana",
+    "size_chart_chest": "Circonferenza Petto (cm)"
+  },
+  "cart_page": {
+    "title": "Il tuo Carrello",
+    "empty": "Il tuo carrello è vuoto.",
+    "empty_cta": "Vai allo shop",
+    "summary": "Riepilogo Ordine",
+    "subtotal": "Subtotale",
+    "shipping": "Spedizione",
+    "shipping_free": "Gratuita",
+    "total": "Totale",
+    "checkout": "Procedi all'Acquisto (Simulato)",
+    "checkout_note": "Nota: L'integrazione dei pagamenti è disattivata in questa versione dimostrativa.",
+    "remove": "Rimuovi"
+  },
+  "wishlist_page": {
+    "title": "La tua Lista dei Desideri",
+    "empty": "Non hai ancora salvato prodotti nei desideri.",
+    "empty_cta": "Scopri i prodotti"
+  },
+  "contact": {
+    "title": "Contattaci",
+    "subtitle": "Hai domande sulle taglie, sui materiali o sulle spedizioni in Italia? Scrivici.",
+    "name": "Nome",
+    "email": "Email",
+    "subject": "Oggetto",
+    "message": "Messaggio",
+    "send": "Invia Messaggio",
+    "success": "Messaggio inviato con successo! Ti risponderemo presto.",
+    "error": "Errore durante l'invio. Riprova."
+  },
+  "admin": {
+    "title": "Dashboard Amministrativa",
+    "subtitle": "Gestisci i prodotti in catalogo e visualizza le richieste dei clienti.",
+    "tab_products": "Prodotti",
+    "tab_inquiries": "Richieste Ricevute",
+    "add_new": "Aggiungi Nuovo Prodotto",
+    "edit_product": "Modifica Prodotto",
+    "sku": "SKU",
+    "price": "Prezzo (€)",
+    "category": "Categoria",
+    "materials": "Materiali (separati da virgola)",
+    "sizes": "Taglie (es. S, M, L)",
+    "images": "URL Immagine (separati da virgola)",
+    "stock": "Quantità in stock",
+    "featured": "In evidenza in Home",
+    "it_name": "Nome (Italiano)",
+    "it_desc": "Descrizione (Italiano)",
+    "it_tags": "Tag (Italiano, separati da virgola)",
+    "en_name": "Nome (Inglese)",
+    "en_desc": "Descrizione (Inglese)",
+    "en_tags": "Tag (Inglese, separati da virgola)",
+    "btn_save": "Salva Prodotto",
+    "btn_cancel": "Annulla",
+    "btn_edit": "Modifica",
+    "btn_delete": "Elimina",
+    "inquiry_type": "Tipo",
+    "inquiry_date": "Data",
+    "inquiry_email": "Email",
+    "inquiry_message": "Messaggio"
+  }
+}
