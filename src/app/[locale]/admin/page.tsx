@@ -28,24 +28,26 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, onChange, dict })
     }
   };
 
-  const uploadFile = async (file: File) => {
+  const uploadFiles = async (files: FileList) => {
     setUploading(true);
-    const formData = new FormData();
-    formData.append('image', file);
-
+    const updatedUrls = [...imageUrls];
     try {
-      const res = await fetch(getApiUrl('/api/upload'), {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        const updated = [...imageUrls, data.url].join(', ');
-        onChange(updated);
-      } else {
-        alert('Upload failed');
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const formData = new FormData();
+        formData.append('image', file);
+        const res = await fetch(getApiUrl('/api/upload'), {
+          method: 'POST',
+          body: formData,
+        });
+        if (res.ok) {
+          const data = await res.json();
+          updatedUrls.push(data.url);
+        } else {
+          alert(`Failed to upload ${file.name}`);
+        }
       }
+      onChange(updatedUrls.join(', '));
     } catch (err) {
       console.error(err);
       alert('Upload failed. Backend offline?');
@@ -59,17 +61,15 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, onChange, dict })
     e.stopPropagation();
     setDragActive(false);
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      await uploadFile(file);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      await uploadFiles(e.dataTransfer.files);
     }
   };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      await uploadFile(file);
+    if (e.target.files && e.target.files.length > 0) {
+      await uploadFiles(e.target.files);
     }
   };
 
@@ -117,6 +117,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, onChange, dict })
               type="file"
               id="file-upload"
               accept="image/*"
+              multiple
               onChange={handleChange}
               className="hidden"
             />
@@ -172,6 +173,12 @@ export default function AdminPage({ params }: AdminPageProps) {
   const [loading, setLoading] = useState(true);
   const [errorNotice, setErrorNotice] = useState('');
 
+  // Authorization State
+  const [authorized, setAuthorized] = useState(false);
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+
   // Form State
   const [editingProduct, setEditingProduct] = useState<any | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -191,6 +198,24 @@ export default function AdminPage({ params }: AdminPageProps) {
     en_description: '',
     en_tags: '',
   });
+
+  useEffect(() => {
+    const isAuthed = sessionStorage.getItem('admin_authorized') === 'true';
+    if (isAuthed) {
+      setAuthorized(true);
+    }
+  }, []);
+
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (authEmail === 'aayush6b12@gmail.com' && authPassword === 'soniKmno4@') {
+      sessionStorage.setItem('admin_authorized', 'true');
+      setAuthorized(true);
+      setAuthError('');
+    } else {
+      setAuthError(locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password');
+    }
+  };
 
   useEffect(() => {
     getDictionary(locale).then(setDict);
@@ -383,6 +408,80 @@ export default function AdminPage({ params }: AdminPageProps) {
 
   if (!dict) return <div className="max-w-7xl mx-auto px-4 py-20 text-center">Loading...</div>;
 
+  if (!authorized) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center px-4 py-16 bg-[#FAF8F5]">
+        <div className="w-full max-w-md bg-white border border-[#232B28]/10 rounded-2xl p-8 shadow-md flex flex-col gap-6 animate-in fade-in duration-300">
+          <div className="flex flex-col items-center gap-2 text-center">
+            {/* Minimalist logo duplication for branding */}
+            <div className="flex items-center gap-2 mb-2">
+              <svg className="w-6 h-6 text-[#B35C37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <rect x="4" y="9" width="16" height="11" rx="1" />
+                <path d="M12 9V20" />
+                <path d="M4 13H20" />
+                <path d="M12 9C12 6.5 10 5 8.5 6.5S10 9 12 9z" />
+                <path d="M12 9C12 6.5 14 5 15.5 6.5S14 9 12 9z" />
+              </svg>
+              <div className="flex flex-col text-left">
+                <span className="font-serif text-sm font-bold tracking-[0.15em] uppercase text-[#232B28]">
+                  Casa dei Regali
+                </span>
+                <span className="font-sans text-[7px] tracking-[0.3em] uppercase text-[#B35C37] mt-1 font-semibold leading-none">
+                  Milano
+                </span>
+              </div>
+            </div>
+            <h2 className="font-serif text-2xl font-bold text-[#232B28] mt-2">
+              {locale === 'it' ? 'Accesso Amministratore' : 'Admin Portal Access'}
+            </h2>
+            <p className="font-sans text-xs text-[#232B28]/60 max-w-[280px]">
+              {locale === 'it' ? 'Inserisci le tue credenziali per accedere al pannello di controllo.' : 'Please enter your credentials to access the management dashboard.'}
+            </p>
+          </div>
+
+          <form onSubmit={handleLoginSubmit} className="flex flex-col gap-4 font-sans text-sm">
+            {authError && (
+              <div className="border border-red-200 bg-red-50 text-red-700 text-xs font-semibold rounded-lg p-3 text-center">
+                {authError}
+              </div>
+            )}
+            
+            <div className="flex flex-col gap-1.5">
+              <label className="font-bold text-[#232B28]/70">Email</label>
+              <input
+                type="email"
+                required
+                value={authEmail}
+                onChange={(e) => setAuthEmail(e.target.value)}
+                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
+                placeholder="admin@casadeiregali.it"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="font-bold text-[#232B28]/70">Password</label>
+              <input
+                type="password"
+                required
+                value={authPassword}
+                onChange={(e) => setAuthPassword(e.target.value)}
+                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full mt-2 py-3 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-bold font-sans tracking-wider text-xs uppercase rounded-xl transition-colors cursor-pointer"
+            >
+              {locale === 'it' ? 'Accedi' : 'Login'}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 flex flex-col gap-10">
       
@@ -393,15 +492,27 @@ export default function AdminPage({ params }: AdminPageProps) {
           <p className="font-sans text-sm text-[#232B28]/60 mt-2">{dict.admin.subtitle}</p>
         </div>
 
-        {activeTab === 'products' && !showForm && (
+        <div className="flex items-center gap-4">
+          {activeTab === 'products' && !showForm && (
+            <button
+              onClick={openAddForm}
+              className="flex items-center justify-center gap-2 px-5 py-3 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all cursor-pointer shadow-sm animate-fade-in"
+            >
+              <Plus size={16} />
+              <span>{dict.admin.add_new}</span>
+            </button>
+          )}
+
           <button
-            onClick={openAddForm}
-            className="flex items-center justify-center gap-2 px-5 py-3 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all cursor-pointer shadow-sm"
+            onClick={() => {
+              sessionStorage.removeItem('admin_authorized');
+              setAuthorized(false);
+            }}
+            className="px-4 py-3 border border-red-200 hover:bg-red-50 text-red-500 font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all cursor-pointer shadow-sm"
           >
-            <Plus size={16} />
-            <span>{dict.admin.add_new}</span>
+            Logout
           </button>
-        )}
+        </div>
       </div>
 
       {/* Backend Alert Warning */}

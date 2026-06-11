@@ -44,9 +44,28 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
     <footer className="bg-[#232B28] text-[#FAF8F5]/90 pt-16 pb-8 border-t border-[#FAF8F5]/10">
       <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         
-        {/* Brand Column */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-serif text-2xl font-bold text-[#B35C37] tracking-widest uppercase">Casa dei Regali</h3>
+          <Link 
+            href={`/${locale}`}
+            className="flex items-center gap-2 group cursor-pointer"
+          >
+            {/* Minimalist bow emblem */}
+            <svg className="w-5.5 h-5.5 text-[#B35C37] transition-transform duration-500 group-hover:scale-105" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+              <rect x="4" y="9" width="16" height="11" rx="1" />
+              <path d="M12 9V20" />
+              <path d="M4 13H20" />
+              <path d="M12 9C12 6.5 10 5 8.5 6.5S10 9 12 9z" />
+              <path d="M12 9C12 6.5 14 5 15.5 6.5S14 9 12 9z" />
+            </svg>
+            <div className="flex flex-col">
+              <span className="font-serif text-sm md:text-base font-bold tracking-[0.15em] uppercase text-[#FAF8F5] group-hover:text-[#B35C37] transition-colors duration-300 leading-none">
+                Casa dei Regali
+              </span>
+              <span className="font-sans text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-[#B35C37] mt-1.5 font-semibold leading-none">
+                Milano
+              </span>
+            </div>
+          </Link>
           <p className="font-sans text-sm text-[#FAF8F5]/70 leading-relaxed">
             {locale === 'it' 
               ? 'L\'incontro esclusivo tra la preziosa manifattura tessile indiana e l\'eleganza del design minimale italiano. Un viaggio di stili cucito su misura per te.'
