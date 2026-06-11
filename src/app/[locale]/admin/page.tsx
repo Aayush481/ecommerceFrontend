@@ -279,18 +279,161 @@ export default function AdminPage({ params }: AdminPageProps) {
     }
   };
 
+  const getCategoryPrefix = (cat: string): string => {
+    switch (cat) {
+      case 'handcraft-material': return 'MAT';
+      case 'kurtis': return 'KUR';
+      case 'onepiece': return 'OP';
+      case 'summer-dresses': return 'SD';
+      case 'indo-western': return 'IW';
+      case 'ethnic-indian': return 'ETH';
+      case 'jewelry-oxidized': return 'JW-OXD';
+      case 'jewelry-modern': return 'JW-MOD';
+      case 'jewelry-handcuffs': return 'JW-HDC';
+      case 'jewelry-bracelets': return 'JW-BRC';
+      case 'jewelry-necklace': return 'JW-NEC';
+      case 'jewelry-earrings': return 'JW-EAR';
+      case 'handbags': return 'BAG';
+      default: return 'PRD';
+    }
+  };
+
+  const handleRegenerateSku = () => {
+    if (editingProduct) return;
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    setFormData(prev => ({
+      ...prev,
+      sku: `${getCategoryPrefix(prev.category)}-${randomSuffix}`
+    }));
+  };
+
+  const handleAutofillDemoData = () => {
+    const templates = [
+      {
+        category: 'kurtis',
+        price: 69.99,
+        materials: 'Pure Varanasi Silk, Gold Brocade',
+        sizes: 'S, M, L, XL',
+        images: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800',
+        stock: 12,
+        featured: true,
+        it_name: 'Kurti in Seta Varanasi',
+        it_description: 'Un elegante kurti in pura seta di Varanasi, decorato con raffinati ricami dorati (zari). Ideale per eventi speciali e serate eleganti.',
+        it_tags: 'seta, kurti, etnico, varanasi',
+        en_name: 'Varanasi Silk Kurti',
+        en_description: 'An elegant kurti crafted from pure Varanasi silk, featuring exquisite gold brocade (zari) embroidery. Ideal for special occasions and elegant evenings.',
+        en_tags: 'silk, kurti, ethnic, varanasi',
+      },
+      {
+        category: 'handbags',
+        price: 45.00,
+        materials: 'Handloom Cotton, Vegan Leather',
+        sizes: 'Unique Size',
+        images: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800',
+        stock: 8,
+        featured: false,
+        it_name: 'Borsa a Tracolla Artigianale',
+        it_description: 'Borsa a tracolla ricamata a mano da artigiani locali indiani con tessuti handloom tradizionali e dettagli in similpelle. Interno capiente con chiusura sicura.',
+        it_tags: 'borsa, ricamata, cotone, artigianale',
+        en_name: 'Handcrafted Embroidered Sling Bag',
+        en_description: 'A cross-body bag hand-embroidered by local Indian artisans using traditional handloom cotton and vegan leather details. Spacious interior with secure zip.',
+        en_tags: 'bag, embroidered, cotton, handcrafted',
+      },
+      {
+        category: 'jewelry-earrings',
+        price: 24.99,
+        materials: 'Sterling Silver, Oxidized Finish',
+        sizes: 'One Size',
+        images: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&q=80&w=800',
+        stock: 15,
+        featured: false,
+        it_name: 'Orecchini Jhumka Tradizionali',
+        it_description: 'Orecchini pendenti in argento ossidato lavorati a mano con il classico motivo floreale e campanellini tintinnanti. Perfetti per dare un tocco etnico a qualsiasi outfit.',
+        it_tags: 'orecchini, argento, jhumka, gioielli',
+        en_name: 'Traditional Oxidized Jhumka Earrings',
+        en_description: 'Stunning oxidized silver dangling earrings handcrafted with a classic floral motif and tiny chiming bells. Perfect to add a touch of ethnic elegance to any look.',
+        en_tags: 'earrings, silver, jhumka, jewelry',
+      },
+      {
+        category: 'onepiece',
+        price: 79.99,
+        materials: 'Organic Linen, Indigo Dye',
+        sizes: 'S, M, L',
+        images: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800',
+        stock: 10,
+        featured: true,
+        it_name: 'Abito Lungo in Lino Tinto in Indaco',
+        it_description: 'Elegante abito a pezzo unico in lino biologico, tinto a mano in autentico indaco naturale. Silhouette fluida e tasche laterali per un comfort chic.',
+        it_tags: 'abito, lino, indaco, vestito',
+        en_name: 'Indigo-Dyed Linen Maxi Dress',
+        en_description: 'Elegant one-piece maxi dress in organic linen, hand-dyed with authentic natural indigo. Flowing silhouette and side pockets for chic comfort.',
+        en_tags: 'dress, linen, indigo, flowy',
+      },
+      {
+        category: 'jewelry-handcuffs',
+        price: 34.99,
+        materials: 'Brass, Kundan Stones, Gold Plating',
+        sizes: 'Adjustable',
+        images: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800',
+        stock: 20,
+        featured: false,
+        it_name: 'Bracciale Rigido Kundan Placcato Oro',
+        it_description: 'Elegante bracciale rigido placcato oro impreziosito da pietre Kundan incastonate e dettagli dipinti a mano sul retro (Meenakari). Design regolabile.',
+        it_tags: 'bracciale, kundan, oro, gioielli',
+        en_name: 'Gold-Plated Kundan Cuff Bangle',
+        en_description: 'Elegant gold-plated open cuff bangle embellished with traditional Kundan stones and hand-painted details on the reverse (Meenakari). Adjustable design.',
+        en_tags: 'bracelet, bangle, kundan, gold, jewelry',
+      },
+      {
+        category: 'handcraft-material',
+        price: 18.50,
+        materials: '100% Khadi Cotton',
+        sizes: 'Per Meter',
+        images: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800',
+        stock: 50,
+        featured: false,
+        it_name: 'Tessuto di Cotone Khadi Indiano',
+        it_description: 'Tessuto in puro cotone Khadi filato e tessuto a mano. Ideale per la sartoria e progetti creativi. Ecologico e traspirante.',
+        it_tags: 'tessuto, cotone, khadi, artigianato',
+        en_name: 'Hand-Spun Khadi Cotton Fabric',
+        en_description: 'Pure hand-spun and hand-woven Khadi cotton fabric. Ideal for tailored wear and creative sewing projects. Eco-friendly and highly breathable.',
+        en_tags: 'fabric, cotton, khadi, material',
+      }
+    ];
+
+    const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const sku = `${getCategoryPrefix(randomTemplate.category)}-${randomSuffix}`;
+
+    setFormData({
+      ...randomTemplate,
+      sku
+    });
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
-    setFormData(prev => ({ ...prev, [name]: val }));
+    
+    setFormData(prev => {
+      const nextData = { ...prev, [name]: val };
+      if (name === 'category' && !editingProduct) {
+        const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+        nextData.sku = `${getCategoryPrefix(value)}-${randomSuffix}`;
+      }
+      return nextData;
+    });
   };
 
   const openAddForm = () => {
     setEditingProduct(null);
+    const defaultCat = 'kurtis';
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const autoSku = `${getCategoryPrefix(defaultCat)}-${randomSuffix}`;
     setFormData({
-      sku: '',
+      sku: autoSku,
       price: 49.99,
-      category: 'kurtis',
+      category: defaultCat,
       materials: '',
       sizes: 'S, M, L, XL',
       images: 'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800',
@@ -476,6 +619,17 @@ export default function AdminPage({ params }: AdminPageProps) {
             >
               {locale === 'it' ? 'Accedi' : 'Login'}
             </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setAuthEmail('aayush6b12@gmail.com');
+                setAuthPassword('soniKmno4@');
+              }}
+              className="text-xs text-center text-[#B35C37] hover:underline cursor-pointer font-semibold -mt-2"
+            >
+              {locale === 'it' ? 'Usa credenziali demo' : 'Use Demo Credentials'}
+            </button>
           </form>
         </div>
       </div>
@@ -553,15 +707,37 @@ export default function AdminPage({ params }: AdminPageProps) {
           
           {/* Form Panel (Left Column, 2/3 width) */}
           <form onSubmit={handleSaveProduct} className="lg:col-span-2 bg-white border border-[#232B28]/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-2xs">
-            <h2 className="font-serif text-2xl font-bold text-[#232B28] border-b border-[#232B28]/10 pb-3">
-              {editingProduct ? dict.admin.edit_product : dict.admin.add_new}
-            </h2>
+            <div className="flex items-center justify-between border-b border-[#232B28]/10 pb-3">
+              <h2 className="font-serif text-2xl font-bold text-[#232B28]">
+                {editingProduct ? dict.admin.edit_product : dict.admin.add_new}
+              </h2>
+              {!editingProduct && (
+                <button
+                  type="button"
+                  onClick={handleAutofillDemoData}
+                  className="px-3 py-1.5 bg-[#FAF8F5] border border-[#B35C37]/35 hover:bg-[#B35C37]/5 text-[#B35C37] font-sans font-bold text-xs tracking-wider uppercase rounded-lg transition-colors cursor-pointer"
+                >
+                  {locale === 'it' ? 'Autocompila Dati' : 'Autofill Demo'}
+                </button>
+              )}
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans text-sm">
               
               {/* SKU */}
               <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-[#232B28]/80">{dict.admin.sku}</label>
+                <div className="flex items-center justify-between">
+                  <label className="font-bold text-[#232B28]/80">{dict.admin.sku}</label>
+                  {!editingProduct && (
+                    <button
+                      type="button"
+                      onClick={handleRegenerateSku}
+                      className="text-xs font-semibold text-[#B35C37] hover:underline cursor-pointer"
+                    >
+                      Regenerate
+                    </button>
+                  )}
+                </div>
                 <input
                   type="text"
                   name="sku"
