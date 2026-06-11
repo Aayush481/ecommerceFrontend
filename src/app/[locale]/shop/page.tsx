@@ -24,7 +24,7 @@ const fallbackCatalog = [
     materials: ['Varanasi Silk', 'Zari Thread'],
     sizes: ['S', 'M', 'L', 'XL'],
     images: [
-      'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800'
     ],
     stock: 15,
     featured: true,

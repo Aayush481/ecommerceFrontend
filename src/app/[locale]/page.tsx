@@ -329,7 +329,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Tuniche etniche tradizionali in seta fine e ricami indiani fatti a mano.' 
         : 'Traditional ethnic tunics in fine silk and hand-made Indian embroidery.',
-      image: 'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
+      image: 'https://i.pinimg.com/originals/7e/78/13/7e78132ea4987ccee3ad2261b8470634.jpg'
     },
     {
       id: 'onepiece',
@@ -353,7 +353,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Tagli e silhouette asimmetrici moderni ispirati alla moda fusion orientale.' 
         : 'Asymmetrical modern cuts and silhouettes inspired by Eastern fusion fashion.',
-      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800'
+      image: 'https://i.pinimg.com/736x/9f/24/cb/9f24cb58beb1a2db9a45ff85f88c45a2.jpg'
     },
     {
       id: 'ethnic-indian',
@@ -369,7 +369,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Bijoux d\'effetto in argento ossidato, girocolli mandala e orecchini jhumka.' 
         : 'Statement antique oxidized silver bijoux, mandala chokers, and jhumka earrings.',
-      image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800'
+      image: 'https://5.imimg.com/data5/SELLER/Default/2021/11/WX/SM/SG/27266304/dual-tone-set-party-wear-390--1000x1000.jpeg'
     },
     {
       id: 'jewelry-modern',
@@ -401,7 +401,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Collane d\'effetto, ciondoli decorati e collier fatti a mano.' 
         : 'Statement necklaces, detailed pendants, and handcrafted colliers.',
-      image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800'
+      image: 'https://i.pinimg.com/originals/70/67/fd/7067fda96c5cc9dc302e53c5a0246d72.jpg'
     },
     {
       id: 'jewelry-earrings',

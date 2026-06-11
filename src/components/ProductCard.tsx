@@ -111,10 +111,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
 
           <button
             onClick={handleAddToCartClick}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-semibold text-xs tracking-wider uppercase rounded-lg transition-colors cursor-pointer"
+            className="p-2.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white rounded-full transition-all duration-300 hover:scale-105 cursor-pointer shadow-xs"
+            title={dict.shop.add_to_cart}
+            aria-label={dict.shop.add_to_cart}
           >
-            <ShoppingCart size={13} />
-            <span>{dict.shop.add_to_cart}</span>
+            <ShoppingCart size={18} />
           </button>
         </div>
       </div>
