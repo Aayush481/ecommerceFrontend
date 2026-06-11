@@ -9,20 +9,25 @@
   },
   "hero": {
     "title": "Ethnic Elegance, Italian Minimalism",
-    "subtitle": "An exclusive fusion of fine Indian craftsmanship and contemporary silhouette. Discover the Sita & Seta collection.",
+    "subtitle": "An exclusive fusion of fine Indian craftsmanship and contemporary silhouette. Discover the Casa dei Regali collection.",
     "cta": "Explore the Shop"
   },
   "categories": {
     "title": "Browse by Category",
     "subtitle": "Select from our curated collections to find your perfect fit.",
+    "handcraft-material": "Handcraft Material",
     "kurtis": "Ethnic Kurtis",
-    "kurtis_desc": "Elegant silk and cotton tunics for special occasions.",
-    "dailywear": "Daily Wear",
-    "dailywear_desc": "Breathable comfort for everyday style.",
-    "modern": "Fusion Wear",
-    "modern_desc": "Modern cuts featuring drapery-inspired details.",
-    "jewelry": "Oxidized Jewelry",
-    "jewelry_desc": "Hand-finished chokers and traditional jhumkas."
+    "onepiece": "One-Piece Dresses",
+    "summer-dresses": "Summer Dresses",
+    "indo-western": "Indo-Western Wear",
+    "ethnic-indian": "Ethnic & Indian",
+    "jewelry-oxidized": "Oxidized Jewelry",
+    "jewelry-modern": "Modern Jewelry",
+    "jewelry-handcuffs": "Handcuffs & Bangles",
+    "jewelry-bracelets": "Bracelets",
+    "jewelry-necklace": "Necklaces",
+    "jewelry-earrings": "Earrings",
+    "handbags": "Handbags"
   },
   "featured": {
     "title": "Featured Products",

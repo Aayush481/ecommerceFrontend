@@ -480,12 +480,21 @@ export default function AdminPage({ params }: AdminPageProps) {
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37]"
+                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-sm"
               >
+                <option value="handcraft-material">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</option>
                 <option value="kurtis">{dict.categories.kurtis}</option>
-                <option value="dailywear">{dict.categories.dailywear}</option>
-                <option value="modern">{dict.categories.modern}</option>
-                <option value="jewelry">{dict.categories.jewelry}</option>
+                <option value="onepiece">{dict.categories.onepiece}</option>
+                <option value="summer-dresses">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</option>
+                <option value="indo-western">{(dict.categories as any)["indo-western"] || "Indo-Western"}</option>
+                <option value="ethnic-indian">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</option>
+                <option value="jewelry-oxidized">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</option>
+                <option value="jewelry-modern">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</option>
+                <option value="jewelry-handcuffs">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs & Bangles"}</option>
+                <option value="jewelry-bracelets">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</option>
+                <option value="jewelry-necklace">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</option>
+                <option value="jewelry-earrings">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</option>
+                <option value="handbags">{dict.categories.handbags}</option>
               </select>
             </div>
 

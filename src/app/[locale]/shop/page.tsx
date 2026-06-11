@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { getDictionary } from '@/dictionaries';
 import { ProductCard } from '@/components/ProductCard';
+import { FilterSidebarClient } from '@/components/FilterSidebarClient';
 
 import { getApiUrl } from '@/utils/api';
 
@@ -223,103 +224,12 @@ export default async function ShopPage({ params, searchParams }: ShopPageProps) 
 
       <div className="flex flex-col lg:flex-row gap-10">
         
-        {/* FILTERS SIDEBAR (Server-side Form elements) */}
-        <aside className="w-full lg:w-64 flex-shrink-0 flex flex-col gap-8">
-          
-          {/* Search bar */}
-          <form method="GET" action={`/${locale}/shop`} className="flex gap-2">
-            <input type="hidden" name="category" value={activeCategory} />
-            <input type="hidden" name="material" value={activeMaterial} />
-            <input type="hidden" name="maxPrice" value={activePrice} />
-            <input type="hidden" name="sort" value={activeSort} />
-            
-            <input
-              type="text"
-              name="search"
-              placeholder={dict.shop.search_placeholder}
-              defaultValue={activeSearch}
-              className="w-full bg-white border border-[#232B28]/15 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#B35C37] transition-colors"
-            />
-            <button type="submit" className="px-4 py-2.5 bg-[#232B28] hover:bg-[#B35C37] text-white text-xs font-bold uppercase rounded-lg transition-colors cursor-pointer">
-              Go
-            </button>
-          </form>
-
-          {/* Categories Filter */}
-          <div className="border border-[#232B28]/10 bg-white rounded-xl p-5 flex flex-col gap-4 shadow-2xs">
-            <h3 className="font-serif text-base font-bold text-[#232B28] border-b border-[#232B28]/5 pb-2">
-              {dict.shop.filter_category}
-            </h3>
-            <div className="flex flex-col gap-2.5 text-sm font-sans">
-              <Link
-                href={`/${locale}/shop?${new URLSearchParams({ ...sParams, category: '' })}`}
-                className={`transition-colors hover:text-[#B35C37] ${!activeCategory ? 'text-[#B35C37] font-bold' : 'text-[#232B28]/70'}`}
-              >
-                {dict.shop.all_categories}
-              </Link>
-              {['kurtis', 'dailywear', 'modern', 'jewelry'].map(cat => (
-                <Link
-                  key={cat}
-                  href={`/${locale}/shop?${new URLSearchParams({ ...sParams, category: cat })}`}
-                  className={`transition-colors hover:text-[#B35C37] capitalize ${activeCategory === cat ? 'text-[#B35C37] font-bold' : 'text-[#232B28]/70'}`}
-                >
-                  {(dict.categories as any)[cat]}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Materials Filter */}
-          <div className="border border-[#232B28]/10 bg-white rounded-xl p-5 flex flex-col gap-4 shadow-2xs">
-            <h3 className="font-serif text-base font-bold text-[#232B28] border-b border-[#232B28]/5 pb-2">
-              {dict.shop.filter_material}
-            </h3>
-            <div className="flex flex-col gap-2.5 text-sm font-sans">
-              <Link
-                href={`/${locale}/shop?${new URLSearchParams({ ...sParams, material: '' })}`}
-                className={`transition-colors hover:text-[#B35C37] ${!activeMaterial ? 'text-[#B35C37] font-bold' : 'text-[#232B28]/70'}`}
-              >
-                {dict.shop.all_materials}
-              </Link>
-              {materialsList.map(mat => (
-                <Link
-                  key={mat}
-                  href={`/${locale}/shop?${new URLSearchParams({ ...sParams, material: mat })}`}
-                  className={`transition-colors hover:text-[#B35C37] ${activeMaterial === mat ? 'text-[#B35C37] font-bold' : 'text-[#232B28]/70'}`}
-                >
-                  {mat}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Price Filter (Server action submit slider) */}
-          <div className="border border-[#232B28]/10 bg-white rounded-xl p-5 flex flex-col gap-4 shadow-2xs">
-            <h3 className="font-serif text-base font-bold text-[#232B28] border-b border-[#232B28]/5 pb-2">
-              {dict.shop.filter_price} (€{activePrice})
-            </h3>
-            <form method="GET" action={`/${locale}/shop`} className="flex flex-col gap-3">
-              <input type="hidden" name="category" value={activeCategory} />
-              <input type="hidden" name="material" value={activeMaterial} />
-              <input type="hidden" name="search" value={activeSearch} />
-              <input type="hidden" name="sort" value={activeSort} />
-              
-              <input
-                type="range"
-                name="maxPrice"
-                min="20"
-                max="150"
-                step="5"
-                defaultValue={activePrice}
-                className="w-full accent-[#B35C37]"
-              />
-              <button type="submit" className="w-full py-2 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-bold text-[11px] tracking-wider uppercase rounded-lg transition-colors cursor-pointer">
-                Apply Price
-              </button>
-            </form>
-          </div>
-
-        </aside>
+        {/* INTERACTIVE FILTERS SIDEBAR & DRAWER */}
+        <FilterSidebarClient
+          locale={locale as 'it' | 'en'}
+          dict={dict}
+          materialsList={materialsList}
+        />
 
         {/* PRODUCTS LIST PANEL */}
         <main className="flex-grow">
@@ -329,7 +239,7 @@ export default async function ShopPage({ params, searchParams }: ShopPageProps) 
               {products.length} {locale === 'it' ? 'prodotti trovati' : 'products found'}
             </span>
 
-            <div className="flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-3">
               <label htmlFor="sort" className="font-sans text-xs font-semibold text-[#232B28]/70 uppercase tracking-wider">
                 {dict.shop.sort}:
               </label>
@@ -358,7 +268,7 @@ export default async function ShopPage({ params, searchParams }: ShopPageProps) 
 
           {/* Grid of Product Cards */}
           {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-8 pb-20 lg:pb-0">
               {products.map((product: any) => (
                 <ProductCard key={product.sku} product={product} locale={locale as 'it' | 'en'} dict={dict} />
               ))}

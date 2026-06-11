@@ -78,7 +78,7 @@ export default function ContactPage({ params }: ContactPageProps) {
         {/* Info panel */}
         <div className="flex flex-col gap-8 bg-white border border-[#232B28]/10 rounded-2xl p-6 md:p-8 shadow-2xs">
           <h2 className="font-serif text-2xl font-bold text-[#232B28]">
-            {locale === 'it' ? 'Sita & Seta Showroom' : 'Sita & Seta Showroom'}
+            {locale === 'it' ? 'Casa dei Regali Showroom' : 'Casa dei Regali Showroom'}
           </h2>
           <p className="font-sans text-sm text-[#232B28]/70 leading-relaxed">
             {locale === 'it' 

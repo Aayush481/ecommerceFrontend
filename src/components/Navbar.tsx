@@ -16,6 +16,8 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileShopOpen, setMobileShopOpen] = useState(false);
 
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const wishlistCount = wishlist.length;
@@ -31,7 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
 
   const navLinks = [
     { href: `/${locale}`, label: dict.nav.home },
-    { href: `/${locale}/shop`, label: dict.nav.shop },
+    { href: `/${locale}/shop`, label: dict.nav.shop, hasDropdown: true },
     { href: `/${locale}/contact`, label: dict.nav.contact },
     { href: `/${locale}/admin`, label: dict.nav.admin },
   ];
@@ -51,15 +53,82 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
         {/* Brand Logo */}
         <Link 
           href={`/${locale}`}
-          className="font-serif text-2xl md:text-3xl font-semibold tracking-wide text-[#B35C37] hover:opacity-95 transition-opacity"
+          className="font-serif text-lg md:text-xl font-medium tracking-widest uppercase text-[#B35C37] hover:text-[#B35C37]/80 transition-colors duration-300"
         >
-          Sita & Seta
+          Casa dei Regali
         </Link>
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8 font-sans text-sm font-medium tracking-wide">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href.endsWith('/shop') && pathname.includes('/shop'));
+            
+            if (link.hasDropdown) {
+              return (
+                <div
+                  key={link.href}
+                  className="relative py-2"
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
+                  <Link
+                    href={link.href}
+                    className={`transition-colors hover:text-[#B35C37] flex items-center gap-1 ${
+                      isActive ? 'text-[#B35C37]' : 'text-[#232B28]/80'
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    <span className="text-[9px] opacity-70 transition-transform duration-300 group-hover:rotate-180">▼</span>
+                  </Link>
+
+                  {/* Mega Dropdown Panel */}
+                  {dropdownOpen && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[560px] bg-[#FAF8F5]/98 backdrop-blur-md border border-[#232B28]/10 rounded-2xl shadow-xl p-6 grid grid-cols-3 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                      {/* Column 1: Apparel */}
+                      <div className="flex flex-col gap-3">
+                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-[#232B28]/5 pb-1">
+                          {locale === 'it' ? 'Abbigliamento' : 'Apparel'}
+                        </span>
+                        <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
+                          <Link href={`/${locale}/shop?category=kurtis`} className="hover:text-[#B35C37] transition-colors">{dict.categories.kurtis}</Link>
+                          <Link href={`/${locale}/shop?category=onepiece`} className="hover:text-[#B35C37] transition-colors">{dict.categories.onepiece}</Link>
+                          <Link href={`/${locale}/shop?category=summer-dresses`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</Link>
+                          <Link href={`/${locale}/shop?category=indo-western`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["indo-western"] || "Indo-Western"}</Link>
+                          <Link href={`/${locale}/shop?category=ethnic-indian`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</Link>
+                        </div>
+                      </div>
+
+                      {/* Column 2: Jewelry */}
+                      <div className="flex flex-col gap-3">
+                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-[#232B28]/5 pb-1">
+                          {locale === 'it' ? 'Gioielli' : 'Jewelry'}
+                        </span>
+                        <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
+                          <Link href={`/${locale}/shop?category=jewelry-oxidized`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</Link>
+                          <Link href={`/${locale}/shop?category=jewelry-modern`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</Link>
+                          <Link href={`/${locale}/shop?category=jewelry-handcuffs`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs"}</Link>
+                          <Link href={`/${locale}/shop?category=jewelry-bracelets`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</Link>
+                          <Link href={`/${locale}/shop?category=jewelry-necklace`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</Link>
+                          <Link href={`/${locale}/shop?category=jewelry-earrings`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</Link>
+                        </div>
+                      </div>
+
+                      {/* Column 3: Bags & Yarns */}
+                      <div className="flex flex-col gap-3">
+                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-[#232B28]/5 pb-1">
+                          {locale === 'it' ? 'Accessori & Tessuti' : 'Bags & Yarns'}
+                        </span>
+                        <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
+                          <Link href={`/${locale}/shop?category=handbags`} className="hover:text-[#B35C37] transition-colors">{dict.categories.handbags}</Link>
+                          <Link href={`/${locale}/shop?category=handcraft-material`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.href}
@@ -119,16 +188,57 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-[73px] left-0 w-full bg-[#FAF8F5] border-b border-[#232B28]/10 shadow-lg p-5 flex flex-col gap-4 z-40 animate-in slide-in-from-top duration-200">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="font-sans text-base font-semibold py-2 border-b border-[#232B28]/5 text-[#232B28]/85 hover:text-[#B35C37]"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            if (link.hasDropdown) {
+              return (
+                <div key={link.href} className="flex flex-col py-1">
+                  <button
+                    onClick={() => setMobileShopOpen(!mobileShopOpen)}
+                    className="font-sans text-base font-semibold py-2 border-b border-[#232B28]/5 text-[#232B28]/85 flex items-center justify-between text-left"
+                  >
+                    <span>{link.label}</span>
+                    <span className={`text-xs transition-transform duration-300 ${mobileShopOpen ? 'rotate-180' : ''}`}>▼</span>
+                  </button>
+                  {mobileShopOpen && (
+                    <div className="pl-4 flex flex-col gap-3.5 py-3 text-sm font-sans text-[#232B28]/70 border-l border-[#B35C37]/30 mt-1">
+                      <Link href={`/${locale}/shop`} onClick={() => setMobileMenuOpen(false)} className="font-semibold">{locale === 'it' ? 'Vedi Tutto' : 'View All'}</Link>
+                      
+                      {/* Subheadings */}
+                      <span className="font-serif text-xs font-bold text-[#B35C37] uppercase tracking-wider mt-1">{locale === 'it' ? 'Abbigliamento' : 'Apparel'}</span>
+                      <Link href={`/${locale}/shop?category=kurtis`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{dict.categories.kurtis}</Link>
+                      <Link href={`/${locale}/shop?category=onepiece`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{dict.categories.onepiece}</Link>
+                      <Link href={`/${locale}/shop?category=summer-dresses`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</Link>
+                      <Link href={`/${locale}/shop?category=indo-western`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["indo-western"] || "Indo-Western"}</Link>
+                      <Link href={`/${locale}/shop?category=ethnic-indian`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</Link>
+
+                      <span className="font-serif text-xs font-bold text-[#B35C37] uppercase tracking-wider mt-1">{locale === 'it' ? 'Gioielli' : 'Jewelry'}</span>
+                      <Link href={`/${locale}/shop?category=jewelry-oxidized`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</Link>
+                      <Link href={`/${locale}/shop?category=jewelry-modern`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</Link>
+                      <Link href={`/${locale}/shop?category=jewelry-handcuffs`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs"}</Link>
+                      <Link href={`/${locale}/shop?category=jewelry-bracelets`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</Link>
+                      <Link href={`/${locale}/shop?category=jewelry-necklace`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</Link>
+                      <Link href={`/${locale}/shop?category=jewelry-earrings`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</Link>
+
+                      <span className="font-serif text-xs font-bold text-[#B35C37] uppercase tracking-wider mt-1">{locale === 'it' ? 'Accessori & Artigianato' : 'Accessories & Yarns'}</span>
+                      <Link href={`/${locale}/shop?category=handbags`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{dict.categories.handbags}</Link>
+                      <Link href={`/${locale}/shop?category=handcraft-material`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</Link>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-sans text-base font-semibold py-2 border-b border-[#232B28]/5 text-[#232B28]/85 hover:text-[#B35C37]"
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
       )}
     </nav>

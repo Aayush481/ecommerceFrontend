@@ -128,26 +128,106 @@ export default async function HomePage({ params }: PageProps) {
     {
       id: 'kurtis',
       title: dict.categories.kurtis,
-      desc: dict.categories.kurtis_desc,
+      desc: locale === 'it' 
+        ? 'Tuniche etniche tradizionali in seta fine e ricami indiani fatti a mano.' 
+        : 'Traditional ethnic tunics in fine silk and hand-made Indian embroidery.',
       image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800'
     },
     {
-      id: 'dailywear',
-      title: dict.categories.dailywear,
-      desc: dict.categories.dailywear_desc,
-      image: 'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
-    },
-    {
-      id: 'modern',
-      title: dict.categories.modern,
-      desc: dict.categories.modern_desc,
+      id: 'onepiece',
+      title: dict.categories.onepiece,
+      desc: locale === 'it' 
+        ? 'Eleganti abiti interi che fondono design contemporaneo ed elementi etnici.' 
+        : 'Elegant one-piece dresses fusing contemporary design and ethnic elements.',
       image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
     },
     {
-      id: 'jewelry',
-      title: dict.categories.jewelry,
-      desc: dict.categories.jewelry_desc,
+      id: 'summer-dresses',
+      title: dict.categories["summer-dresses"] || 'Summer Dresses',
+      desc: locale === 'it' 
+        ? 'Abiti freschi in cotone leggero e lino traspirante stampati a mano.' 
+        : 'Fresh dresses in lightweight cotton and breathable linen, printed by hand.',
+      image: 'https://images.unsplash.com/photo-1561414927-6d86591d0c4f?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'indo-western',
+      title: dict.categories["indo-western"] || 'Indo-Western Wear',
+      desc: locale === 'it' 
+        ? 'Tagli e silhouette asimmetrici moderni ispirati alla moda fusion orientale.' 
+        : 'Asymmetrical modern cuts and silhouettes inspired by Eastern fusion fashion.',
+      image: 'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'ethnic-indian',
+      title: dict.categories["ethnic-indian"] || 'Ethnic & Indian',
+      desc: locale === 'it' 
+        ? 'Capi tradizionali indiani d\'effetto per cerimonie ed occasioni speciali.' 
+        : 'Statement traditional Indian wear for ceremonies and special occasions.',
+      image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'jewelry-oxidized',
+      title: dict.categories["jewelry-oxidized"] || 'Oxidized Jewelry',
+      desc: locale === 'it' 
+        ? 'Bijoux d\'effetto in argento ossidato, girocolli mandala e orecchini jhumka.' 
+        : 'Statement antique oxidized silver bijoux, mandala chokers, and jhumka earrings.',
       image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'jewelry-modern',
+      title: dict.categories["jewelry-modern"] || 'Modern Jewelry',
+      desc: locale === 'it' 
+        ? 'Anelli, ciondoli e gioielli dal design contemporaneo e minimalista.' 
+        : 'Contemporary and minimalist design rings, pendants, and accessories.',
+      image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'jewelry-handcuffs',
+      title: dict.categories["jewelry-handcuffs"] || 'Handcuffs',
+      desc: locale === 'it' 
+        ? 'Bracciali rigidi e tradizionali bangles indiani finemente decorati.' 
+        : 'Cuff bracelets and finely decorated traditional Indian bangles.',
+      image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'jewelry-bracelets',
+      title: dict.categories["jewelry-bracelets"] || 'Bracelets',
+      desc: locale === 'it' 
+        ? 'Braccialetti eleganti in argento, perline e pietre dure naturali.' 
+        : 'Elegant bracelets made of silver, beads, and natural semi-precious stones.',
+      image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'jewelry-necklace',
+      title: dict.categories["jewelry-necklace"] || 'Necklaces',
+      desc: locale === 'it' 
+        ? 'Collane d\'effetto, ciondoli decorati e collier fatti a mano.' 
+        : 'Statement necklaces, detailed pendants, and handcrafted colliers.',
+      image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'jewelry-earrings',
+      title: dict.categories["jewelry-earrings"] || 'Earrings',
+      desc: locale === 'it' 
+        ? 'Orecchini pendenti tradizionali Jhumka e orecchini a perno moderni.' 
+        : 'Traditional hanging Jhumka earrings and modern stud earrings.',
+      image: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'handbags',
+      title: dict.categories.handbags || 'Handbags',
+      desc: locale === 'it' 
+        ? 'Pochette e borse realizzate con tessuti pregiati e ricami tradizionali.' 
+        : 'Clutches and bags crafted with premium fabrics and traditional embroidery.',
+      image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: 'handcraft-material',
+      title: dict.categories["handcraft-material"] || 'Handcraft Material',
+      desc: locale === 'it' 
+        ? 'Tessuti biologici in cotone Khadi filato a mano e matasse di seta indiana.' 
+        : 'Organic handspun Khadi cotton fabrics and premium Varanasi silk skeins.',
+      image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=800'
     }
   ];
 
@@ -159,7 +239,7 @@ export default async function HomePage({ params }: PageProps) {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=1600"
-            alt="Sita & Seta Banner"
+            alt="Casa dei Regali Banner"
             fill
             priority
             className="object-cover object-center opacity-40 scale-102"
@@ -189,7 +269,37 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 2. Curation Highlights */}
+      {/* 2. Myntra/Flipkart Style Circular Quick Navigation Strip */}
+      <section className="bg-white border-b border-[#232B28]/10 py-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex gap-6 md:gap-10 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] py-2 px-1 justify-start md:justify-center">
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/${locale}/shop?category=${cat.id}`}
+                className="flex flex-col items-center gap-2 group flex-shrink-0 cursor-pointer"
+              >
+                <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[#232B28]/10 group-hover:border-[#B35C37] transition-all duration-300 shadow-sm p-0.5 bg-white">
+                  <div className="relative w-full h-full rounded-full overflow-hidden">
+                    <Image
+                      src={cat.image}
+                      alt={cat.title}
+                      fill
+                      sizes="80px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-108"
+                    />
+                  </div>
+                </div>
+                <span className="font-sans text-[10px] md:text-xs font-semibold text-[#232B28]/80 group-hover:text-[#B35C37] transition-colors text-center max-w-[80px] md:max-w-[100px] leading-tight">
+                  {cat.title}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Curation Highlights */}
       <section className="py-12 bg-[#FAF8F5] border-b border-[#232B28]/5">
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="flex flex-col items-center gap-3">
@@ -234,7 +344,7 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 3. Category Grid Section */}
+      {/* 4. Category Grid Section */}
       <section className="py-20 bg-[#FAF8F5]">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16 flex flex-col gap-3">
@@ -243,7 +353,7 @@ export default async function HomePage({ params }: PageProps) {
             <div className="w-16 h-1 bg-[#B35C37] mx-auto mt-2"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {categories.map((cat) => (
               <Link
                 key={cat.id}
@@ -256,7 +366,7 @@ export default async function HomePage({ params }: PageProps) {
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#232B28]/90 via-[#232B28]/30 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#232B28]/95 via-[#232B28]/40 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6 text-white flex flex-col gap-2">
                   <h3 className="font-serif text-xl font-bold">{cat.title}</h3>
                   <p className="font-sans text-xs text-white/80 leading-relaxed line-clamp-2">{cat.desc}</p>
@@ -281,14 +391,14 @@ export default async function HomePage({ params }: PageProps) {
           />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 flex flex-col items-center gap-6">
-          <span className="font-serif italic text-lg text-[#B35C37]">Moda Sita & Seta</span>
+          <span className="font-serif italic text-lg text-[#B35C37]">Casa dei Regali</span>
           <blockquote className="font-serif text-2xl md:text-3xl font-bold leading-relaxed italic text-[#FAF8F5]">
             {locale === 'it'
               ? '"L\'eleganza non è farsi notare, ma farsi ricordare. Abbiamo unito i colori accesi del sole indiano con le linee fluide e minimaliste della sartoria milanese."'
               : '"Elegance is not about being noticed, but being remembered. We have merged the bright colors of the Indian sun with the clean, minimalist lines of Milanese design."'}
           </blockquote>
           <span className="font-sans text-xs tracking-widest uppercase font-semibold text-white/50">
-            - Sita & Seta Design Studio Milano
+            - Casa dei Regali Design Studio Milano
           </span>
         </div>
       </section>

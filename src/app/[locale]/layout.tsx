@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const dict = await getDictionary(locale as 'it' | 'en');
   return {
     title: {
-      default: `Sita & Seta | ${dict.hero.title}`,
-      template: '%s | Sita & Seta'
+      default: `Casa dei Regali | ${dict.hero.title}`,
+      template: '%s | Casa dei Regali'
     },
     description: dict.hero.subtitle,
     keywords: locale === 'it' 

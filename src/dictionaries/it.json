@@ -9,20 +9,25 @@
   },
   "hero": {
     "title": "Eleganza Etnica, Minimalismo Italiano",
-    "subtitle": "Una fusione esclusiva di pregiata manifattura artigianale indiana e design contemporaneo. Scopri la collezione Sita & Seta.",
+    "subtitle": "Una fusione esclusiva di pregiata manifattura artigianale indiana e design contemporaneo. Scopri la collezione Casa dei Regali.",
     "cta": "Esplora il Negozio"
   },
   "categories": {
     "title": "Sfoglia per Categoria",
     "subtitle": "Seleziona una delle nostre collezioni curate per trovare il capo perfetto.",
+    "handcraft-material": "Materiali Artigianali",
     "kurtis": "Kurtis Etniche",
-    "kurtis_desc": "Tuniche eleganti in seta e cotone per occasioni speciali.",
-    "dailywear": "Abbigliamento Quotidiano",
-    "dailywear_desc": "Comfort traspirante per lo stile di tutti i giorni.",
-    "modern": "Moda Fusion",
-    "modern_desc": "Linee moderne con dettagli drappeggiati orientali.",
-    "jewelry": "Gioielli Ossidati",
-    "jewelry_desc": "Girocolli e orecchini jhumka rifiniti a mano."
+    "onepiece": "Abiti Monopezzo",
+    "summer-dresses": "Abiti Estivi",
+    "indo-western": "Moda Indo-Western",
+    "ethnic-indian": "Abbigliamento Etnico & Indiano",
+    "jewelry-oxidized": "Gioielli Ossidati",
+    "jewelry-modern": "Gioielli Moderni",
+    "jewelry-handcuffs": "Bracciali Rigidi & Bangles",
+    "jewelry-bracelets": "Braccialetti",
+    "jewelry-necklace": "Collane",
+    "jewelry-earrings": "Orecchini",
+    "handbags": "Borse a Mano"
   },
   "featured": {
     "title": "Pezzi in Evidenza",

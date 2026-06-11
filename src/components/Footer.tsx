@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
         
         {/* Brand Column */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-serif text-2xl font-bold text-[#B35C37]">Sita & Seta</h3>
+          <h3 className="font-serif text-2xl font-bold text-[#B35C37] tracking-widest uppercase">Casa dei Regali</h3>
           <p className="font-sans text-sm text-[#FAF8F5]/70 leading-relaxed">
             {locale === 'it' 
               ? 'L\'incontro esclusivo tra la preziosa manifattura tessile indiana e l\'eleganza del design minimale italiano. Un viaggio di stili cucito su misura per te.'
@@ -65,18 +65,18 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
               </Link>
             </li>
             <li>
-              <Link href={`/${locale}/shop?category=dailywear`} className="hover:text-[#B35C37] transition-colors">
-                {dict.categories.dailywear}
+              <Link href={`/${locale}/shop?category=onepiece`} className="hover:text-[#B35C37] transition-colors">
+                {dict.categories.onepiece}
               </Link>
             </li>
             <li>
-              <Link href={`/${locale}/shop?category=modern`} className="hover:text-[#B35C37] transition-colors">
-                {dict.categories.modern}
+              <Link href={`/${locale}/shop?category=jewelry-oxidized`} className="hover:text-[#B35C37] transition-colors">
+                {dict.categories["jewelry-oxidized"]}
               </Link>
             </li>
             <li>
-              <Link href={`/${locale}/shop?category=jewelry`} className="hover:text-[#B35C37] transition-colors">
-                {dict.categories.jewelry}
+              <Link href={`/${locale}/shop?category=handbags`} className="hover:text-[#B35C37] transition-colors">
+                {dict.categories.handbags}
               </Link>
             </li>
           </ul>
@@ -96,7 +96,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
             </li>
             <li className="flex items-center gap-2">
               <Mail size={16} className="text-[#B35C37]" />
-              <span>ciao@sitaseta.it</span>
+              <span>ciao@casadeiregali.it</span>
             </li>
           </ul>
         </div>
@@ -144,7 +144,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
 
       {/* Copyright */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 border-t border-[#FAF8F5]/10 pt-8 text-center text-[#FAF8F5]/40 text-xs font-sans tracking-wide">
-        <p>&copy; {new Date().getFullYear()} Sita & Seta. All rights reserved. Created for the Italian fashion connoisseur.</p>
+        <p>&copy; {new Date().getFullYear()} Casa dei Regali. All rights reserved. Created for the Italian fashion connoisseur.</p>
       </div>
     </footer>
   );
