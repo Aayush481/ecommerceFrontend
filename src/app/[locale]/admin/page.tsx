@@ -623,8 +623,8 @@ export default function AdminPage({ params }: AdminPageProps) {
             <button
               type="button"
               onClick={() => {
-                setAuthEmail('aayush6b12@gmail.com');
-                setAuthPassword('soniKmno4@');
+                setAuthEmail('aayush@gmail.com');
+                setAuthPassword('anjali1234');
               }}
               className="text-xs text-center text-[#B35C37] hover:underline cursor-pointer font-semibold -mt-2"
             >

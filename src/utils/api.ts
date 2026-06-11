@@ -1,5 +1,5 @@
 /**
- * Sita & Seta API URL and Image formatting utilities
+ * Casa dei Regali API URL and Image formatting utilities
  */
 
 export const getApiUrl = (path: string = ''): string => {

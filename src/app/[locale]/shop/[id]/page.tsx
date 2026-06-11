@@ -152,15 +152,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale, id } = await params;
   const product = await fetchProduct(id);
   if (!product) {
-    return { title: 'Product Not Found | Sita & Seta' };
+    return { title: 'Product Not Found | Casa dei Regali' };
   }
 
   const details = locale === 'it' ? product.it : product.en;
   return {
-    title: `${details.name} | Sita & Seta`,
+    title: `${details.name} | Casa dei Regali`,
     description: details.description.substring(0, 160),
     openGraph: {
-      title: `${details.name} | Sita & Seta`,
+      title: `${details.name} | Casa dei Regali`,
       description: details.description,
       images: [{ url: product.images[0] }],
     }
