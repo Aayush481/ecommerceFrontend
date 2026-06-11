@@ -30,7 +30,7 @@ export default function WishlistPage({ params }: WishlistPageProps) {
       <h1 className="font-serif text-3xl md:text-5xl font-bold text-[#232B28] mb-10">{dict.wishlist_page.title}</h1>
 
       {wishlist.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {wishlist.map((item) => (
             <div
               key={item.id}

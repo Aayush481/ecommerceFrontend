@@ -551,12 +551,12 @@ export default async function HomePage({ params }: PageProps) {
             <div className="w-16 h-1 bg-[#B35C37] mx-auto mt-2"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
             {categories.map((cat) => (
               <Link
                 key={cat.id}
                 href={`/${locale}/shop?category=${cat.id}`}
-                className="group relative h-96 rounded-2xl overflow-hidden card-hover block shadow-xs border border-[#232B28]/5"
+                className="group relative h-60 sm:h-80 lg:h-96 rounded-2xl overflow-hidden card-hover block shadow-xs border border-[#232B28]/5"
               >
                 <Image
                   src={cat.image}
@@ -565,11 +565,11 @@ export default async function HomePage({ params }: PageProps) {
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#232B28]/95 via-[#232B28]/40 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6 text-white flex flex-col gap-2">
-                  <h3 className="font-serif text-xl font-bold">{cat.title}</h3>
-                  <p className="font-sans text-xs text-white/80 leading-relaxed line-clamp-2">{cat.desc}</p>
-                  <span className="font-sans text-[11px] font-semibold tracking-wider uppercase text-[#B35C37] group-hover:text-white transition-colors flex items-center gap-1 mt-2">
-                    {locale === 'it' ? 'Esplora' : 'Explore'} <ArrowRight size={12} />
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white flex flex-col gap-1 sm:gap-2">
+                  <h3 className="font-serif text-sm sm:text-lg lg:text-xl font-bold">{cat.title}</h3>
+                  <p className="font-sans text-[10px] sm:text-xs text-white/80 leading-relaxed line-clamp-2">{cat.desc}</p>
+                  <span className="font-sans text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-[#B35C37] group-hover:text-white transition-colors flex items-center gap-1 mt-1 sm:mt-2">
+                    {locale === 'it' ? 'Esplora' : 'Explore'} <ArrowRight size={10} className="sm:w-3.5 sm:h-3.5" />
                   </span>
                 </div>
               </Link>
@@ -610,7 +610,7 @@ export default async function HomePage({ params }: PageProps) {
             <div className="w-16 h-1 bg-[#B35C37] mx-auto mt-2"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {products.map((prod: any) => (
               <ProductCard key={prod.sku} product={prod} locale={locale as 'it' | 'en'} dict={dict} />
             ))}
