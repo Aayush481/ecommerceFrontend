@@ -437,234 +437,358 @@ export default function AdminPage({ params }: AdminPageProps) {
         <div className="text-center py-20 font-sans text-sm text-[#232B28]/60">Loading Dashboard Data...</div>
       ) : showForm ? (
         
-        /* ADD / EDIT FORM PANEL */
-        <form onSubmit={handleSaveProduct} className="bg-white border border-[#232B28]/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-2xs">
-          <h2 className="font-serif text-2xl font-bold text-[#232B28] border-b border-[#232B28]/10 pb-3">
-            {editingProduct ? dict.admin.edit_product : dict.admin.add_new}
-          </h2>
+        /* ADD / EDIT FORM & PREVIEW PANEL */
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          
+          {/* Form Panel (Left Column, 2/3 width) */}
+          <form onSubmit={handleSaveProduct} className="lg:col-span-2 bg-white border border-[#232B28]/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-2xs">
+            <h2 className="font-serif text-2xl font-bold text-[#232B28] border-b border-[#232B28]/10 pb-3">
+              {editingProduct ? dict.admin.edit_product : dict.admin.add_new}
+            </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-sans text-sm">
-            
-            {/* SKU */}
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/80">{dict.admin.sku}</label>
-              <input
-                type="text"
-                name="sku"
-                required
-                disabled={!!editingProduct}
-                value={formData.sku}
-                onChange={handleInputChange}
-                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37] disabled:opacity-50"
-              />
-            </div>
-
-            {/* Price */}
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/80">{dict.admin.price}</label>
-              <input
-                type="number"
-                name="price"
-                step="0.01"
-                required
-                value={formData.price}
-                onChange={handleInputChange}
-                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
-              />
-            </div>
-
-            {/* Category */}
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/80">{dict.admin.category}</label>
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-sm"
-              >
-                <option value="handcraft-material">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</option>
-                <option value="kurtis">{dict.categories.kurtis}</option>
-                <option value="onepiece">{dict.categories.onepiece}</option>
-                <option value="summer-dresses">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</option>
-                <option value="indo-western">{(dict.categories as any)["indo-western"] || "Indo-Western"}</option>
-                <option value="ethnic-indian">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</option>
-                <option value="jewelry-oxidized">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</option>
-                <option value="jewelry-modern">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</option>
-                <option value="jewelry-handcuffs">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs & Bangles"}</option>
-                <option value="jewelry-bracelets">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</option>
-                <option value="jewelry-necklace">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</option>
-                <option value="jewelry-earrings">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</option>
-                <option value="handbags">{dict.categories.handbags}</option>
-              </select>
-            </div>
-
-            {/* Materials */}
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/80">{dict.admin.materials}</label>
-              <input
-                type="text"
-                name="materials"
-                value={formData.materials}
-                onChange={handleInputChange}
-                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
-              />
-            </div>
-
-            {/* Sizes */}
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/80">{dict.admin.sizes}</label>
-              <input
-                type="text"
-                name="sizes"
-                value={formData.sizes}
-                onChange={handleInputChange}
-                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
-              />
-            </div>
-
-            {/* Images Drag-and-Drop Uploader */}
-            <div className="flex flex-col gap-1.5 md:col-span-2">
-              <ImageUploader
-                images={formData.images}
-                onChange={(urls) => setFormData(prev => ({ ...prev, images: urls }))}
-                dict={dict}
-              />
-            </div>
-
-            {/* Stock */}
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/80">{dict.admin.stock}</label>
-              <input
-                type="number"
-                name="stock"
-                required
-                value={formData.stock}
-                onChange={handleInputChange}
-                className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
-              />
-            </div>
-
-            {/* Featured */}
-            <div className="flex items-center gap-2 mt-6">
-              <input
-                type="checkbox"
-                name="featured"
-                id="featured"
-                checked={formData.featured}
-                onChange={handleInputChange}
-                className="w-4.5 h-4.5 rounded-sm border-[#232B28]/25 text-[#B35C37] focus:ring-[#B35C37]"
-              />
-              <label htmlFor="featured" className="font-bold text-[#232B28]/80 cursor-pointer">
-                {dict.admin.featured}
-              </label>
-            </div>
-            
-          </div>
-
-          <hr className="border-[#232B28]/10 my-2" />
-
-          {/* Localized Details Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-sans text-sm">
-            
-            {/* ITALIAN DETAILS */}
-            <div className="border border-[#232B28]/10 rounded-xl p-5 bg-[#FAF8F5]/50 flex flex-col gap-4">
-              <h3 className="font-serif text-lg font-bold text-[#B35C37] border-b border-[#232B28]/5 pb-2">Italiano</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans text-sm">
               
+              {/* SKU */}
               <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-[#232B28]/70">{dict.admin.it_name}</label>
+                <label className="font-bold text-[#232B28]/80">{dict.admin.sku}</label>
                 <input
                   type="text"
-                  name="it_name"
+                  name="sku"
                   required
-                  value={formData.it_name}
+                  disabled={!!editingProduct}
+                  value={formData.sku}
                   onChange={handleInputChange}
-                  className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
+                  className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37] disabled:opacity-50"
                 />
               </div>
 
+              {/* Price */}
               <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-[#232B28]/70">{dict.admin.it_desc}</label>
-                <textarea
-                  name="it_description"
+                <label className="font-bold text-[#232B28]/80">{dict.admin.price}</label>
+                <input
+                  type="number"
+                  name="price"
+                  step="0.01"
                   required
-                  rows={3}
-                  value={formData.it_description}
+                  value={formData.price}
                   onChange={handleInputChange}
-                  className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37] resize-none"
+                  className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
                 />
               </div>
 
+              {/* Category */}
               <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-[#232B28]/70">{dict.admin.it_tags}</label>
+                <label className="font-bold text-[#232B28]/80">{dict.admin.category}</label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-sm"
+                >
+                  <option value="handcraft-material">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</option>
+                  <option value="kurtis">{dict.categories.kurtis}</option>
+                  <option value="onepiece">{dict.categories.onepiece}</option>
+                  <option value="summer-dresses">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</option>
+                  <option value="indo-western">{(dict.categories as any)["indo-western"] || "Indo-Western"}</option>
+                  <option value="ethnic-indian">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</option>
+                  <option value="jewelry-oxidized">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</option>
+                  <option value="jewelry-modern">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</option>
+                  <option value="jewelry-handcuffs">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs & Bangles"}</option>
+                  <option value="jewelry-bracelets">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</option>
+                  <option value="jewelry-necklace">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</option>
+                  <option value="jewelry-earrings">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</option>
+                  <option value="handbags">{dict.categories.handbags}</option>
+                </select>
+              </div>
+
+              {/* Materials */}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-[#232B28]/80">{dict.admin.materials}</label>
                 <input
                   type="text"
-                  name="it_tags"
-                  value={formData.it_tags}
+                  name="materials"
+                  value={formData.materials}
                   onChange={handleInputChange}
-                  className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
+                  className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
                 />
+              </div>
+
+              {/* Sizes */}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-[#232B28]/80">{dict.admin.sizes}</label>
+                <input
+                  type="text"
+                  name="sizes"
+                  value={formData.sizes}
+                  onChange={handleInputChange}
+                  className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
+                />
+              </div>
+
+              {/* Stock */}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-[#232B28]/80">{dict.admin.stock}</label>
+                <input
+                  type="number"
+                  name="stock"
+                  required
+                  value={formData.stock}
+                  onChange={handleInputChange}
+                  className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 focus:outline-none focus:border-[#B35C37]"
+                />
+              </div>
+
+              {/* Featured */}
+              <div className="flex items-center gap-2 mt-6">
+                <input
+                  type="checkbox"
+                  name="featured"
+                  id="featured"
+                  checked={formData.featured}
+                  onChange={handleInputChange}
+                  className="w-4.5 h-4.5 rounded-sm border-[#232B28]/25 text-[#B35C37] focus:ring-[#B35C37]"
+                />
+                <label htmlFor="featured" className="font-bold text-[#232B28]/80 cursor-pointer">
+                  {dict.admin.featured}
+                </label>
+              </div>
+              
+              {/* Images Drag-and-Drop Uploader */}
+              <div className="flex flex-col gap-1.5 md:col-span-2">
+                <ImageUploader
+                  images={formData.images}
+                  onChange={(urls) => setFormData(prev => ({ ...prev, images: urls }))}
+                  dict={dict}
+                />
+              </div>
+              
+            </div>
+
+            <hr className="border-[#232B28]/10 my-2" />
+
+            {/* Localized Details Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-sans text-sm">
+              
+              {/* ITALIAN DETAILS */}
+              <div className="border border-[#232B28]/10 rounded-xl p-5 bg-[#FAF8F5]/50 flex flex-col gap-4">
+                <h3 className="font-serif text-lg font-bold text-[#B35C37] border-b border-[#232B28]/5 pb-2">Italiano</h3>
+                
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-[#232B28]/70">{dict.admin.it_name}</label>
+                  <input
+                    type="text"
+                    name="it_name"
+                    required
+                    value={formData.it_name}
+                    onChange={handleInputChange}
+                    className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-[#232B28]/70">{dict.admin.it_desc}</label>
+                  <textarea
+                    name="it_description"
+                    required
+                    rows={3}
+                    value={formData.it_description}
+                    onChange={handleInputChange}
+                    className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37] resize-none"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-[#232B28]/70">{dict.admin.it_tags}</label>
+                  <input
+                    type="text"
+                    name="it_tags"
+                    value={formData.it_tags}
+                    onChange={handleInputChange}
+                    className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
+                  />
+                </div>
+              </div>
+
+              {/* ENGLISH DETAILS */}
+              <div className="border border-[#232B28]/10 rounded-xl p-5 bg-[#FAF8F5]/50 flex flex-col gap-4">
+                <h3 className="font-serif text-lg font-bold text-[#B35C37] border-b border-[#232B28]/5 pb-2">English</h3>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-[#232B28]/70">{dict.admin.en_name}</label>
+                  <input
+                    type="text"
+                    name="en_name"
+                    required
+                    value={formData.en_name}
+                    onChange={handleInputChange}
+                    className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-[#232B28]/70">{dict.admin.en_desc}</label>
+                  <textarea
+                    name="en_description"
+                    required
+                    rows={3}
+                    value={formData.en_description}
+                    onChange={handleInputChange}
+                    className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37] resize-none"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-[#232B28]/70">{dict.admin.en_tags}</label>
+                  <input
+                    type="text"
+                    name="en_tags"
+                    value={formData.en_tags}
+                    onChange={handleInputChange}
+                    className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+            {/* Form Actions */}
+            <div className="flex justify-end gap-4 border-t border-[#232B28]/10 pt-6">
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="px-6 py-3 border border-[#232B28]/15 rounded-xl text-xs font-bold font-sans tracking-wider uppercase hover:bg-stone-50 cursor-pointer"
+              >
+                {dict.admin.btn_cancel}
+              </button>
+              <button
+                type="submit"
+                className="px-6 py-3 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-bold font-sans tracking-wider text-xs uppercase rounded-xl transition-colors cursor-pointer"
+              >
+                {dict.admin.btn_save}
+              </button>
+            </div>
+          </form>
+
+          {/* Live Preview Card & Options Summary Panel (Right Column, 1/3 width) */}
+          <div className="lg:col-span-1 lg:sticky lg:top-28 flex flex-col gap-6">
+            
+            {/* 1. Live Product Card Mockup */}
+            <div className="bg-white border border-[#232B28]/10 rounded-2xl p-5 shadow-2xs flex flex-col gap-4">
+              <h3 className="font-serif text-base font-bold text-[#232B28] border-b border-[#232B28]/5 pb-2">
+                {locale === 'it' ? 'Anteprima in Tempo Reale' : 'Real-time Live Preview'}
+              </h3>
+              
+              {/* Product Card Container */}
+              <div className="bg-[#FAF8F5] border border-[#232B28]/10 rounded-xl overflow-hidden flex flex-col h-full shadow-2xs">
+                {/* Image panel */}
+                <div className="relative aspect-3/4 overflow-hidden bg-stone-100 flex items-center justify-center">
+                  {formData.images.split(',').filter(Boolean)[0] ? (
+                    <img 
+                      src={formData.images.split(',').filter(Boolean)[0].trim()} 
+                      alt="Live Preview Product Image" 
+                      className="w-full h-full object-cover object-center"
+                    />
+                  ) : (
+                    <div className="text-center p-4 text-[#232B28]/35 font-sans text-xs flex flex-col items-center gap-1">
+                      <span className="font-bold">No Image Added</span>
+                      <span>URL links or files uploaded will display here</span>
+                    </div>
+                  )}
+                  {/* Category Badge */}
+                  <span className="absolute top-3 left-3 bg-[#FAF8F5]/90 backdrop-blur-xs text-[#232B28] font-sans font-semibold text-[9px] tracking-wider uppercase px-2.5 py-1 rounded-full shadow-xs border border-[#232B28]/5">
+                    {(dict.categories as any)[formData.category] || formData.category}
+                  </span>
+                </div>
+
+                {/* Text details */}
+                <div className="p-4 flex flex-col flex-grow justify-between">
+                  <div className="mb-3">
+                    <span className="text-[10px] font-medium text-[#232B28]/60 tracking-wider font-sans uppercase">
+                      {formData.materials.split(',').filter(Boolean).join(' • ') || (locale === 'it' ? 'Nessun materiale inserito' : 'No materials entered')}
+                    </span>
+                    <h4 className="font-serif text-[15px] font-bold text-[#232B28] leading-tight mt-1 line-clamp-2">
+                      {(locale === 'it' ? formData.it_name : formData.en_name) || (locale === 'it' ? 'Nome del Prodotto' : 'Product Name')}
+                    </h4>
+                  </div>
+
+                  <div className="flex items-center justify-between mt-auto pt-2 border-t border-[#232B28]/5">
+                    <span className="font-serif font-bold text-base text-[#B35C37]">
+                      €{Number(formData.price || 0).toFixed(2)}
+                    </span>
+                    <span className="text-[9px] font-sans font-bold uppercase text-[#232B28]/50 border border-[#232B28]/10 px-2 py-0.5 rounded-md">
+                      Qty: {formData.stock}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* ENGLISH DETAILS */}
-            <div className="border border-[#232B28]/10 rounded-xl p-5 bg-[#FAF8F5]/50 flex flex-col gap-4">
-              <h3 className="font-serif text-lg font-bold text-[#B35C37] border-b border-[#232B28]/5 pb-2">English</h3>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-[#232B28]/70">{dict.admin.en_name}</label>
-                <input
-                  type="text"
-                  name="en_name"
-                  required
-                  value={formData.en_name}
-                  onChange={handleInputChange}
-                  className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-[#232B28]/70">{dict.admin.en_desc}</label>
-                <textarea
-                  name="en_description"
-                  required
-                  rows={3}
-                  value={formData.en_description}
-                  onChange={handleInputChange}
-                  className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37] resize-none"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-[#232B28]/70">{dict.admin.en_tags}</label>
-                <input
-                  type="text"
-                  name="en_tags"
-                  value={formData.en_tags}
-                  onChange={handleInputChange}
-                  className="border border-[#232B28]/15 bg-white rounded-lg px-4 py-2 focus:outline-none focus:border-[#B35C37]"
-                />
-              </div>
+            {/* 2. Options Filled Summary Checklist */}
+            <div className="bg-white border border-[#232B28]/10 rounded-2xl p-5 shadow-2xs flex flex-col gap-4 font-sans text-xs">
+              <h3 className="font-serif text-base font-bold text-[#232B28] border-b border-[#232B28]/5 pb-2">
+                {locale === 'it' ? 'Riepilogo Opzioni Compilate' : 'Options Filled Summary'}
+              </h3>
+              
+              <ul className="flex flex-col gap-3 text-[#232B28]/85">
+                <li className="flex items-center justify-between">
+                  <span className="font-semibold">SKU</span>
+                  {formData.sku ? (
+                    <span className="text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100">{formData.sku}</span>
+                  ) : (
+                    <span className="text-red-500 font-semibold italic">{locale === 'it' ? 'Mancante' : 'Missing'}</span>
+                  )}
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="font-semibold">{locale === 'it' ? 'Prezzo' : 'Price'}</span>
+                  <span className="font-bold text-emerald-700">€{Number(formData.price || 0).toFixed(2)}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="font-semibold">{locale === 'it' ? 'Categoria' : 'Category'}</span>
+                  <span className="font-semibold text-emerald-700 capitalize">{(dict.categories as any)[formData.category] || formData.category}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="font-semibold">{locale === 'it' ? 'Materiali' : 'Materials'}</span>
+                  {formData.materials ? (
+                    <span className="text-emerald-700 font-medium truncate max-w-[120px]">{formData.materials}</span>
+                  ) : (
+                    <span className="text-amber-500 font-semibold italic">{locale === 'it' ? 'Vuoto' : 'Empty'}</span>
+                  )}
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="font-semibold">{locale === 'it' ? 'Taglie' : 'Sizes'}</span>
+                  <span className="font-semibold text-emerald-700">{formData.sizes}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="font-semibold">{locale === 'it' ? 'Immagini' : 'Images'}</span>
+                  {formData.images.split(',').filter(Boolean).length > 0 ? (
+                    <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
+                      {formData.images.split(',').filter(Boolean).length} {locale === 'it' ? 'Aggiunte' : 'Added'}
+                    </span>
+                  ) : (
+                    <span className="text-red-500 font-semibold italic">{locale === 'it' ? 'Mancante' : 'Missing'}</span>
+                  )}
+                </li>
+                <li className="flex items-center justify-between border-t border-[#232B28]/5 pt-2 mt-1">
+                  <span className="font-semibold">Dettagli in Italiano (IT)</span>
+                  {formData.it_name && formData.it_description ? (
+                    <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">✓ Compilati</span>
+                  ) : (
+                    <span className="text-red-500 font-semibold italic">✗ Incompleto</span>
+                  )}
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="font-semibold">Details in English (EN)</span>
+                  {formData.en_name && formData.en_description ? (
+                    <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">✓ Compilati</span>
+                  ) : (
+                    <span className="text-red-500 font-semibold italic">✗ Incomplete</span>
+                  )}
+                </li>
+              </ul>
             </div>
-
           </div>
 
-          {/* Form Actions */}
-          <div className="flex justify-end gap-4 border-t border-[#232B28]/10 pt-6">
-            <button
-              type="button"
-              onClick={() => setShowForm(false)}
-              className="px-6 py-3 border border-[#232B28]/15 rounded-xl text-xs font-bold font-sans tracking-wider uppercase hover:bg-stone-50 cursor-pointer"
-            >
-              {dict.admin.btn_cancel}
-            </button>
-            <button
-              type="submit"
-              className="px-6 py-3 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-bold font-sans tracking-wider text-xs uppercase rounded-xl transition-colors cursor-pointer"
-            >
-              {dict.admin.btn_save}
-            </button>
-          </div>
-        </form>
+        </div>
       ) : activeTab === 'products' ? (
         
         /* PRODUCTS LIST TAB */

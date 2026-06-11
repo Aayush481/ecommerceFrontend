@@ -16,69 +16,113 @@ const localMockProducts = [
     materials: ['Varanasi Silk', 'Zari Thread'],
     sizes: ['S', 'M', 'L', 'XL'],
     images: [
-      'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
     ],
     stock: 15,
     featured: true,
     it: {
       name: 'Kurti Etnica in Seta di Varanasi',
       description: 'Questa splendida tunica in pura seta di Varanasi unisce la maestria degli artigiani indiani con un taglio fluido ed elegante, perfetto per le occasioni speciali.',
-      tags: ['seta', 'elegante', 'cerimonia']
+      tags: ['seta', 'elegante', 'cerimonia', 'kurtis']
     },
     en: {
       name: 'Varanasi Silk Ethnic Kurti',
       description: 'This gorgeous pure Varanasi silk tunic combines Indian artisanal craftsmanship with a fluid, elegant silhouette, perfect for special occasions.',
-      tags: ['silk', 'elegant', 'occasion']
+      tags: ['silk', 'elegant', 'occasion', 'kurtis']
     }
   },
   {
-    sku: 'DW-KHA-002',
-    price: 49.99,
-    category: 'dailywear',
-    materials: ['Khadi Cotton'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    images: [
-      'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
-    ],
-    stock: 30,
-    featured: true,
-    it: {
-      name: 'Tunica Quotidiana in Cotone Khadi',
-      description: 'Ideale per le calde giornate estive in Italia, questa tunica traspirante in 100% cotone Khadi filato a mano offre un comfort ineguagliabile e uno stile casual-chic.',
-      tags: ['cotone', 'khadi', 'comodo']
-    },
-    en: {
-      name: 'Khadi Cotton Daily Tunic',
-      description: 'Ideal for hot summer days, this breathable tunic made of 100% handspun Khadi cotton offers unmatched comfort and a minimalist casual-chic style.',
-      tags: ['cotton', 'khadi', 'comfortable']
-    }
-  },
-  {
-    sku: 'MOD-FUS-003',
+    sku: 'OP-LND-002',
     price: 119.99,
-    category: 'modern',
+    category: 'onepiece',
     materials: ['Linen', 'Bamboo Viscose'],
     sizes: ['S', 'M', 'L'],
     images: [
-      'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=800'
     ],
     stock: 12,
     featured: true,
     it: {
-      name: 'Abito Fusion Contemporaneo in Lino',
-      description: 'Un design moderno che fonde l\'eleganza del drappeggio indiano con il minimalismo geometrico italiano. Realizzato in fresco lino premium.',
-      tags: ['lino', 'fusion', 'minimalista']
+      name: 'Abito Intero Elegante in Lino',
+      description: 'Un abito monopezzo moderno e fresco che fonde l\'eleganza del drappeggio indiano con il minimalismo geometrico italiano. Realizzato in lino premium.',
+      tags: ['lino', 'onepiece', 'abito', 'elegante']
     },
     en: {
-      name: 'Modern Fusion Linen Dress',
-      description: 'A modern design fusing the elegance of Indian drapery with modern Italian geometric minimalism. Made from premium fresh linen.',
-      tags: ['linen', 'fusion', 'minimalist']
+      name: 'Elegant One-Piece Linen Dress',
+      description: 'A modern one-piece dress fusing the elegance of Indian drapery with modern Italian geometric minimalism. Made from premium fresh linen.',
+      tags: ['linen', 'onepiece', 'dress', 'elegant']
     }
   },
   {
-    sku: 'JW-MAN-004',
+    sku: 'SD-JAI-003',
+    price: 64.99,
+    category: 'summer-dresses',
+    materials: ['Cotton', 'Mulmul'],
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    images: [
+      'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 22,
+    featured: true,
+    it: {
+      name: 'Vestito Estivo in Cotone di Jaipur',
+      description: 'Leggero e traspirante, questo abito estivo in cotone Mulmul presenta tradizionali stampe a blocco fatte a mano da Jaipur.',
+      tags: ['cotone', 'stampato', 'estate', 'abito']
+    },
+    en: {
+      name: 'Jaipur Cotton Summer Dress',
+      description: 'Lightweight and highly breathable, this summer dress made of Mulmul cotton features traditional hand-block prints from Jaipur.',
+      tags: ['cotton', 'printed', 'summer', 'dress']
+    }
+  },
+  {
+    sku: 'IW-FUS-004',
+    price: 49.99,
+    category: 'indo-western',
+    materials: ['Khadi Cotton'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    images: [
+      'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 30,
+    featured: true,
+    it: {
+      name: 'Tunica Indo-Western in Cotone Khadi',
+      description: 'Perfetta fusione tra linee casual occidentali e filati Khadi tradizionali. Taglio asimmetrico moderno.',
+      tags: ['cotone', 'khadi', 'fusion', 'indo-western']
+    },
+    en: {
+      name: 'Indo-Western Khadi Cotton Tunic',
+      description: 'A perfect fusion between casual Western lines and traditional handspun Khadi fibers.',
+      tags: ['cotton', 'khadi', 'fusion', 'indo-western']
+    }
+  },
+  {
+    sku: 'ETH-BAN-009',
+    price: 149.99,
+    category: 'ethnic-indian',
+    materials: ['Banarasi Silk', 'Zari Border'],
+    sizes: ['M', 'L', 'XL'],
+    images: [
+      'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 8,
+    featured: true,
+    it: {
+      name: 'Lehenga Reale in Seta Banarasi',
+      description: 'Uno splendido completo Lehenga tradizionale ricavato da autentica seta Banarasi, ornato da ricami in vero filo d\'oro (Zari).',
+      tags: ['seta', 'banarasi', 'lehenga', 'etnico']
+    },
+    en: {
+      name: 'Royal Banarasi Lehenga Set',
+      description: 'A gorgeous traditional Lehenga set crafted from authentic Banarasi silk, adorned with real gold thread (Zari) borders.',
+      tags: ['silk', 'banarasi', 'lehenga', 'ethnic']
+    }
+  },
+  {
+    sku: 'JW-OXD-005',
     price: 34.99,
-    category: 'jewelry',
+    category: 'jewelry-oxidized',
     materials: ['Oxidized Silver Alloy'],
     sizes: ['One Size'],
     images: [
@@ -87,14 +131,168 @@ const localMockProducts = [
     stock: 50,
     featured: true,
     it: {
-      name: 'Collana Ossidata Mandala Choker',
-      description: 'Girocollo artigianale in argento ossidato con motivo Mandala tradizionale. Un pezzo d\'effetto che dona un tocco boho-chic.',
-      tags: ['argento', 'ossidato', 'collana']
+      name: 'Girocollo Mandala in Argento Ossido',
+      description: 'Girocollo artigianale in argento ossidato con dettagliato motivo Mandala tradizionale.',
+      tags: ['argento', 'ossidato', 'collana', 'gioielli']
     },
     en: {
-      name: 'Oxidized Mandala Choker',
-      description: 'Artisanal oxidized silver choker featuring a traditional Mandala motif. A statement piece that adds a boho-chic touch.',
-      tags: ['silver', 'oxidized', 'necklace']
+      name: 'Oxidized Silver Mandala Choker',
+      description: 'Artisanal oxidized silver choker featuring a traditional Mandala motif.',
+      tags: ['silver', 'oxidized', 'necklace', 'jewelry']
+    }
+  },
+  {
+    sku: 'JW-MOD-010',
+    price: 29.99,
+    category: 'jewelry-modern',
+    materials: ['Brass', 'Gold Plating'],
+    sizes: ['One Size'],
+    images: [
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 25,
+    featured: false,
+    it: {
+      name: 'Pendente Geometrico Moderno in Ottone',
+      description: 'Pendente geometrico contemporaneo in ottone con finitura spazzolata placcata oro. Design minimalista.',
+      tags: ['moderno', 'ottone', 'minimalista', 'gioielli']
+    },
+    en: {
+      name: 'Geometric Brass Modern Pendant',
+      description: 'Contemporary geometric brass pendant with a brushed gold-plated finish.',
+      tags: ['modern', 'brass', 'minimalist', 'jewelry']
+    }
+  },
+  {
+    sku: 'JW-HDC-011',
+    price: 39.99,
+    category: 'jewelry-handcuffs',
+    materials: ['Brass', 'Kundan Stones'],
+    sizes: ['One Size'],
+    images: [
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 15,
+    featured: false,
+    it: {
+      name: 'Bracciale Rigido Kundan Handcuff',
+      description: 'Bracciale rigido tipo cuff impreziosito da tradizionali pietre Kundan incastonate a mano.',
+      tags: ['bracciale', 'rigido', 'kundan', 'gioielli']
+    },
+    en: {
+      name: 'Kundan Cuff Handcuff Bracelet',
+      description: 'Traditional Kundan cuff bracelet adorned with hand-set glass stones.',
+      tags: ['bracelet', 'cuff', 'kundan', 'jewelry']
+    }
+  },
+  {
+    sku: 'JW-BRC-012',
+    price: 19.99,
+    category: 'jewelry-bracelets',
+    materials: ['Sterling Silver', 'Amethyst Beads'],
+    sizes: ['One Size'],
+    images: [
+      'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 35,
+    featured: false,
+    it: {
+      name: 'Bracciale in Perline d\'Argento e Ametista',
+      description: 'Braccialetto elastico composto da perline in argento sterling 925 e ametista naturale.',
+      tags: ['braccialetto', 'argento', 'ametista', 'gioielli']
+    },
+    en: {
+      name: 'Silver Beaded Amethyst Bracelet',
+      description: 'Elastic beaded bracelet made of 925 sterling silver beads and authentic natural amethyst gemstones.',
+      tags: ['bracelet', 'silver', 'amethyst', 'jewelry']
+    }
+  },
+  {
+    sku: 'JW-NEC-013',
+    price: 45.00,
+    category: 'jewelry-necklace',
+    materials: ['Brass Alloy', 'Red Ruby Stones'],
+    sizes: ['One Size'],
+    images: [
+      'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 20,
+    featured: false,
+    it: {
+      name: 'Collana Etnica Temple Border',
+      description: 'Collana d\'ispirazione Temple indiana con incisioni divine e pietre sintetiche color rubino.',
+      tags: ['collana', 'temple', 'rubino', 'gioielli']
+    },
+    en: {
+      name: 'Temple Border Heritage Necklace',
+      description: 'Indian temple-border style necklace featuring intricate heritage engravings and red ruby-colored glass stones.',
+      tags: ['necklace', 'temple', 'ruby', 'jewelry']
+    }
+  },
+  {
+    sku: 'JW-JHU-006',
+    price: 24.99,
+    category: 'jewelry-earrings',
+    materials: ['Oxidized Silver', 'Beads'],
+    sizes: ['One Size'],
+    images: [
+      'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 40,
+    featured: false,
+    it: {
+      name: 'Orecchini Jhumka Etnici Pendenti',
+      description: 'Orecchini tradizionali a campana in metallo ossidato anticato indiano.',
+      tags: ['orecchini', 'jhumka', 'ossidato', 'gioielli']
+    },
+    en: {
+      name: 'Oxidized Ethnic Jhumka Earrings',
+      description: 'Traditional bell-shaped earrings in antique-finished oxidized metal.',
+      tags: ['earrings', 'jhumka', 'oxidized', 'jewelry']
+    }
+  },
+  {
+    sku: 'BAG-JAI-007',
+    price: 45.00,
+    category: 'handbags',
+    materials: ['Organic Cotton Canvas', 'Mirror Embroidery'],
+    sizes: ['One Size'],
+    images: [
+      'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 20,
+    featured: true,
+    it: {
+      name: 'Borsa a Mano Jaipur Ricamata',
+      description: 'Borsa a mano colorata e ricamata con piccoli specchi tradizionali di Jaipur.',
+      tags: ['borsa', 'ricamo', 'specchi', 'accessori']
+    },
+    en: {
+      name: 'Jaipur Embroidered Handbag',
+      description: 'Colorful handbag embellished with traditional mirror embroidery from Jaipur.',
+      tags: ['bag', 'embroidery', 'mirror', 'accessories']
+    }
+  },
+  {
+    sku: 'MAT-KHA-008',
+    price: 15.00,
+    category: 'handcraft-material',
+    materials: ['100% Handspun Khadi Cotton'],
+    sizes: ['1 Meter'],
+    images: [
+      'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
+    ],
+    stock: 100,
+    featured: false,
+    it: {
+      name: 'Tessuto in Cotone Khadi Grezzo (al metro)',
+      description: 'Tessuto biologico filato e tessuto a mano in India. Perfetto per sarti e designer.',
+      tags: ['tessuto', 'khadi', 'cotone', 'artigianale']
+    },
+    en: {
+      name: 'Raw Khadi Cotton Fabric (per meter)',
+      description: 'Organic handspun and handwoven cotton fabric from India.',
+      tags: ['fabric', 'khadi', 'cotton', 'handcraft']
     }
   }
 ];
@@ -131,7 +329,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Tuniche etniche tradizionali in seta fine e ricami indiani fatti a mano.' 
         : 'Traditional ethnic tunics in fine silk and hand-made Indian embroidery.',
-      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
     },
     {
       id: 'onepiece',
@@ -139,7 +337,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Eleganti abiti interi che fondono design contemporaneo ed elementi etnici.' 
         : 'Elegant one-piece dresses fusing contemporary design and ethnic elements.',
-      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=800'
     },
     {
       id: 'summer-dresses',
@@ -147,7 +345,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Abiti freschi in cotone leggero e lino traspirante stampati a mano.' 
         : 'Fresh dresses in lightweight cotton and breathable linen, printed by hand.',
-      image: 'https://images.unsplash.com/photo-1561414927-6d86591d0c4f?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
     },
     {
       id: 'indo-western',
@@ -155,7 +353,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Tagli e silhouette asimmetrici moderni ispirati alla moda fusion orientale.' 
         : 'Asymmetrical modern cuts and silhouettes inspired by Eastern fusion fashion.',
-      image: 'https://images.unsplash.com/photo-1608748010899-18f300247112?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800'
     },
     {
       id: 'ethnic-indian',
@@ -227,7 +425,7 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it' 
         ? 'Tessuti biologici in cotone Khadi filato a mano e matasse di seta indiana.' 
         : 'Organic handspun Khadi cotton fabrics and premium Varanasi silk skeins.',
-      image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
     }
   ];
 

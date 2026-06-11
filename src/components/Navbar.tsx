@@ -53,9 +53,24 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
         {/* Brand Logo */}
         <Link 
           href={`/${locale}`}
-          className="font-serif text-lg md:text-xl font-medium tracking-widest uppercase text-[#B35C37] hover:text-[#B35C37]/80 transition-colors duration-300"
+          className="flex items-center gap-2 group cursor-pointer"
         >
-          Casa dei Regali
+          {/* Minimalist bow emblem */}
+          <svg className="w-5.5 h-5.5 text-[#B35C37] transition-transform duration-500 group-hover:scale-105" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+            <rect x="4" y="9" width="16" height="11" rx="1" />
+            <path d="M12 9V20" />
+            <path d="M4 13H20" />
+            <path d="M12 9C12 6.5 10 5 8.5 6.5S10 9 12 9z" />
+            <path d="M12 9C12 6.5 14 5 15.5 6.5S14 9 12 9z" />
+          </svg>
+          <div className="flex flex-col">
+            <span className="font-serif text-sm md:text-base font-bold tracking-[0.15em] uppercase text-[#232B28] group-hover:text-[#B35C37] transition-colors duration-300 leading-none">
+              Casa dei Regali
+            </span>
+            <span className="font-sans text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-[#B35C37] mt-1.5 font-semibold leading-none">
+              Milano
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Navigation Links */}
