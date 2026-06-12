@@ -432,74 +432,82 @@ export default async function HomePage({ params }: PageProps) {
   return (
     <div className="flex flex-col min-h-screen">
 
-      {/* 1. Hero Section - Premium Indo-Italian Editorial Split Layout */}
-      <section className="relative min-h-[85vh] py-12 lg:py-20 flex items-center bg-gradient-to-br from-[#F6F3EE] via-[#FAF8F5] to-[#EFEAE2] overflow-hidden border-b border-[#B35C37]/10">
-        {/* Decorative soft texture overlays */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(179,92,55,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(179,92,55,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-          <div className="absolute -top-[30%] -right-[10%] w-[600px] h-[600px] bg-[#B35C37]/5 rounded-full filter blur-[120px]"></div>
-          <div className="absolute -bottom-[20%] -left-[10%] w-[500px] h-[500px] bg-[#E5A93B]/5 rounded-full filter blur-[100px]"></div>
+      {/* 1. Hero Section - Premium Editorial Full-Bleed Layout */}
+      <section className="relative min-h-[75vh] lg:min-h-[85vh] py-12 lg:py-20 flex items-center bg-[#232B28] overflow-hidden border-b border-[#B35C37]/10">
+        
+        {/* Full-bleed Campaign Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/indo_italian_hero.png"
+            alt="Casa dei Regali - Indo-Italian Fusion Campaign"
+            fill
+            priority
+            unoptimized
+            className="object-cover object-center lg:object-[80%_center] opacity-35 lg:opacity-45 scale-100 transition-all duration-1000"
+          />
+          {/* Elegant dark gradient vignettes to ensure readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#232B28] via-[#232B28]/60 to-[#232B28]/85 lg:bg-gradient-to-r lg:from-[#232B28] lg:via-[#232B28]/70 lg:to-transparent"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-between">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
+            
             {/* Left Content Column */}
-            <div className="lg:col-span-7 flex flex-col gap-6 md:gap-8 text-left">
+            <div className="lg:col-span-7 flex flex-col gap-5 md:gap-7 text-left">
               {/* Luxury Badge Tag */}
               <div className="flex items-center gap-3">
-                <span className="h-[1px] w-8 bg-[#B35C37]/40"></span>
-                <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-[#B35C37] font-sans">
-                  {locale === 'it' ? 'CASA DEI REGALI • VI' : 'CASA DEI REGALI • MILAN / VARANASI'}
+                <span className="h-[1px] w-8 bg-[#E5A93B]/60"></span>
+                <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-[#E5A93B] font-sans">
+                  {locale === 'it' ? 'CASA DEI REGALI • VICENZA / VARANASI' : 'CASA DEI REGALI • VICENZA / VARANASI'}
                 </span>
               </div>
 
               {/* Headline - Playfair Display serif font */}
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#232B28] leading-[1.15] font-light tracking-wide">
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#FAF8F5] leading-[1.15] font-light tracking-wide">
                 {locale === 'it' ? (
                   <>
-                    L&apos;Eleganza <span className="font-serif italic text-[#B35C37] font-normal">Etnica</span>,
-                    <br />Il Minimalismo <span className="font-serif italic text-[#B35C37] font-normal">Italiano</span>
+                    L&apos;Eleganza <span className="font-serif italic text-[#E5A93B] font-normal">Etnica</span>,
+                    <br />Il Minimalismo <span className="font-serif italic text-[#E5A93B] font-normal">Italiano</span>
                   </>
                 ) : (
                   <>
-                    Ethnic <span className="font-serif italic text-[#B35C37] font-normal">Elegance</span>,
-                    <br />Italian <span className="font-serif italic text-[#B35C37] font-normal">Minimalism</span>
+                    Ethnic <span className="font-serif italic text-[#E5A93B] font-normal">Elegance</span>,
+                    <br />Italian <span className="font-serif italic text-[#E5A93B] font-normal">Minimalism</span>
                   </>
                 )}
               </h1>
 
               {/* Subtitle */}
-              <p className="font-sans text-sm md:text-base text-[#232B28]/80 max-w-lg leading-relaxed font-light">
+              <p className="font-sans text-xs sm:text-sm md:text-base text-[#FAF8F5]/80 max-w-lg leading-relaxed font-light">
                 {dict.hero.subtitle}
               </p>
 
               {/* Premium Call to Actions */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-1">
                 <Link
                   href={`/${locale}/shop`}
-                  className="flex items-center justify-center gap-2.5 px-8 py-4 bg-[#B35C37] hover:bg-[#9E4B28] text-white font-sans font-semibold text-xs tracking-widest uppercase rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:translate-y-[-1px] active:translate-y-[1px] cursor-pointer group"
+                  className="flex items-center justify-center gap-2.5 px-7 py-3.5 bg-[#B35C37] hover:bg-[#9E4B28] text-white font-sans font-semibold text-xs tracking-widest uppercase rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:translate-y-[-1px] active:translate-y-[1px] cursor-pointer group"
                 >
                   <span>{dict.hero.cta}</span>
                   <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
 
-                <a
+                <a 
                   href="https://wa.me/393898373685"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-6 py-4 border border-[#232B28]/20 hover:border-[#232B28] text-[#232B28] font-sans font-semibold text-xs tracking-widest uppercase rounded-lg transition-all duration-300 hover:bg-[#232B28]/5 cursor-pointer"
+                  className="flex items-center justify-center gap-2 px-5 py-3.5 border border-white/20 hover:border-white text-white font-sans font-semibold text-xs tracking-widest uppercase rounded-lg transition-all duration-300 hover:bg-white/5 cursor-pointer"
                 >
                   <svg className="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z" />
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z"/>
                   </svg>
                   <span>{locale === 'it' ? 'Chiedi su WhatsApp' : 'WhatsApp Inquiry'}</span>
                 </a>
               </div>
 
               {/* Fine Jewelry Floating Accent Card */}
-              <div className="flex items-center gap-4 p-3.5 rounded-xl bg-white/50 backdrop-blur-sm border border-[#B35C37]/10 max-w-sm mt-4 shadow-xs hover:shadow-md transition-all duration-300">
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-[#B35C37]/10 bg-white">
+              <div className="flex items-center gap-4 p-3.5 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 max-w-sm mt-3 shadow-xs hover:shadow-md transition-all duration-300">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-[#E5A93B]/20 bg-stone-900">
                   <Image
                     src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&q=80&w=200"
                     alt="Luxury Jhumka Earring Accent"
@@ -510,25 +518,25 @@ export default async function HomePage({ params }: PageProps) {
                   />
                 </div>
                 <div>
-                  <p className="font-serif italic text-xs text-[#B35C37] tracking-wider uppercase">
+                  <p className="font-serif italic text-xs text-[#E5A93B] tracking-wider uppercase">
                     {locale === 'it' ? 'Gioielleria Artigianale' : 'Handcrafted Jewelry'}
                   </p>
-                  <p className="font-sans text-[11px] text-[#232B28]/70 leading-normal mt-0.5">
-                    {locale === 'it'
-                      ? 'Orecchini Jhumka in filigrana d\'oro e argento ossidato antico.'
+                  <p className="font-sans text-[11px] text-[#FAF8F5]/70 leading-normal mt-0.5">
+                    {locale === 'it' 
+                      ? 'Orecchini Jhumka in filigrana d\'oro e argento ossidato antico.' 
                       : 'Traditional Jhumka earrings in gold filigree and antique oxidized silver.'}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Right Campaign Image Column */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div className="relative w-full max-w-[340px] sm:max-w-[400px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl group bg-[#FAF8F5]">
+            {/* Right Campaign Image Column - Invisible on mobile but beautiful editorial layout on desktop */}
+            <div className="hidden lg:flex lg:col-span-5 flex-col items-center justify-center relative">
+              <div className="relative w-full max-w-[340px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl group bg-[#232B28]">
                 {/* Dual Editorial Frame Borders */}
-                <div className="absolute inset-2 border border-[#B35C37]/20 rounded-xl z-20 pointer-events-none group-hover:inset-3 transition-all duration-500"></div>
-                <div className="absolute inset-3.5 border border-white/20 rounded-lg z-20 pointer-events-none group-hover:inset-4.5 transition-all duration-500"></div>
-
+                <div className="absolute inset-2 border border-[#E5A93B]/30 rounded-xl z-20 pointer-events-none group-hover:inset-3 transition-all duration-500"></div>
+                <div className="absolute inset-3.5 border border-white/10 rounded-lg z-20 pointer-events-none group-hover:inset-4.5 transition-all duration-500"></div>
+                
                 <Image
                   src="/indo_italian_hero.png"
                   alt="Casa dei Regali - Indo-Italian Fusion Campaign"
@@ -539,16 +547,16 @@ export default async function HomePage({ params }: PageProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#232B28]/30 via-transparent to-transparent z-10"></div>
               </div>
-              <span className="font-serif italic text-[10px] text-[#232B28]/50 mt-3.5 tracking-[0.2em] uppercase">
-                {locale === 'it' ? 'Collezione Seta & Oro • Milano / Jaipur' : 'Silk & Gold Collection • Milan / Jaipur'}
+              <span className="font-serif italic text-[10px] text-[#FAF8F5]/50 mt-3.5 tracking-[0.2em] uppercase">
+                {locale === 'it' ? 'Collezione Seta & Oro • Vicenza / Jaipur' : 'Silk & Gold Collection • Vicenza / Jaipur'}
               </span>
             </div>
 
           </div>
 
           {/* Social Links Ribbon bar */}
-          <div className="w-full mt-12 lg:mt-16 pt-6 border-t border-[#232B28]/10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#232B28]/40">
+          <div className="w-full mt-6 lg:mt-12 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#FAF8F5]/50">
               <span>{locale === 'it' ? 'I Nostri Canali Diretti:' : 'Our Direct Channels:'}</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-10">
@@ -556,40 +564,47 @@ export default async function HomePage({ params }: PageProps) {
                 href="https://www.facebook.com/casadairegali"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#232B28]/60 hover:text-[#B35C37] transition-all duration-300 font-sans text-xs"
+                className="flex items-center gap-2 text-[#FAF8F5]/70 hover:text-[#E5A93B] transition-all duration-300 font-sans text-xs"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" />
                 </svg>
-                <span className="font-medium">casa dai regali</span>
+                <span className="font-medium">
+                  {locale === 'it' ? 'Seguici su Facebook' : 'Follow us on Facebook'}
+                </span>
               </a>
 
               <a
                 href="https://www.instagram.com/casadeiregali"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#232B28]/60 hover:text-[#B35C37] transition-all duration-300 font-sans text-xs"
+                className="flex items-center gap-2 text-[#FAF8F5]/70 hover:text-[#E5A93B] transition-all duration-300 font-sans text-xs"
               >
                 <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                 </svg>
-                <span className="font-medium">@casadeiregali</span>
+                <span className="font-medium">
+                  {locale === 'it' ? 'Seguici su Instagram' : 'Follow us on Instagram'}
+                </span>
               </a>
 
               <a
                 href="https://wa.me/393898373685"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#232B28]/60 hover:text-[#B35C37] transition-all duration-300 font-sans text-xs"
+                className="flex items-center gap-2 text-[#FAF8F5]/70 hover:text-[#25D366] transition-all duration-300 font-sans text-xs"
               >
                 <svg className="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24">
                   <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z" />
                 </svg>
-                <span className="font-medium">+39 389 837 3685</span>
+                <span className="font-medium">
+                  {locale === 'it' ? 'Contattaci su WhatsApp' : 'Contact us on WhatsApp'}
+                </span>
               </a>
             </div>
           </div>
+
         </div>
       </section>
 
