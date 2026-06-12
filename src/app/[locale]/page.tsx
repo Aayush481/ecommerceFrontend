@@ -434,7 +434,7 @@ export default async function HomePage({ params }: PageProps) {
 
       {/* 1. Hero Section - Premium Editorial Full-Bleed Layout */}
       <section className="relative min-h-[75vh] lg:min-h-[85vh] py-12 lg:py-20 flex items-center bg-[#232B28] overflow-hidden border-b border-[#B35C37]/10">
-        
+
         {/* Full-bleed Campaign Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -451,14 +451,14 @@ export default async function HomePage({ params }: PageProps) {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-between">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
+
             {/* Left Content Column */}
             <div className="lg:col-span-7 flex flex-col gap-5 md:gap-7 text-left">
               {/* Luxury Badge Tag */}
               <div className="flex items-center gap-3">
                 <span className="h-[1px] w-8 bg-[#E5A93B]/60"></span>
                 <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-[#E5A93B] font-sans">
-                  {locale === 'it' ? 'CASA DEI REGALI • VICENZA / VARANASI' : 'CASA DEI REGALI • VICENZA / VARANASI'}
+                  {locale === 'it' ? 'CASA DEI REGALI • VICENZA' : 'CASA DEI REGALI • VICENZA '}
                 </span>
               </div>
 
@@ -492,14 +492,14 @@ export default async function HomePage({ params }: PageProps) {
                   <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
 
-                <a 
+                <a
                   href="https://wa.me/393898373685"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3.5 border border-white/20 hover:border-white text-white font-sans font-semibold text-[11px] sm:text-xs tracking-widest uppercase rounded-lg transition-all duration-300 hover:bg-white/5 cursor-pointer"
                 >
                   <svg className="w-3.5 h-3.5 fill-current text-[#25D366]" viewBox="0 0 24 24">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z"/>
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z" />
                   </svg>
                   <span>{locale === 'it' ? 'Chiedi su WhatsApp' : 'WhatsApp Inquiry'}</span>
                 </a>
@@ -522,8 +522,8 @@ export default async function HomePage({ params }: PageProps) {
                     {locale === 'it' ? 'Gioielleria Artigianale' : 'Handcrafted Jewelry'}
                   </p>
                   <p className="font-sans text-[11px] text-[#FAF8F5]/70 leading-normal mt-0.5">
-                    {locale === 'it' 
-                      ? 'Orecchini Jhumka in filigrana d\'oro e argento ossidato antico.' 
+                    {locale === 'it'
+                      ? 'Orecchini Jhumka in filigrana d\'oro e argento ossidato antico.'
                       : 'Traditional Jhumka earrings in gold filigree and antique oxidized silver.'}
                   </p>
                 </div>
@@ -536,7 +536,7 @@ export default async function HomePage({ params }: PageProps) {
                 {/* Dual Editorial Frame Borders */}
                 <div className="absolute inset-2 border border-[#E5A93B]/30 rounded-xl z-20 pointer-events-none group-hover:inset-3 transition-all duration-500"></div>
                 <div className="absolute inset-3.5 border border-white/10 rounded-lg z-20 pointer-events-none group-hover:inset-4.5 transition-all duration-500"></div>
-                
+
                 <Image
                   src="/indo_italian_hero.png"
                   alt="Casa dei Regali - Indo-Italian Fusion Campaign"
