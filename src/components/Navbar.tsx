@@ -68,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
               Casa dei Regali
             </span>
             <span className="font-sans text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-[#B35C37] mt-1.5 font-semibold leading-none">
-              Milano
+              Vicenza
             </span>
           </div>
         </Link>

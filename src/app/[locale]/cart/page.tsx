@@ -42,6 +42,16 @@ export default function CartPage({ params }: CartPageProps) {
     setCheckoutError('');
   };
 
+  const handleWhatsAppCartOrder = () => {
+    const itemsText = cart.map((item, idx) => `${idx + 1}. ${item.name} (SKU: ${item.sku}, Size: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`).join('\n');
+    const message = locale === 'it'
+      ? `Ciao Casa dei Regali! Vorrei effettuare un ordine per i seguenti articoli dal mio carrello:\n\n${itemsText}\n\nTotale dell'ordine: €${total.toFixed(2)}`
+      : `Hello Casa dei Regali! I would like to place an order for the following items from my cart:\n\n${itemsText}\n\nOrder Total: €${total.toFixed(2)}`;
+    
+    const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const handleConfirmOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customerEmail) return;
@@ -193,12 +203,23 @@ export default function CartPage({ params }: CartPageProps) {
             </div>
 
             {!showCheckoutForm ? (
-              <button
-                onClick={handleProceedToCheckout}
-                className="w-full py-4 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-colors shadow-sm cursor-pointer"
-              >
-                {dict.cart_page.checkout}
-              </button>
+              <div className="flex flex-col gap-2.5 w-full">
+                <button
+                  onClick={handleProceedToCheckout}
+                  className="w-full py-4 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-colors shadow-sm cursor-pointer"
+                >
+                  {dict.cart_page.checkout}
+                </button>
+                <button
+                  onClick={handleWhatsAppCartOrder}
+                  className="w-full py-4 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-colors shadow-sm cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z"/>
+                  </svg>
+                  <span>{locale === 'it' ? 'Ordina su WhatsApp' : 'Order via WhatsApp'}</span>
+                </button>
+              </div>
             ) : (
               <form onSubmit={handleConfirmOrder} className="flex flex-col gap-4 border-t border-[#232B28]/10 pt-4 mt-1">
                 <div className="flex flex-col gap-1.5 font-sans text-sm">

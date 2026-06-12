@@ -206,14 +206,33 @@ export default function AdminPage({ params }: AdminPageProps) {
     }
   }, []);
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (authEmail === 'aayush6b12@gmail.com' && authPassword === 'soniKmno4@') {
-      sessionStorage.setItem('admin_authorized', 'true');
-      setAuthorized(true);
-      setAuthError('');
-    } else {
-      setAuthError(locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password');
+    try {
+      const res = await fetch(getApiUrl('/api/admin/login'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: authEmail, password: authPassword }),
+      });
+
+      if (res.ok) {
+        sessionStorage.setItem('admin_authorized', 'true');
+        setAuthorized(true);
+        setAuthError('');
+      } else {
+        const err = await res.json();
+        setAuthError(err.message || (locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password'));
+      }
+    } catch (err) {
+      console.warn('[AdminLogin] Backend login unreachable. Simulating offline fallback.');
+      // Offline fallback simulation using the same static credentials as original logic
+      if (authEmail === 'aayush6b12@gmail.com' && authPassword === 'soniKmno4@') {
+        sessionStorage.setItem('admin_authorized', 'true');
+        setAuthorized(true);
+        setAuthError('');
+      } else {
+        setAuthError(locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password');
+      }
     }
   };
 
