@@ -17,7 +17,7 @@ export default function CartPage({ params }: CartPageProps) {
   const { locale: rawLocale } = use(params);
   const locale = rawLocale as 'it' | 'en';
   const [dict, setDict] = useState<any>(null);
-  const { cart, updateQuantity, removeFromCart, clearCart } = useStore();
+  const { cart, updateQuantity, removeFromCart, clearCart, user, openAuthModal } = useStore();
   
   // Checkout states
   const [checkoutComplete, setCheckoutComplete] = useState(false);
@@ -31,6 +31,12 @@ export default function CartPage({ params }: CartPageProps) {
     getDictionary(locale).then(setDict);
   }, [locale]);
 
+  React.useEffect(() => {
+    if (user) {
+      setCustomerEmail(user.email);
+    }
+  }, [user]);
+
   if (!dict) return <div className="max-w-7xl mx-auto px-4 py-20 text-center">Loading...</div>;
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -38,18 +44,39 @@ export default function CartPage({ params }: CartPageProps) {
   const total = subtotal + shipping;
 
   const handleProceedToCheckout = () => {
-    setShowCheckoutForm(true);
-    setCheckoutError('');
+    const action = () => {
+      setShowCheckoutForm(true);
+      setCheckoutError('');
+      if (user) setCustomerEmail(user.email);
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const handleWhatsAppCartOrder = () => {
-    const itemsText = cart.map((item, idx) => `${idx + 1}. ${item.name} (SKU: ${item.sku}, Size: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`).join('\n');
-    const message = locale === 'it'
-      ? `Ciao Casa dei Regali! Vorrei effettuare un ordine per i seguenti articoli dal mio carrello:\n\n${itemsText}\n\nTotale dell'ordine: €${total.toFixed(2)}`
-      : `Hello Casa dei Regali! I would like to place an order for the following items from my cart:\n\n${itemsText}\n\nOrder Total: €${total.toFixed(2)}`;
-    
-    const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    const action = () => {
+      const itemsText = cart.map((item, idx) => `${idx + 1}. ${item.name} (SKU: ${item.sku}, Size: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`).join('\n');
+      const buyerInfo = locale === 'it'
+        ? `\n\nDettagli Spedizione:\n- Nome: ${user?.name}\n- Email: ${user?.email}\n- Tel: ${user?.phone}\n- Indirizzo: ${user?.address}`
+        : `\n\nShipping Details:\n- Name: ${user?.name}\n- Email: ${user?.email}\n- Phone: ${user?.phone}\n- Address: ${user?.address}`;
+
+      const message = locale === 'it'
+        ? `Ciao Casa dei Regali! Vorrei effettuare un ordine per i seguenti articoli dal mio carrello:\n\n${itemsText}\n\nTotale dell'ordine: €${total.toFixed(2)}.${buyerInfo}`
+        : `Hello Casa dei Regali! I would like to place an order for the following items from my cart:\n\n${itemsText}\n\nOrder Total: €${total.toFixed(2)}.${buyerInfo}`;
+      
+      const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const handleConfirmOrder = async (e: React.FormEvent) => {

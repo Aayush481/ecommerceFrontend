@@ -300,14 +300,13 @@ export default function AdminPage({ params }: AdminPageProps) {
 
   const getCategoryPrefix = (cat: string): string => {
     switch (cat) {
-      case 'handcraft-material': return 'MAT';
       case 'kurtis': return 'KUR';
       case 'onepiece': return 'OP';
       case 'summer-dresses': return 'SD';
       case 'indo-western': return 'IW';
       case 'ethnic-indian': return 'ETH';
       case 'jewelry-oxidized': return 'JW-OXD';
-      case 'jewelry-modern': return 'JW-MOD';
+      case 'jewelry-anklets': return 'JW-ANK';
       case 'jewelry-handcuffs': return 'JW-HDC';
       case 'jewelry-bracelets': return 'JW-BRC';
       case 'jewelry-necklace': return 'JW-NEC';
@@ -404,19 +403,19 @@ export default function AdminPage({ params }: AdminPageProps) {
         en_tags: 'bracelet, bangle, kundan, gold, jewelry',
       },
       {
-        category: 'handcraft-material',
-        price: 18.50,
-        materials: '100% Khadi Cotton',
-        sizes: 'Per Meter',
-        images: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800',
-        stock: 50,
+        category: 'jewelry-anklets',
+        price: 29.99,
+        materials: 'Oxidized Silver, Brass, Beads',
+        sizes: 'Adjustable',
+        images: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800',
+        stock: 25,
         featured: false,
-        it_name: 'Tessuto di Cotone Khadi Indiano',
-        it_description: 'Tessuto in puro cotone Khadi filato e tessuto a mano. Ideale per la sartoria e progetti creativi. Ecologico e traspirante.',
-        it_tags: 'tessuto, cotone, khadi, artigianato',
-        en_name: 'Hand-Spun Khadi Cotton Fabric',
-        en_description: 'Pure hand-spun and hand-woven Khadi cotton fabric. Ideal for tailored wear and creative sewing projects. Eco-friendly and highly breathable.',
-        en_tags: 'fabric, cotton, khadi, material',
+        it_name: 'Cavigliera Etnica in Argento Ossidato',
+        it_description: 'Elegante cavigliera artigianale regolabile con piccoli campanellini tradizionali indiani payal.',
+        it_tags: 'cavigliera, argento, gioielli, payal',
+        en_name: 'Oxidized Silver Ethnic Anklet',
+        en_description: 'Elegant adjustable handcrafted anklet featuring tiny traditional chime bells.',
+        en_tags: 'anklet, silver, jewelry, payal',
       }
     ];
 
@@ -791,14 +790,13 @@ export default function AdminPage({ params }: AdminPageProps) {
                   onChange={handleInputChange}
                   className="border border-[#232B28]/15 rounded-lg px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-sm"
                 >
-                  <option value="handcraft-material">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</option>
                   <option value="kurtis">{dict.categories.kurtis}</option>
                   <option value="onepiece">{dict.categories.onepiece}</option>
                   <option value="summer-dresses">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</option>
                   <option value="indo-western">{(dict.categories as any)["indo-western"] || "Indo-Western"}</option>
                   <option value="ethnic-indian">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</option>
                   <option value="jewelry-oxidized">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</option>
-                  <option value="jewelry-modern">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</option>
+                  <option value="jewelry-anklets">{(dict.categories as any)["jewelry-anklets"] || "Anklets"}</option>
                   <option value="jewelry-handcuffs">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs & Bangles"}</option>
                   <option value="jewelry-bracelets">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</option>
                   <option value="jewelry-necklace">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</option>

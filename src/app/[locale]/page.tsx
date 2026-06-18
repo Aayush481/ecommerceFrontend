@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Sparkles, ShieldCheck, Heart } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { getDictionary } from '@/dictionaries';
 import { ProductCard } from '@/components/ProductCard';
 
@@ -142,25 +142,25 @@ const localMockProducts = [
     }
   },
   {
-    sku: 'JW-MOD-010',
+    sku: 'JW-ANK-010',
     price: 29.99,
-    category: 'jewelry-modern',
-    materials: ['Brass', 'Gold Plating'],
+    category: 'jewelry-anklets',
+    materials: ['Sterling Silver', 'Beads'],
     sizes: ['One Size'],
     images: [
-      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800'
     ],
     stock: 25,
     featured: false,
     it: {
-      name: 'Pendente Geometrico Moderno in Ottone',
-      description: 'Pendente geometrico contemporaneo in ottone con finitura spazzolata placcata oro. Design minimalista.',
-      tags: ['moderno', 'ottone', 'minimalista', 'gioielli']
+      name: 'Cavigliera Etnica in Argento Ossidato',
+      description: 'Elegante cavigliera regolabile con piccoli campanellini tradizionali indiani payal.',
+      tags: ['cavigliera', 'argento', 'etnico', 'gioielli']
     },
     en: {
-      name: 'Geometric Brass Modern Pendant',
-      description: 'Contemporary geometric brass pendant with a brushed gold-plated finish.',
-      tags: ['modern', 'brass', 'minimalist', 'jewelry']
+      name: 'Oxidized Silver Ethnic Anklet',
+      description: 'Elegant adjustable handcrafted anklet featuring tiny traditional chime bells.',
+      tags: ['anklet', 'silver', 'ethnic', 'jewelry']
     }
   },
   {
@@ -272,28 +272,6 @@ const localMockProducts = [
       description: 'Colorful handbag embellished with traditional mirror embroidery from Jaipur.',
       tags: ['bag', 'embroidery', 'mirror', 'accessories']
     }
-  },
-  {
-    sku: 'MAT-KHA-008',
-    price: 15.00,
-    category: 'handcraft-material',
-    materials: ['100% Handspun Khadi Cotton'],
-    sizes: ['1 Meter'],
-    images: [
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
-    ],
-    stock: 100,
-    featured: false,
-    it: {
-      name: 'Tessuto in Cotone Khadi Grezzo (al metro)',
-      description: 'Tessuto biologico filato e tessuto a mano in India. Perfetto per sarti e designer.',
-      tags: ['tessuto', 'khadi', 'cotone', 'artigianale']
-    },
-    en: {
-      name: 'Raw Khadi Cotton Fabric (per meter)',
-      description: 'Organic handspun and handwoven cotton fabric from India.',
-      tags: ['fabric', 'khadi', 'cotton', 'handcraft']
-    }
   }
 ];
 
@@ -372,12 +350,12 @@ export default async function HomePage({ params }: PageProps) {
       image: 'https://5.imimg.com/data5/SELLER/Default/2021/11/WX/SM/SG/27266304/dual-tone-set-party-wear-390--1000x1000.jpeg'
     },
     {
-      id: 'jewelry-modern',
-      title: dict.categories["jewelry-modern"] || 'Modern Jewelry',
+      id: 'jewelry-anklets',
+      title: dict.categories["jewelry-anklets"] || 'Anklets',
       desc: locale === 'it'
-        ? 'Anelli, ciondoli e gioielli dal design contemporaneo e minimalista.'
-        : 'Contemporary and minimalist design rings, pendants, and accessories.',
-      image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800'
+        ? 'Eleganti cavigliere artigianali impreziosite da perline e campanellini.'
+        : 'Elegant handcrafted anklets adorned with delicate beads and charms.',
+      image: '/anklets_category.png'
     },
     {
       id: 'jewelry-handcuffs',
@@ -418,14 +396,6 @@ export default async function HomePage({ params }: PageProps) {
         ? 'Pochette e borse realizzate con tessuti pregiati e ricami tradizionali.'
         : 'Clutches and bags crafted with premium fabrics and traditional embroidery.',
       image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800'
-    },
-    {
-      id: 'handcraft-material',
-      title: dict.categories["handcraft-material"] || 'Handcraft Material',
-      desc: locale === 'it'
-        ? 'Tessuti biologici in cotone Khadi filato a mano e matasse di seta indiana.'
-        : 'Organic handspun Khadi cotton fabrics and premium Varanasi silk skeins.',
-      image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
     }
   ];
 
@@ -638,50 +608,6 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 3. Curation Highlights */}
-      <section className="py-12 bg-[#FAF8F5] border-b border-[#232B28]/5">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div className="flex flex-col items-center gap-3">
-            <div className="p-3 bg-[#B35C37]/10 rounded-full text-[#B35C37]">
-              <Sparkles size={24} />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-[#232B28]">
-              {locale === 'it' ? 'Manifattura Pregiata' : 'Artisanal Weaving'}
-            </h3>
-            <p className="font-sans text-sm text-[#232B28]/70 leading-relaxed max-w-xs">
-              {locale === 'it'
-                ? 'Tessuti in seta e cotone selezionati a mano dai migliori artigiani di Jaipur e Varanasi.'
-                : 'Handpicked silk and cotton textiles sourced directly from top master weavers in Jaipur and Varanasi.'}
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-3">
-            <div className="p-3 bg-[#B35C37]/10 rounded-full text-[#B35C37]">
-              <ShieldCheck size={24} />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-[#232B28]">
-              {locale === 'it' ? 'Qualità Certificata' : 'Italian Fit & Quality'}
-            </h3>
-            <p className="font-sans text-sm text-[#232B28]/70 leading-relaxed max-w-xs">
-              {locale === 'it'
-                ? 'Tagli e taglie ottimizzati per garantire una vestibilità perfetta secondo gli standard italiani.'
-                : 'Cuts and sizes adjusted to ensure a flawless silhouette according to high Italian standards.'}
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-3">
-            <div className="p-3 bg-[#B35C37]/10 rounded-full text-[#B35C37]">
-              <Heart size={24} />
-            </div>
-            <h3 className="font-serif text-lg font-bold text-[#232B28]">
-              {locale === 'it' ? 'Ecosostenibile' : 'Sustainable Choice'}
-            </h3>
-            <p className="font-sans text-sm text-[#232B28]/70 leading-relaxed max-w-xs">
-              {locale === 'it'
-                ? 'Fibre naturali biologiche stampate con tinte vegetali prive di tossine nocive.'
-                : 'Organic natural fibers dyed using pure botanical elements, free of chemical toxins.'}
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* 4. Category Grid Section */}
       <section className="py-20 bg-[#FAF8F5]">
@@ -703,6 +629,7 @@ export default async function HomePage({ params }: PageProps) {
                   src={cat.image}
                   alt={cat.title}
                   fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#232B28]/95 via-[#232B28]/40 to-transparent"></div>
@@ -726,6 +653,7 @@ export default async function HomePage({ params }: PageProps) {
             src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=1200"
             alt="Fabric details"
             fill
+            sizes="100vw"
             className="object-cover object-center"
           />
         </div>
@@ -772,4 +700,4 @@ export default async function HomePage({ params }: PageProps) {
     </div>
   );
 }
-export const dynamic = 'force-dynamic';
+

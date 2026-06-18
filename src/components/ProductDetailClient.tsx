@@ -25,7 +25,7 @@ interface ProductDetailClientProps {
 }
 
 export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, locale, dict }) => {
-  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist, user, openAuthModal } = useStore();
   const [selectedSize, setSelectedSize] = useState(product.sizes[0] || 'One Size');
   const [activeImage, setActiveImage] = useState(product.images[0]);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
@@ -49,24 +49,44 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   };
 
   const handleAddToCart = () => {
-    addToCart({
-      id,
-      sku: product.sku,
-      name: details.name,
-      price: product.price,
-      image: product.images[0],
-      size: selectedSize,
-    });
+    const action = () => {
+      addToCart({
+        id,
+        sku: product.sku,
+        name: details.name,
+        price: product.price,
+        image: product.images[0],
+        size: selectedSize,
+      });
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const handleWhatsAppBuyNow = () => {
-    const productUrl = typeof window !== 'undefined' ? window.location.href : '';
-    const message = locale === 'it'
-      ? `Ciao Casa dei Regali! Vorrei acquistare ora: ${details.name} (SKU: ${product.sku}, Taglia: ${selectedSize}) al prezzo di €${product.price.toFixed(2)}.${productUrl ? ` Link del prodotto: ${productUrl}` : ''}`
-      : `Hello Casa dei Regali! I would like to buy now: ${details.name} (SKU: ${product.sku}, Size: ${selectedSize}) for €${product.price.toFixed(2)}.${productUrl ? ` Product Link: ${productUrl}` : ''}`;
-    
-    const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    const action = () => {
+      const productUrl = typeof window !== 'undefined' ? window.location.href : '';
+      const buyerInfo = locale === 'it'
+        ? `\n\nDettagli Spedizione:\n- Nome: ${user?.name}\n- Email: ${user?.email}\n- Tel: ${user?.phone}\n- Indirizzo: ${user?.address}`
+        : `\n\nShipping Details:\n- Name: ${user?.name}\n- Email: ${user?.email}\n- Phone: ${user?.phone}\n- Address: ${user?.address}`;
+
+      const message = locale === 'it'
+        ? `Ciao Casa dei Regali! Vorrei acquistare ora: ${details.name} (SKU: ${product.sku}, Taglia: ${selectedSize}) al prezzo di €${product.price.toFixed(2)}.${buyerInfo}${productUrl ? `\nLink del prodotto: ${productUrl}` : ''}`
+        : `Hello Casa dei Regali! I would like to buy now: ${details.name} (SKU: ${product.sku}, Size: ${selectedSize}) for €${product.price.toFixed(2)}.${buyerInfo}${productUrl ? `\nProduct Link: ${productUrl}` : ''}`;
+      
+      const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const sizeChartData = [

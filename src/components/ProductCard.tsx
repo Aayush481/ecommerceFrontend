@@ -25,7 +25,7 @@ export interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict }) => {
-  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist, user, openAuthModal } = useStore();
 
   const id = product._id || product.sku;
   const details = locale === 'it' ? product.it : product.en;
@@ -52,14 +52,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
     e.stopPropagation();
     // Default to the first size or 'One Size'
     const defaultSize = product.sizes && product.sizes.length > 0 ? product.sizes[0] : 'One Size';
-    addToCart({
-      id,
-      sku: product.sku,
-      name: details.name,
-      price: product.price,
-      image: product.images[0],
-      size: defaultSize,
-    });
+    
+    const action = () => {
+      addToCart({
+        id,
+        sku: product.sku,
+        name: details.name,
+        price: product.price,
+        image: product.images[0],
+        size: defaultSize,
+      });
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const categoryLabel = (dict.categories as any)[product.category] || product.category;
@@ -72,7 +81,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
           src={formatImageUrl(product.images[0])}
           alt={details.name}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
         />
 

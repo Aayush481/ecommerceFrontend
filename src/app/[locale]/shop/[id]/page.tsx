@@ -131,7 +131,7 @@ const localMockProducts = [
 async function fetchProduct(id: string) {
   try {
     const res = await fetch(getApiUrl(`/api/products/${id}`), {
-      next: { revalidate: 0 }
+      next: { revalidate: 60 } // cache for 60 seconds
     });
     if (res.ok) {
       return await res.json();
@@ -215,4 +215,4 @@ export default async function ProductPage({ params }: PageProps) {
     </>
   );
 }
-export const dynamic = 'force-dynamic';
+

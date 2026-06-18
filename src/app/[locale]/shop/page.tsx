@@ -150,25 +150,25 @@ const fallbackCatalog = [
     }
   },
   {
-    sku: 'JW-MOD-010',
+    sku: 'JW-ANK-010',
     price: 29.99,
-    category: 'jewelry-modern',
-    materials: ['Brass', 'Gold Plating'],
+    category: 'jewelry-anklets',
+    materials: ['Sterling Silver', 'Beads'],
     sizes: ['One Size'],
     images: [
-      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800'
     ],
     stock: 25,
     featured: false,
     it: {
-      name: 'Pendente Geometrico Moderno in Ottone',
-      description: 'Pendente geometrico contemporaneo in ottone con finitura spazzolata placcata oro. Design minimalista.',
-      tags: ['moderno', 'ottone', 'minimalista', 'gioielli']
+      name: 'Cavigliera Etnica in Argento Ossidato',
+      description: 'Elegante cavigliera regolabile con piccoli campanellini tradizionali indiani payal.',
+      tags: ['cavigliera', 'argento', 'etnico', 'gioielli']
     },
     en: {
-      name: 'Geometric Brass Modern Pendant',
-      description: 'Contemporary geometric brass pendant with a brushed gold-plated finish.',
-      tags: ['modern', 'brass', 'minimalist', 'jewelry']
+      name: 'Oxidized Silver Ethnic Anklet',
+      description: 'Elegant adjustable handcrafted anklet featuring tiny traditional chime bells.',
+      tags: ['anklet', 'silver', 'ethnic', 'jewelry']
     }
   },
   {
@@ -280,35 +280,13 @@ const fallbackCatalog = [
       description: 'Colorful handbag embellished with traditional mirror embroidery from Jaipur.',
       tags: ['bag', 'embroidery', 'mirror', 'accessories']
     }
-  },
-  {
-    sku: 'MAT-KHA-008',
-    price: 15.00,
-    category: 'handcraft-material',
-    materials: ['100% Handspun Khadi Cotton'],
-    sizes: ['1 Meter'],
-    images: [
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
-    ],
-    stock: 100,
-    featured: false,
-    it: {
-      name: 'Tessuto in Cotone Khadi Grezzo (al metro)',
-      description: 'Tessuto biologico filato e tessuto a mano in India. Perfetto per sarti e designer.',
-      tags: ['tessuto', 'khadi', 'cotone', 'artigianale']
-    },
-    en: {
-      name: 'Raw Khadi Cotton Fabric (per meter)',
-      description: 'Organic handspun and handwoven cotton fabric from India.',
-      tags: ['fabric', 'khadi', 'cotton', 'handcraft']
-    }
   }
 ];
 
 async function fetchProducts(queryParams: string) {
   try {
     const res = await fetch(getApiUrl(`/api/products?${queryParams}`), {
-      next: { revalidate: 0 } // dynamic catalog
+      next: { revalidate: 30 } // cache for 30 seconds
     });
     if (res.ok) {
       return await res.json();
@@ -456,4 +434,4 @@ export default async function ShopPage({ params, searchParams }: ShopPageProps) 
     </div>
   );
 }
-export const dynamic = 'force-dynamic';
+

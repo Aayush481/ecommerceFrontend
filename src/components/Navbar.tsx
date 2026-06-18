@@ -12,7 +12,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
-  const { cart, wishlist } = useStore();
+  const { cart, wishlist, user, openAuthModal, logoutUser } = useStore();
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -120,7 +120,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                         </span>
                         <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
                           <Link href={`/${locale}/shop?category=jewelry-oxidized`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</Link>
-                          <Link href={`/${locale}/shop?category=jewelry-modern`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</Link>
+                          <Link href={`/${locale}/shop?category=jewelry-anklets`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-anklets"] || "Anklets"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-handcuffs`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-bracelets`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-necklace`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</Link>
@@ -128,14 +128,13 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                         </div>
                       </div>
 
-                      {/* Column 3: Bags & Yarns */}
+                      {/* Column 3: Bags & Accessories */}
                       <div className="flex flex-col gap-3">
                         <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-[#232B28]/5 pb-1">
-                          {locale === 'it' ? 'Accessori & Tessuti' : 'Bags & Yarns'}
+                          {locale === 'it' ? 'Borse & Accessori' : 'Bags & Accessories'}
                         </span>
                         <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
                           <Link href={`/${locale}/shop?category=handbags`} className="hover:text-[#B35C37] transition-colors">{dict.categories.handbags}</Link>
-                          <Link href={`/${locale}/shop?category=handcraft-material`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</Link>
                         </div>
                       </div>
                     </div>
@@ -197,6 +196,29 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
               </span>
             )}
           </Link>
+
+          {user ? (
+            <div className="flex items-center gap-2 border-l border-[#232B28]/10 pl-3 md:pl-5">
+              <span className="hidden lg:inline text-xs font-semibold text-[#232B28]/70">
+                {user.name.split(' ')[0]}
+              </span>
+              <button
+                onClick={logoutUser}
+                className="px-3 py-1.5 text-[10px] uppercase font-bold text-red-500 hover:bg-red-50 rounded-lg border border-red-200 transition-colors cursor-pointer"
+                title="Logout"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => openAuthModal()}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-[#232B28]/20 hover:bg-[#232B28]/5 transition-colors cursor-pointer text-[#232B28]/80 hover:text-[#B35C37]"
+            >
+              <User size={13} />
+              <span className="hidden sm:inline">{locale === 'it' ? 'Accedi' : 'Login'}</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -228,15 +250,14 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
 
                       <span className="font-serif text-xs font-bold text-[#B35C37] uppercase tracking-wider mt-1">{locale === 'it' ? 'Gioielli' : 'Jewelry'}</span>
                       <Link href={`/${locale}/shop?category=jewelry-oxidized`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</Link>
-                      <Link href={`/${locale}/shop?category=jewelry-modern`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-modern"] || "Modern Jewelry"}</Link>
+                      <Link href={`/${locale}/shop?category=jewelry-anklets`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-anklets"] || "Anklets"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-handcuffs`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-bracelets`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-necklace`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-earrings`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</Link>
 
-                      <span className="font-serif text-xs font-bold text-[#B35C37] uppercase tracking-wider mt-1">{locale === 'it' ? 'Accessori & Artigianato' : 'Accessories & Yarns'}</span>
+                      <span className="font-serif text-xs font-bold text-[#B35C37] uppercase tracking-wider mt-1">{locale === 'it' ? 'Borse & Accessori' : 'Bags & Accessories'}</span>
                       <Link href={`/${locale}/shop?category=handbags`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{dict.categories.handbags}</Link>
-                      <Link href={`/${locale}/shop?category=handcraft-material`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["handcraft-material"] || "Handcraft Material"}</Link>
                     </div>
                   )}
                 </div>
@@ -254,6 +275,37 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
               </Link>
             );
           })}
+
+          {user ? (
+            <div className="flex flex-col gap-2 pt-4 border-t border-[#232B28]/5 mt-2">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#232B28]/85">
+                <User size={16} className="text-[#B35C37]" />
+                <span>{locale === 'it' ? `Ciao, ${user.name}` : `Hello, ${user.name}`}</span>
+              </div>
+              <p className="text-[10px] text-[#232B28]/50 italic -mt-1 leading-normal">{user.address}</p>
+              <button
+                onClick={() => {
+                  logoutUser();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full mt-2 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-red-500 bg-red-50 border border-red-200 rounded-xl cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="pt-4 border-t border-[#232B28]/5 mt-2">
+              <button
+                onClick={() => {
+                  openAuthModal();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full py-3 text-center text-xs font-bold uppercase tracking-wider text-white bg-[#B35C37] rounded-xl cursor-pointer"
+              >
+                {locale === 'it' ? 'Accedi / Registrati' : 'Login / Sign Up'}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </nav>

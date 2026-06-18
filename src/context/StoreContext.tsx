@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { AuthModal } from '../components/AuthModal';
 
 export interface CartItem {
   id: string;
@@ -20,6 +21,13 @@ export interface WishlistItem {
   image: string;
 }
 
+export interface User {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
 interface StoreContextType {
   cart: CartItem[];
   wishlist: WishlistItem[];
@@ -30,6 +38,9 @@ interface StoreContextType {
   addToWishlist: (item: WishlistItem) => void;
   removeFromWishlist: (id: string) => void;
   isInWishlist: (id: string) => boolean;
+  user: User | null;
+  openAuthModal: (onSuccess?: () => void) => void;
+  logoutUser: () => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -37,6 +48,9 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authSuccessCallback, setAuthSuccessCallback] = useState<(() => void) | null>(null);
   const [notification, setNotification] = useState<{
     show: boolean;
     name: string;
@@ -56,8 +70,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     const savedCart = localStorage.getItem('sita_seta_cart');
     const savedWishlist = localStorage.getItem('sita_seta_wishlist');
+    const savedUser = localStorage.getItem('sita_seta_user');
     if (savedCart) setCart(JSON.parse(savedCart));
     if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+    if (savedUser) setUser(JSON.parse(savedUser));
   }, []);
 
   // Sync state to localStorage
@@ -118,6 +134,27 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const isInWishlist = (id: string) => wishlist.some((i) => i.id === id);
 
+  const openAuthModal = (onSuccess?: () => void) => {
+    if (onSuccess) setAuthSuccessCallback(() => onSuccess);
+    else setAuthSuccessCallback(null);
+    setIsAuthModalOpen(true);
+  };
+
+  const logoutUser = () => {
+    localStorage.removeItem('sita_seta_user');
+    setUser(null);
+  };
+
+  const handleAuthSuccess = () => {
+    const savedUser = localStorage.getItem('sita_seta_user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+      if (authSuccessCallback) {
+        authSuccessCallback();
+      }
+    }
+  };
+
   const locale = typeof window !== 'undefined' ? (window.location.pathname.startsWith('/it') ? 'it' : 'en') : 'en';
 
   return (
@@ -132,9 +169,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         addToWishlist,
         removeFromWishlist,
         isInWishlist,
+        user,
+        openAuthModal,
+        logoutUser,
       }}
     >
       {children}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={handleAuthSuccess}
+        locale={locale as 'it' | 'en'}
+      />
       {notification && (
         <div className="fixed bottom-6 right-6 left-6 md:left-auto max-w-sm md:w-96 z-50 bg-white/95 backdrop-blur-md border border-[#232B28]/10 rounded-2xl p-4 shadow-xl flex gap-4 animate-in slide-in-from-bottom md:slide-in-from-right fade-in duration-300">
           <div className="relative w-16 h-20 rounded-lg overflow-hidden bg-stone-100 flex-shrink-0 border border-[#232B28]/5">

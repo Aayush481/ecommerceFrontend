@@ -11,14 +11,13 @@ interface FilterSidebarClientProps {
 }
 
 const categoriesList = [
-  'handcraft-material',
   'kurtis',
   'onepiece',
   'summer-dresses',
   'indo-western',
   'ethnic-indian',
   'jewelry-oxidized',
-  'jewelry-modern',
+  'jewelry-anklets',
   'jewelry-handcuffs',
   'jewelry-bracelets',
   'jewelry-necklace',
