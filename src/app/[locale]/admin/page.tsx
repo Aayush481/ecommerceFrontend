@@ -304,10 +304,10 @@ export default function AdminPage({ params }: AdminPageProps) {
       case 'onepiece': return 'OP';
       case 'summer-dresses': return 'SD';
       case 'indo-western': return 'IW';
-      case 'ethnic-indian': return 'ETH';
+
       case 'jewelry-oxidized': return 'JW-OXD';
       case 'jewelry-anklets': return 'JW-ANK';
-      case 'jewelry-handcuffs': return 'JW-HDC';
+
       case 'jewelry-bracelets': return 'JW-BRC';
       case 'jewelry-necklace': return 'JW-NEC';
       case 'jewelry-earrings': return 'JW-EAR';
@@ -387,21 +387,7 @@ export default function AdminPage({ params }: AdminPageProps) {
         en_description: 'Elegant one-piece maxi dress in organic linen, hand-dyed with authentic natural indigo. Flowing silhouette and side pockets for chic comfort.',
         en_tags: 'dress, linen, indigo, flowy',
       },
-      {
-        category: 'jewelry-handcuffs',
-        price: 34.99,
-        materials: 'Brass, Kundan Stones, Gold Plating',
-        sizes: 'Adjustable',
-        images: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800',
-        stock: 20,
-        featured: false,
-        it_name: 'Bracciale Rigido Kundan Placcato Oro',
-        it_description: 'Elegante bracciale rigido placcato oro impreziosito da pietre Kundan incastonate e dettagli dipinti a mano sul retro (Meenakari). Design regolabile.',
-        it_tags: 'bracciale, kundan, oro, gioielli',
-        en_name: 'Gold-Plated Kundan Cuff Bangle',
-        en_description: 'Elegant gold-plated open cuff bangle embellished with traditional Kundan stones and hand-painted details on the reverse (Meenakari). Adjustable design.',
-        en_tags: 'bracelet, bangle, kundan, gold, jewelry',
-      },
+
       {
         category: 'jewelry-anklets',
         price: 29.99,
@@ -794,10 +780,8 @@ export default function AdminPage({ params }: AdminPageProps) {
                   <option value="onepiece">{dict.categories.onepiece}</option>
                   <option value="summer-dresses">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</option>
                   <option value="indo-western">{(dict.categories as any)["indo-western"] || "Indo-Western"}</option>
-                  <option value="ethnic-indian">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</option>
                   <option value="jewelry-oxidized">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</option>
                   <option value="jewelry-anklets">{(dict.categories as any)["jewelry-anklets"] || "Anklets"}</option>
-                  <option value="jewelry-handcuffs">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs & Bangles"}</option>
                   <option value="jewelry-bracelets">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</option>
                   <option value="jewelry-necklace">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</option>
                   <option value="jewelry-earrings">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</option>

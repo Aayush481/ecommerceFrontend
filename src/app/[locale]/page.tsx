@@ -97,28 +97,7 @@ const localMockProducts = [
       tags: ['cotton', 'khadi', 'fusion', 'indo-western']
     }
   },
-  {
-    sku: 'ETH-BAN-009',
-    price: 149.99,
-    category: 'ethnic-indian',
-    materials: ['Banarasi Silk', 'Zari Border'],
-    sizes: ['M', 'L', 'XL'],
-    images: [
-      'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&q=80&w=800'
-    ],
-    stock: 8,
-    featured: true,
-    it: {
-      name: 'Lehenga Reale in Seta Banarasi',
-      description: 'Uno splendido completo Lehenga tradizionale ricavato da autentica seta Banarasi, ornato da ricami in vero filo d\'oro (Zari).',
-      tags: ['seta', 'banarasi', 'lehenga', 'etnico']
-    },
-    en: {
-      name: 'Royal Banarasi Lehenga Set',
-      description: 'A gorgeous traditional Lehenga set crafted from authentic Banarasi silk, adorned with real gold thread (Zari) borders.',
-      tags: ['silk', 'banarasi', 'lehenga', 'ethnic']
-    }
-  },
+
   {
     sku: 'JW-OXD-005',
     price: 34.99,
@@ -163,28 +142,7 @@ const localMockProducts = [
       tags: ['anklet', 'silver', 'ethnic', 'jewelry']
     }
   },
-  {
-    sku: 'JW-HDC-011',
-    price: 39.99,
-    category: 'jewelry-handcuffs',
-    materials: ['Brass', 'Kundan Stones'],
-    sizes: ['One Size'],
-    images: [
-      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'
-    ],
-    stock: 15,
-    featured: false,
-    it: {
-      name: 'Bracciale Rigido Kundan Handcuff',
-      description: 'Bracciale rigido tipo cuff impreziosito da tradizionali pietre Kundan incastonate a mano.',
-      tags: ['bracciale', 'rigido', 'kundan', 'gioielli']
-    },
-    en: {
-      name: 'Kundan Cuff Handcuff Bracelet',
-      description: 'Traditional Kundan cuff bracelet adorned with hand-set glass stones.',
-      tags: ['bracelet', 'cuff', 'kundan', 'jewelry']
-    }
-  },
+
   {
     sku: 'JW-BRC-012',
     price: 19.99,
@@ -333,14 +291,7 @@ export default async function HomePage({ params }: PageProps) {
         : 'Asymmetrical modern cuts and silhouettes inspired by Eastern fusion fashion.',
       image: 'https://i.pinimg.com/736x/9f/24/cb/9f24cb58beb1a2db9a45ff85f88c45a2.jpg'
     },
-    {
-      id: 'ethnic-indian',
-      title: dict.categories["ethnic-indian"] || 'Ethnic & Indian',
-      desc: locale === 'it'
-        ? 'Capi tradizionali indiani d\'effetto per cerimonie ed occasioni speciali.'
-        : 'Statement traditional Indian wear for ceremonies and special occasions.',
-      image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&q=80&w=800'
-    },
+
     {
       id: 'jewelry-oxidized',
       title: dict.categories["jewelry-oxidized"] || 'Oxidized Jewelry',
@@ -357,14 +308,7 @@ export default async function HomePage({ params }: PageProps) {
         : 'Elegant handcrafted anklets adorned with delicate beads and charms.',
       image: '/anklets_category.png'
     },
-    {
-      id: 'jewelry-handcuffs',
-      title: dict.categories["jewelry-handcuffs"] || 'Handcuffs',
-      desc: locale === 'it'
-        ? 'Bracciali rigidi e tradizionali bangles indiani finemente decorati.'
-        : 'Cuff bracelets and finely decorated traditional Indian bangles.',
-      image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800'
-    },
+
     {
       id: 'jewelry-bracelets',
       title: dict.categories["jewelry-bracelets"] || 'Bracelets',

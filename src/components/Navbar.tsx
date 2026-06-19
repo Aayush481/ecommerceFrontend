@@ -109,7 +109,6 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                           <Link href={`/${locale}/shop?category=onepiece`} className="hover:text-[#B35C37] transition-colors">{dict.categories.onepiece}</Link>
                           <Link href={`/${locale}/shop?category=summer-dresses`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</Link>
                           <Link href={`/${locale}/shop?category=indo-western`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["indo-western"] || "Indo-Western"}</Link>
-                          <Link href={`/${locale}/shop?category=ethnic-indian`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</Link>
                         </div>
                       </div>
 
@@ -121,7 +120,6 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                         <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
                           <Link href={`/${locale}/shop?category=jewelry-oxidized`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-anklets`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-anklets"] || "Anklets"}</Link>
-                          <Link href={`/${locale}/shop?category=jewelry-handcuffs`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-bracelets`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-necklace`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-earrings`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</Link>
@@ -246,12 +244,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                       <Link href={`/${locale}/shop?category=onepiece`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{dict.categories.onepiece}</Link>
                       <Link href={`/${locale}/shop?category=summer-dresses`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</Link>
                       <Link href={`/${locale}/shop?category=indo-western`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["indo-western"] || "Indo-Western"}</Link>
-                      <Link href={`/${locale}/shop?category=ethnic-indian`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["ethnic-indian"] || "Ethnic & Indian"}</Link>
 
                       <span className="font-serif text-xs font-bold text-[#B35C37] uppercase tracking-wider mt-1">{locale === 'it' ? 'Gioielli' : 'Jewelry'}</span>
                       <Link href={`/${locale}/shop?category=jewelry-oxidized`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-anklets`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-anklets"] || "Anklets"}</Link>
-                      <Link href={`/${locale}/shop?category=jewelry-handcuffs`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-handcuffs"] || "Handcuffs"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-bracelets`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-necklace`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-necklace"] || "Necklaces"}</Link>
                       <Link href={`/${locale}/shop?category=jewelry-earrings`} onClick={() => setMobileMenuOpen(false)} className="pl-2">{(dict.categories as any)["jewelry-earrings"] || "Earrings"}</Link>

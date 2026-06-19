@@ -15,10 +15,10 @@ const categoriesList = [
   'onepiece',
   'summer-dresses',
   'indo-western',
-  'ethnic-indian',
+
   'jewelry-oxidized',
   'jewelry-anklets',
-  'jewelry-handcuffs',
+
   'jewelry-bracelets',
   'jewelry-necklace',
   'jewelry-earrings',
