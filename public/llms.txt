@@ -1,0 +1,49 @@
+# Casa dei Regali E-commerce
+
+An exclusive fusion of fine Indian craftsmanship and contemporary silhouette. Fusing ethnic Indian elegance with Italian geometric minimalism. This store services customer orders in Italy (from Vicenza/Milano) and provides a luxury catalog of clothing, jewelry, and handbags.
+
+## Client Navigation Routes
+All paths are prefixed with `/[locale]` where locale is `it` (default) or `en`.
+
+- `/` - Landing homepage. Shows campaign banners, circular category nav, and featured catalog items.
+- `/shop` - Dynamic catalog search and filter screen.
+- `/shop/:id` - Product details page. Includes size guides, materials list, and image display.
+- `/cart` - Order items overview and checkout form submission.
+- `/wishlist` - Client list of saved products.
+- `/contact` - Customer support inquiries form.
+- `/admin` - Management dashboard login and workspace.
+
+## Admin Management Panel
+Available inside the `/admin` route after authenticating with Owner Credentials.
+
+- **Catalog Manager** - Add new items, upload images, regenerate SKUs, edit detailed descriptions (Italian / English), adjust price and stock count.
+- **Orders Manager** - Track buyer emails, totals, ordered item grids, and dynamically update processing status or cancel orders.
+- **Inquiries Panel** - View received contact requests and newsletter subscribers.
+- **Owner Profile** - Edit visible admin card info (name, bio, avatar) and update security login email/password.
+
+## Core API Endpoints
+
+### Catalog Products
+- `GET /api/products` - Returns a JSON array of all available products.
+  - Supports query filters: `category` (e.g. `kurtis`, `onepiece`, `summer-dresses`, `jewelry-oxidized`, `handbags`), `search` (keyword in tags, SKU, title), `minPrice`, `maxPrice`, and `sort` (`price_asc`, `price_desc`, `newest`).
+- `GET /api/products/:sku` - Returns detail details for a specific item.
+- `POST /api/products` - Creates a catalog product (Admin Only).
+- `PUT /api/products/:sku` - Updates product specifications (Admin Only).
+- `DELETE /api/products/:sku` - Removes a product from the database (Admin Only).
+
+### Orders
+- `POST /api/orders` - Submits a customer cart order. Saves payload to database and sends notification email.
+- `GET /api/orders` - Fetches all placed orders (Admin Only).
+- `PUT /api/orders/:id/status` - Updates processing status (Admin Only).
+- `DELETE /api/orders/:id` - Deletes/archives an order (Admin Only).
+
+### Inquiries & Support
+- `POST /api/contact` - Submits contact messages. Saves details and dispatches query email.
+- `POST /api/newsletter` - Registers user email for newsletter subscriptions.
+- `GET /api/inquiries` - Fetches contact inbox submissions (Admin Only).
+
+### Admin Settings
+- `POST /api/admin/login` - Authenticates admin login email and password.
+- `GET /api/admin/profile` - Fetches the owner profile metadata card.
+- `PUT /api/admin/profile` - Updates the owner name, bio, and avatar.
+- `PUT /api/admin/credentials` - Resets login email and password.

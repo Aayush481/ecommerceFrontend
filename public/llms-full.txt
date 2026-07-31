@@ -1,0 +1,117 @@
+# Casa dei Regali E-commerce - Complete API Schemas & Data Structures
+
+Exposing structural definitions, JSON payloads, and interface schemas for automated AI/LLM agents.
+
+---
+
+## 1. Mongoose Database Schemas
+
+### Product Schema
+```typescript
+interface ILocalizedDetails {
+  name: string;
+  description: string;
+  tags: string[];
+}
+
+interface IProduct {
+  sku: string;         // Unique identifier (e.g. "KUR-VAR-001")
+  price: number;
+  category: string;    // e.g. "kurtis", "onepiece", "summer-dresses", "handbags", etc.
+  materials: string[];
+  sizes: string[];     // Available sizes (e.g. ["S", "M", "L"])
+  images: string[];    // Array of image URLs
+  stock: number;
+  featured: boolean;   // Displays on home page if true
+  it: ILocalizedDetails; // Italian translations
+  en: ILocalizedDetails; // English translations
+}
+```
+
+### Order Schema
+```typescript
+interface IOrderItem {
+  id: string;
+  sku: string;
+  name: string;
+  price: number;
+  image: string;
+  size: string;
+  quantity: number;
+}
+
+interface IOrder {
+  email: string;
+  items: IOrderItem[];
+  total: number;
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  createdAt?: string;
+  updatedAt?: string;
+}
+```
+
+### Inquiry Schema
+```typescript
+interface IInquiry {
+  type: 'newsletter' | 'contact';
+  email: string;
+  name?: string;
+  subject?: string;
+  message?: string;
+  createdAt?: string;
+}
+```
+
+---
+
+## 2. API Request & Response Contracts
+
+### Create Order (`POST /api/orders`)
+- **Request Headers**: `Content-Type: application/json`
+- **Request Body**:
+  ```json
+  {
+    "email": "buyer@example.com",
+    "items": [
+      {
+        "id": "prod-12345",
+        "sku": "KUR-VAR-001",
+        "name": "Varanasi Silk Ethnic Kurti",
+        "price": 89.99,
+        "image": "https://example.com/uploads/img.jpg",
+        "size": "M",
+        "quantity": 1
+      }
+    ],
+    "total": 89.99
+  }
+  ```
+- **Response (201 Created)**: Returns the saved Order object including `_id`, `status` (defaults to `"pending"`), and timestamps.
+
+### Submit Inquiry (`POST /api/contact`)
+- **Request Body**:
+  ```json
+  {
+    "name": "Maria Rossi",
+    "email": "maria@example.com",
+    "subject": "Size Inquiry",
+    "message": "Is size S standard fit?"
+  }
+  ```
+- **Response (201 Created)**: Returns the saved Inquiry object.
+
+### Newsletter Subscription (`POST /api/newsletter`)
+- **Request Body**:
+  ```json
+  {
+    "email": "reader@example.com"
+  }
+  ```
+- **Response (201 Created)**: Returns subscription info or `200 OK` if already subscribed.
+
+---
+
+## 3. SEO Metadata & Localization Configuration
+- Path mappings: Next.js routing uses localized segments `/[locale]` (`it` or `en`).
+- Structured Data: Every product detail page injects JSON-LD script `application/ld+json` containing Schema.org `@type: Product`.
+- Homepage injects JSON-LD Schema.org `@type: OnlineStore` details.

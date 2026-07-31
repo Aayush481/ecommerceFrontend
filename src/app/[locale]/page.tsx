@@ -4,6 +4,11 @@ import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { getDictionary } from '@/dictionaries';
 import { ProductCard } from '@/components/ProductCard';
+import { TiltCard } from '@/components/TiltCard';
+import { FloatingParticles } from '@/components/FloatingParticles';
+import { ScrollParallax } from '@/components/ScrollParallax';
+import { ThreeCanvas } from '@/components/ThreeCanvas';
+import { ScrollReveal, StaggerContainer, StaggerChild, FloatingMesh } from '@/components/MotionWrapper';
 
 import { getApiUrl } from '@/utils/api';
 
@@ -265,7 +270,8 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it'
         ? 'Tuniche etniche tradizionali in seta fine e ricami indiani fatti a mano.'
         : 'Traditional ethnic tunics in fine silk and hand-made Indian embroidery.',
-      image: 'https://i.pinimg.com/originals/7e/78/13/7e78132ea4987ccee3ad2261b8470634.jpg'
+      image: 'https://i.pinimg.com/originals/7e/78/13/7e78132ea4987ccee3ad2261b8470634.jpg',
+      badge: 'BEST'
     },
     {
       id: 'onepiece',
@@ -273,7 +279,8 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it'
         ? 'Eleganti abiti interi che fondono design contemporaneo ed elementi etnici.'
         : 'Elegant one-piece dresses fusing contemporary design and ethnic elements.',
-      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=800',
+      badge: 'NEW'
     },
     {
       id: 'summer-dresses',
@@ -291,14 +298,14 @@ export default async function HomePage({ params }: PageProps) {
         : 'Asymmetrical modern cuts and silhouettes inspired by Eastern fusion fashion.',
       image: 'https://i.pinimg.com/736x/9f/24/cb/9f24cb58beb1a2db9a45ff85f88c45a2.jpg'
     },
-
     {
       id: 'jewelry-oxidized',
       title: dict.categories["jewelry-oxidized"] || 'Oxidized Jewelry',
       desc: locale === 'it'
         ? 'Bijoux d\'effetto in argento ossidato, girocolli mandala e orecchini jhumka.'
         : 'Statement antique oxidized silver bijoux, mandala chokers, and jhumka earrings.',
-      image: 'https://5.imimg.com/data5/SELLER/Default/2021/11/WX/SM/SG/27266304/dual-tone-set-party-wear-390--1000x1000.jpeg'
+      image: 'https://5.imimg.com/data5/SELLER/Default/2021/11/WX/SM/SG/27266304/dual-tone-set-party-wear-390--1000x1000.jpeg',
+      badge: 'HOT'
     },
     {
       id: 'jewelry-anklets',
@@ -308,7 +315,6 @@ export default async function HomePage({ params }: PageProps) {
         : 'Elegant handcrafted anklets adorned with delicate beads and charms.',
       image: '/anklets_category.png'
     },
-
     {
       id: 'jewelry-bracelets',
       title: dict.categories["jewelry-bracelets"] || 'Bracelets',
@@ -331,7 +337,8 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it'
         ? 'Orecchini pendenti tradizionali Jhumka e orecchini a perno moderni.'
         : 'Traditional hanging Jhumka earrings and modern stud earrings.',
-      image: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&q=80&w=800',
+      badge: 'HOT'
     },
     {
       id: 'handbags',
@@ -339,260 +346,303 @@ export default async function HomePage({ params }: PageProps) {
       desc: locale === 'it'
         ? 'Pochette e borse realizzate con tessuti pregiati e ricami tradizionali.'
         : 'Clutches and bags crafted with premium fabrics and traditional embroidery.',
-      image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800'
+      image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800',
+      badge: 'NEW'
     }
   ];
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'OnlineStore',
+    name: 'Casa dei Regali',
+    url: 'https://casadeiregali.it',
+    logo: 'https://casadeiregali.it/indo_italian_hero.png',
+    description: dict.hero.subtitle,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Vicenza',
+      addressCountry: 'IT'
+    },
+    sameAs: [
+      'https://www.facebook.com/casadairegali',
+      'https://www.instagram.com/casadeiregali'
+    ]
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="flex flex-col min-h-screen overflow-x-hidden w-full">
 
-      {/* 1. Hero Section - Premium Editorial Full-Bleed Layout */}
-      <section className="relative min-h-[75vh] lg:min-h-[85vh] py-12 lg:py-20 flex items-center bg-[#232B28] overflow-hidden border-b border-[#B35C37]/10">
+      {/* 1. Hero Section - Premium 3D Editorial Layout */}
+      <section className="relative min-h-[90vh] py-16 flex items-center overflow-hidden border-b border-[#B35C37]/10 bg-[#0A0D0B]">
+        {/* Background elements */}
+        <FloatingParticles />
+        <ThreeCanvas />
+        
+        {/* Huge Luxury Title Overlay in background with horizontal scroll parallax */}
+        <ScrollParallax speed={-0.2} direction="left" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none select-none">
+          <div className="text-center font-serif text-[8vw] md:text-[12vw] font-black uppercase text-white/[0.02] tracking-[0.25em] leading-none whitespace-nowrap">
+            CASA REGALI
+          </div>
+        </ScrollParallax>
 
-        {/* Full-bleed Campaign Background Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/indo_italian_hero.png"
-            alt="Casa dei Regali - Indo-Italian Fusion Campaign"
-            fill
-            priority
-            unoptimized
-            className="object-cover object-center lg:object-[80%_center] opacity-35 lg:opacity-45 scale-100 transition-all duration-1000"
-          />
-          {/* Elegant dark gradient vignettes to ensure readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#232B28] via-[#232B28]/60 to-[#232B28]/85 lg:bg-gradient-to-r lg:from-[#232B28] lg:via-[#232B28]/70 lg:to-transparent"></div>
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-between">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
-            {/* Left Content Column */}
-            <div className="lg:col-span-7 flex flex-col gap-5 md:gap-7 text-left">
-              {/* Luxury Badge Tag */}
-              <div className="flex items-center gap-3">
-                <span className="h-[1px] w-8 bg-[#E5A93B]/60"></span>
-                <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-[#E5A93B] font-sans">
-                  {locale === 'it' ? 'CASA DEI REGALI • VICENZA' : 'CASA DEI REGALI • VICENZA '}
-                </span>
-              </div>
-
-              {/* Headline - Playfair Display serif font */}
-              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#FAF8F5] leading-[1.15] font-light tracking-wide">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10">
+          
+          {/* Hero Content Column (Left, 6 columns) */}
+          <StaggerContainer className="lg:col-span-6 flex flex-col gap-6 text-white text-left">
+            <StaggerChild>
+              <span className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-[#D4AF37] uppercase bg-[#B35C37]/15 px-4 py-1.5 rounded-full border border-[#B35C37]/25 w-max">
+                {locale === 'it' ? 'Edizione Limitata 2026' : 'Limited 2026 Lookbook'}
+              </span>
+            </StaggerChild>
+            
+            <StaggerChild>
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white mt-2 uppercase">
                 {locale === 'it' ? (
                   <>
-                    L&apos;Eleganza <span className="font-serif italic text-[#E5A93B] font-normal">Etnica</span>,
-                    <br />Il Minimalismo <span className="font-serif italic text-[#E5A93B] font-normal">Italiano</span>
+                    Design <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B35C37] via-[#E5A93B] to-[#D4AF37] italic font-light">Italiano</span>,<br />Anima <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B35C37]">Indiana</span>
                   </>
                 ) : (
                   <>
-                    Ethnic <span className="font-serif italic text-[#E5A93B] font-normal">Elegance</span>,
-                    <br />Italian <span className="font-serif italic text-[#E5A93B] font-normal">Minimalism</span>
+                    Italian <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B35C37] via-[#E5A93B] to-[#D4AF37] italic font-light">Minimalism</span>,<br />Indian <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B35C37]">Soul</span>
                   </>
                 )}
               </h1>
-
-              {/* Subtitle */}
-              <p className="font-sans text-xs sm:text-sm md:text-base text-[#FAF8F5]/80 max-w-lg leading-relaxed font-light">
+            </StaggerChild>
+            
+            <StaggerChild>
+              <p className="font-sans text-xs sm:text-sm lg:text-base text-stone-300/80 leading-relaxed tracking-wide font-light max-w-[500px]">
                 {dict.hero.subtitle}
               </p>
-
-              {/* Premium Call to Actions */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-1">
-                <Link
-                  href={`/${locale}/shop`}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3.5 bg-[#B35C37] hover:bg-[#9E4B28] text-white font-sans font-semibold text-[11px] sm:text-xs tracking-widest uppercase rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:translate-y-[-1px] active:translate-y-[1px] cursor-pointer group"
-                >
-                  <span>{dict.hero.cta}</span>
-                  <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-
-                <a
-                  href="https://wa.me/393898373685"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3.5 border border-white/20 hover:border-white text-white font-sans font-semibold text-[11px] sm:text-xs tracking-widest uppercase rounded-lg transition-all duration-300 hover:bg-white/5 cursor-pointer"
-                >
-                  <svg className="w-3.5 h-3.5 fill-current text-[#25D366]" viewBox="0 0 24 24">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z" />
-                  </svg>
-                  <span>{locale === 'it' ? 'Chiedi su WhatsApp' : 'WhatsApp Inquiry'}</span>
-                </a>
-              </div>
-
-              {/* Fine Jewelry Floating Accent Card */}
-              <div className="flex items-center gap-4 p-3.5 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 max-w-sm mt-3 shadow-xs hover:shadow-md transition-all duration-300">
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-[#E5A93B]/20 bg-stone-900">
-                  <Image
-                    src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&q=80&w=200"
-                    alt="Luxury Jhumka Earring Accent"
-                    fill
-                    sizes="48px"
-                    unoptimized
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="font-serif italic text-xs text-[#E5A93B] tracking-wider uppercase">
-                    {locale === 'it' ? 'Gioielleria Artigianale' : 'Handcrafted Jewelry'}
-                  </p>
-                  <p className="font-sans text-[11px] text-[#FAF8F5]/70 leading-normal mt-0.5">
-                    {locale === 'it'
-                      ? 'Orecchini Jhumka in filigrana d\'oro e argento ossidato antico.'
-                      : 'Traditional Jhumka earrings in gold filigree and antique oxidized silver.'}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Campaign Image Column - Invisible on mobile but beautiful editorial layout on desktop */}
-            <div className="hidden lg:flex lg:col-span-5 flex-col items-center justify-center relative">
-              <div className="relative w-full max-w-[340px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl group bg-[#232B28]">
-                {/* Dual Editorial Frame Borders */}
-                <div className="absolute inset-2 border border-[#E5A93B]/30 rounded-xl z-20 pointer-events-none group-hover:inset-3 transition-all duration-500"></div>
-                <div className="absolute inset-3.5 border border-white/10 rounded-lg z-20 pointer-events-none group-hover:inset-4.5 transition-all duration-500"></div>
-
-                <Image
-                  src="/indo_italian_hero.png"
-                  alt="Casa dei Regali - Indo-Italian Fusion Campaign"
-                  fill
-                  priority
-                  unoptimized
-                  className="object-cover transition-transform duration-[2000ms] group-hover:scale-103"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#232B28]/30 via-transparent to-transparent z-10"></div>
-              </div>
-              <span className="font-serif italic text-[10px] text-[#FAF8F5]/50 mt-3.5 tracking-[0.2em] uppercase">
-                {locale === 'it' ? 'Collezione Seta & Oro • Vicenza / Jaipur' : 'Silk & Gold Collection • Vicenza / Jaipur'}
-              </span>
-            </div>
-
-          </div>
-
-          {/* Social Links Ribbon bar */}
-          <div className="w-full mt-6 lg:mt-12 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#FAF8F5]/50">
-              <span>{locale === 'it' ? 'I Nostri Canali Diretti:' : 'Our Direct Channels:'}</span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-10">
-              <a
-                href="https://www.facebook.com/casadairegali"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#FAF8F5]/70 hover:text-[#E5A93B] transition-all duration-300 font-sans text-xs"
+            </StaggerChild>
+            
+            <StaggerChild className="flex flex-wrap items-center gap-6 mt-2">
+              <Link
+                href={`/${locale}/shop`}
+                className="px-8 py-4 bg-gradient-to-r from-[#B35C37] to-[#B35C37]/80 hover:from-[#D4AF37] hover:to-[#E5A93B] text-white hover:text-[#0A0D0B] font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all duration-500 cursor-pointer shadow-lg hover:shadow-[#D4AF37]/25 hover:shadow-2xl active:scale-[0.98]"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" />
-                </svg>
-                <span className="font-medium hidden md:inline">
-                  {locale === 'it' ? 'Seguici su Facebook' : 'Follow us on Facebook'}
-                </span>
-              </a>
-
-              <a
-                href="https://www.instagram.com/casadeiregali"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#FAF8F5]/70 hover:text-[#E5A93B] transition-all duration-300 font-sans text-xs"
+                {dict.hero.cta}
+              </Link>
+              
+              <Link
+                href={`/${locale}/contact`}
+                className="text-xs font-sans font-bold tracking-widest uppercase text-stone-300 hover:text-[#D4AF37] transition-colors flex items-center gap-2 group cursor-pointer"
               >
-                <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                </svg>
-                <span className="font-medium hidden md:inline">
-                  {locale === 'it' ? 'Seguici su Instagram' : 'Follow us on Instagram'}
-                </span>
-              </a>
+                <span>{locale === 'it' ? 'Contattaci' : 'Contact Us'}</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform" />
+              </Link>
+            </StaggerChild>
+          </StaggerContainer>
+          
+          {/* Hero 3D Deck Column (Right, 6 columns) */}
+          <div className="lg:col-span-6 flex justify-center items-center relative min-h-[340px] xs:min-h-[460px] sm:min-h-[520px] w-full animate-in fade-in zoom-in-95 duration-1000 delay-150 transform-style-3d">
+            
+            {/* Golden light orb background helper */}
+            <div className="absolute w-72 h-72 rounded-full bg-[#D4AF37]/10 blur-[100px] z-0 animate-pulse pointer-events-none" />
 
-              <a
-                href="https://wa.me/393898373685"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#FAF8F5]/70 hover:text-[#25D366] transition-all duration-300 font-sans text-xs"
-              >
-                <svg className="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.988 3.3 1.487 5.366 1.488 5.4 0 9.794-4.393 9.798-9.793.002-2.616-1.015-5.074-2.864-6.925-1.85-1.85-4.307-2.868-6.924-2.869-5.399 0-9.795 4.393-9.799 9.794-.001 2.155.561 4.162 1.63 5.92L2.73 21.28l4.917-1.289zm10.741-6.953c-.3-.15-1.776-.875-2.049-.974-.273-.1-.472-.15-.672.15-.2.3-.772.974-.947 1.173-.174.2-.35.225-.65.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.488-1.777-1.663-2.077-.174-.3-.018-.463.13-.61.134-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.672-1.62-.92-2.206-.24-.58-.51-.5-.672-.51-.156-.008-.336-.01-.516-.01-.18 0-.472.068-.72.336-.247.269-.943.924-.943 2.252s.967 2.61 1.101 2.793c.134.183 1.902 2.906 4.609 4.074.645.278 1.148.445 1.54.57.649.206 1.24.177 1.707.107.521-.078 1.776-.726 2.025-1.426.25-.7.25-1.299.175-1.425-.076-.125-.275-.2-.575-.35z" />
-                </svg>
-                <span className="font-medium hidden md:inline">
-                  {locale === 'it' ? 'Contattaci su WhatsApp' : 'Contact us on WhatsApp'}
-                </span>
-              </a>
+            {/* Tilt container wrapping the cards deck */}
+            <div className="w-full max-w-[190px] xs:max-w-[270px] sm:max-w-[340px] md:max-w-[360px] relative z-10 transform-style-3d">
+              
+              <ScrollParallax speed={-0.08} direction="down">
+                <TiltCard className="clay-premium p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 relative overflow-visible hover:border-[#D4AF37]/45 transition-colors">
+                  
+                  {/* Parallax Layer 1: Varanasi Silk Card */}
+                  <div 
+                    className="aspect-4/3 w-full rounded-2xl overflow-hidden bg-stone-900 border border-white/5 relative transform-style-3d shadow-lg"
+                    style={{ transform: 'translateZ(20px)' }}
+                  >
+                    <Image
+                      src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800"
+                      alt="Terra Fusion Blazer"
+                      fill
+                      priority
+                      sizes="50vw"
+                      className="object-cover transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D0B]/80 via-transparent to-transparent" />
+                    <span 
+                      className="absolute top-3 left-3 clay-premium-light text-white font-bold text-[8px] sm:text-[9px] tracking-widest uppercase px-2.5 py-0.5 sm:px-3.5 sm:py-1 z-10"
+                      style={{ transform: 'translateZ(10px)' }}
+                    >
+                      Trending Look
+                    </span>
+                  </div>
+
+                  {/* Parallax Layer 2: Main Text Info */}
+                  <div className="flex flex-col text-left transform-style-3d mt-1 sm:mt-2" style={{ transform: 'translateZ(30px)' }}>
+                    <span className="text-[8px] sm:text-[10px] font-sans font-bold tracking-widest text-[#B35C37] uppercase">Indo-Western Fusion</span>
+                    <h3 className="font-serif text-base sm:text-2xl font-bold text-white mt-0.5 sm:mt-1 leading-tight">Terra Fusion Blazer</h3>
+                    <p className="font-sans text-[10px] sm:text-[12px] text-stone-300/80 mt-1 leading-relaxed">Asymmetrical modern Western blazer tailored with handcrafted Zardozi accents.</p>
+                    
+                    <div 
+                      className="flex items-center justify-between mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10 transform-style-3d"
+                      style={{ transform: 'translateZ(10px)' }}
+                    >
+                      <span className="font-serif text-base sm:text-lg font-bold text-[#D4AF37] glow-text-gold">€124.99</span>
+                      <Link 
+                        href={`/${locale}/shop/IWE-TER-001`} 
+                        className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 border border-white/10 hover:bg-[#D4AF37] hover:text-[#0A0D0B] rounded-xl text-[8px] sm:text-[10px] font-sans font-bold uppercase tracking-wider text-white transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-md hover:scale-105"
+                      >
+                        View Piece <ArrowRight size={8} />
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Parallax Layer 3: Overlapping Decorative Jewelry Card (Bottom Left Shift) */}
+                  <FloatingMesh duration={7} yRange={15} className="absolute -bottom-6 -left-4 xs:-bottom-10 xs:-left-8 sm:-bottom-12 sm:-left-12 z-20">
+                    <ScrollParallax speed={-0.15} direction="up">
+                      <div 
+                        className="w-20 xs:w-28 sm:w-44 clay-premium p-2 sm:p-3 flex flex-col gap-1.5 sm:gap-2 hover:border-[#D4AF37]/50 transition-colors cursor-pointer"
+                        style={{ transform: 'translateZ(60px)' }}
+                      >
+                        <div className="aspect-square w-full rounded-lg overflow-hidden bg-stone-900 relative">
+                          <Image
+                            src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=400"
+                            alt="Boho Choker"
+                            fill
+                            sizes="20vw"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex flex-col text-left">
+                          <span className="text-[7px] sm:text-[8px] font-bold text-[#D4AF37] tracking-wider uppercase font-sans">Boho Jewelry</span>
+                          <span className="font-serif text-[9px] sm:text-[11px] font-bold text-white truncate">Mandala Choker</span>
+                          <span className="font-serif text-[8px] sm:text-[10px] text-[#B35C37] font-semibold mt-0.5">€34.99</span>
+                        </div>
+                      </div>
+                    </ScrollParallax>
+                  </FloatingMesh>
+
+                  {/* Parallax Layer 4: Overlapping Decorative Handbag Card (Top Right Shift) */}
+                  <FloatingMesh duration={8} yRange={-12} className="absolute -top-6 -right-4 xs:-top-10 xs:-right-8 sm:-top-12 sm:-right-12 z-20">
+                    <ScrollParallax speed={0.12} direction="up">
+                      <div 
+                        className="w-20 xs:w-28 sm:w-44 clay-premium p-2 sm:p-3 flex flex-col gap-1.5 sm:gap-2 hover:border-[#D4AF37]/50 transition-colors cursor-pointer"
+                        style={{ transform: 'translateZ(50px)' }}
+                      >
+                        <div className="aspect-square w-full rounded-lg overflow-hidden bg-stone-900 relative">
+                          <Image
+                            src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=400"
+                            alt="Handbag"
+                            fill
+                            sizes="20vw"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex flex-col text-left">
+                          <span className="text-[7px] sm:text-[8px] font-bold text-[#D4AF37] tracking-wider uppercase font-sans">Accessories</span>
+                          <span className="font-serif text-[9px] sm:text-[11px] font-bold text-white truncate">Embroidered Bag</span>
+                          <span className="font-serif text-[8px] sm:text-[10px] text-[#B35C37] font-semibold mt-0.5">€45.00</span>
+                        </div>
+                      </div>
+                    </ScrollParallax>
+                  </FloatingMesh>
+
+                </TiltCard>
+              </ScrollParallax>
+
             </div>
+
           </div>
 
         </div>
+
       </section>
 
       {/* 2. Premium Circular Quick Navigation Strip */}
-      <section className="bg-[#FAF8F5] border-b border-[#232B28]/10 py-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="flex gap-6 md:gap-10 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] py-2 px-1 justify-start md:justify-center">
+      <section className="bg-[#0A0D0B] border-b border-white/10 py-6 overflow-hidden relative z-20 w-full">
+        <div className="max-w-7xl mx-auto px-2 xs:px-4 md:px-8 w-full overflow-hidden">
+          <StaggerContainer className="flex gap-6 md:gap-10 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] py-2 px-1 justify-start md:justify-center">
             {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/${locale}/shop?category=${cat.id}`}
-                className="flex flex-col items-center gap-2 group flex-shrink-0 cursor-pointer"
-              >
-                <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[#232B28]/10 group-hover:border-[#B35C37] transition-all duration-300 shadow-xs p-0.5 bg-white">
-                  <div className="relative w-full h-full rounded-full overflow-hidden">
-                    <Image
-                      src={cat.image}
-                      alt={cat.title}
-                      fill
-                      sizes="80px"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+              <StaggerChild key={cat.id}>
+                <Link
+                  href={`/${locale}/shop?category=${cat.id}`}
+                  className="flex flex-col items-center gap-2 group flex-shrink-0 cursor-pointer active:scale-95 transition-transform duration-150 relative"
+                >
+                  {/* Dynamic Notification badge */}
+                  {(cat as any).badge && (
+                    <span className="absolute -top-1 -right-1 bg-gradient-to-r from-[#B35C37] to-[#D4AF37] text-white text-[7px] font-black tracking-widest uppercase px-1.5 py-0.5 rounded-full border border-[#0A0D0B] shadow-md z-30 animate-pulse">
+                      {(cat as any).badge}
+                    </span>
+                  )}
+                  
+                  {/* Conic Gradient border simulation for Instagram-style Ring */}
+                  <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full p-[2.5px] bg-gradient-to-tr from-[#B35C37] via-[#E5A93B] to-[#D4AF37] group-hover:rotate-180 transition-all duration-700 shadow-md">
+                    <div className="relative w-full h-full rounded-full overflow-hidden bg-[#0A0D0B] p-[1.5px]">
+                      <div className="relative w-full h-full rounded-full overflow-hidden">
+                        <Image
+                          src={cat.image}
+                          alt={cat.title}
+                          fill
+                          sizes="80px"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <span className="font-sans text-[10px] md:text-xs font-semibold text-[#232B28]/80 group-hover:text-[#B35C37] transition-colors text-center max-w-[80px] md:max-w-[100px] leading-tight">
-                  {cat.title}
-                </span>
-              </Link>
+                  
+                  <span className="font-sans text-[10px] md:text-xs font-semibold text-stone-300 group-hover:text-[#D4AF37] transition-colors text-center max-w-[80px] md:max-w-[100px] leading-tight">
+                    {cat.title}
+                  </span>
+                </Link>
+              </StaggerChild>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
 
       {/* 4. Category Grid Section */}
-      <section className="py-20 bg-[#FAF8F5]">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="text-center mb-16 flex flex-col gap-3">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#232B28]">{dict.categories.title}</h2>
-            <p className="font-sans text-sm md:text-base text-[#232B28]/70 max-w-lg mx-auto">{dict.categories.subtitle}</p>
-            <div className="w-16 h-1 bg-[#B35C37] mx-auto mt-2"></div>
-          </div>
+      <section className="py-20 bg-[#0A0D0B] overflow-hidden w-full">
+        <div className="max-w-7xl mx-auto px-2 xs:px-4 md:px-8 w-full">
+          <ScrollReveal className="text-center mb-16 flex flex-col gap-3 relative z-10">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white">{dict.categories.title}</h2>
+            <p className="font-sans text-sm md:text-base text-stone-300 max-w-lg mx-auto">{dict.categories.subtitle}</p>
+            <div className="w-16 h-1 bg-[#D4AF37] mx-auto mt-2"></div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 xs:gap-4 md:gap-8 relative z-10 w-full">
             {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/${locale}/shop?category=${cat.id}`}
-                className="group relative h-60 sm:h-80 lg:h-96 rounded-2xl overflow-hidden card-hover block shadow-xs border border-[#232B28]/5"
-              >
-                <Image
-                  src={cat.image}
-                  alt={cat.title}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#232B28]/95 via-[#232B28]/40 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white flex flex-col gap-1 sm:gap-2">
-                  <h3 className="font-serif text-sm sm:text-lg lg:text-xl font-bold">{cat.title}</h3>
-                  <p className="font-sans text-[10px] sm:text-xs text-white/80 leading-relaxed line-clamp-2">{cat.desc}</p>
-                  <span className="font-sans text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-[#B35C37] group-hover:text-white transition-colors flex items-center gap-1 mt-1 sm:mt-2">
-                    {locale === 'it' ? 'Esplora' : 'Explore'} <ArrowRight size={10} className="sm:w-3.5 sm:h-3.5" />
-                  </span>
-                </div>
-              </Link>
+              <StaggerChild key={cat.id} className="h-60 sm:h-80 lg:h-96">
+                <TiltCard className="group relative h-full clay-premium hover:border-[#D4AF37]/45 transition-colors">
+                  <Link
+                    href={`/${locale}/shop?category=${cat.id}`}
+                    className="block w-full h-full relative overflow-hidden transform-style-3d"
+                  >
+                    <Image
+                      src={cat.image}
+                      alt={cat.title}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      style={{ transform: 'translateZ(10px)' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D0B]/95 via-[#0A0D0B]/30 to-transparent z-10" />
+                    <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white flex flex-col gap-1 sm:gap-2 z-20 transform-style-3d">
+                      <h3 className="font-serif text-sm sm:text-lg lg:text-xl font-bold" style={{ transform: 'translateZ(20px)' }}>{cat.title}</h3>
+                      <p className="font-sans text-[10px] sm:text-xs text-white/80 leading-relaxed line-clamp-2" style={{ transform: 'translateZ(15px)' }}>{cat.desc}</p>
+                      <span 
+                        className="font-sans text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-[#D4AF37] group-hover:text-white transition-colors flex items-center gap-1 mt-1 sm:mt-2"
+                        style={{ transform: 'translateZ(15px)' }}
+                      >
+                        {locale === 'it' ? 'Esplora' : 'Explore'} <ArrowRight size={10} className="sm:w-3.5 sm:h-3.5" />
+                      </span>
+                    </div>
+                  </Link>
+                </TiltCard>
+              </StaggerChild>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* 4. Brand Quote Curation */}
-      <section className="py-24 bg-[#232B28] text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      <section className="py-24 bg-[#111614] text-white text-center relative overflow-hidden border-y border-[#B35C37]/15">
+        <div className="absolute inset-0 opacity-5">
           <Image
             src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=1200"
             alt="Fabric details"
@@ -601,8 +651,8 @@ export default async function HomePage({ params }: PageProps) {
             className="object-cover object-center"
           />
         </div>
-        <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 flex flex-col items-center gap-6">
-          <span className="font-serif italic text-lg text-[#B35C37]">Casa dei Regali</span>
+        <ScrollReveal className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 flex flex-col items-center gap-6">
+          <span className="font-serif italic text-lg text-[#D4AF37] glow-text-gold">Casa dei Regali</span>
           <blockquote className="font-serif text-2xl md:text-3xl font-bold leading-relaxed italic text-[#FAF8F5]">
             {locale === 'it'
               ? '"L\'eleganza non è farsi notare, ma farsi ricordare. Abbiamo unito i colori accesi del sole indiano con le linee fluide e minimaliste della sartoria milanese."'
@@ -611,37 +661,40 @@ export default async function HomePage({ params }: PageProps) {
           <span className="font-sans text-xs tracking-widest uppercase font-semibold text-white/50">
             - Casa dei Regali Design Studio Milano
           </span>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* 5. Featured Products Catalog */}
-      <section className="py-20 bg-[#FAF8F5]">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="text-center mb-16 flex flex-col gap-3">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#232B28]">{dict.featured.title}</h2>
-            <p className="font-sans text-sm md:text-base text-[#232B28]/70 max-w-lg mx-auto">{dict.featured.subtitle}</p>
-            <div className="w-16 h-1 bg-[#B35C37] mx-auto mt-2"></div>
-          </div>
+      <section className="py-20 bg-[#0A0D0B] overflow-hidden w-full">
+        <div className="max-w-7xl mx-auto px-2 xs:px-4 md:px-8 w-full">
+          <ScrollReveal className="text-center mb-16 flex flex-col gap-3 relative z-10">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white">{dict.featured.title}</h2>
+            <p className="font-sans text-sm md:text-base text-stone-300 max-w-lg mx-auto">{dict.featured.subtitle}</p>
+            <div className="w-16 h-1 bg-[#D4AF37] mx-auto mt-2"></div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 xs:gap-4 md:gap-8 relative z-10 w-full">
             {products.map((prod: any) => (
-              <ProductCard key={prod.sku} product={prod} locale={locale as 'it' | 'en'} dict={dict} />
+              <StaggerChild key={prod.sku}>
+                <ProductCard product={prod} locale={locale as 'it' | 'en'} dict={dict} />
+              </StaggerChild>
             ))}
-          </div>
+          </StaggerContainer>
 
-          <div className="text-center mt-12">
+          <ScrollReveal className="text-center mt-12 relative z-10">
             <Link
               href={`/${locale}/shop`}
-              className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-[#232B28] hover:bg-[#232B28] hover:text-white text-[#232B28] font-sans font-bold text-sm tracking-wider uppercase rounded-xl transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-white hover:bg-white hover:text-[#0A0D0B] text-white font-sans font-bold text-sm tracking-wider uppercase rounded-xl transition-all cursor-pointer"
             >
               <span>{locale === 'it' ? 'Vedi Tutto il Catalogo' : 'View Full Catalog'}</span>
               <ArrowRight size={14} />
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
     </div>
+    </>
   );
 }
 

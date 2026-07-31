@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ShoppingBag, Heart, Menu, X, Globe, User } from 'lucide-react';
+import { Menu, X, Heart, ShoppingBag, Globe, User } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 
 interface NavbarProps {
@@ -12,21 +12,20 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
-  const { cart, wishlist, user, openAuthModal, logoutUser } = useStore();
-  const pathname = usePathname();
-  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileShopOpen, setMobileShopOpen] = useState(false);
+
+  const pathname = usePathname();
+  const router = useRouter();
+  const { cart, wishlist, user, logoutUser, openAuthModal } = useStore();
 
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const wishlistCount = wishlist.length;
 
   const toggleLanguage = () => {
-    const newLocale = locale === 'it' ? 'en' : 'it';
-    // Replace the locale in the current path
     const segments = pathname.split('/');
-    segments[1] = newLocale;
+    segments[1] = locale === 'it' ? 'en' : 'it';
     const newPath = segments.join('/');
     router.push(newPath);
   };
@@ -39,12 +38,12 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#232B28]/10 text-[#232B28] px-4 md:px-8 py-4 transition-all duration-300">
+    <nav className="sticky top-0 z-50 glass-premium-dark border-b border-[#B35C37]/15 text-[#FAF8F5] px-4 md:px-8 py-4 transition-all duration-300 shadow-[0_4px_25px_-12px_rgba(0,0,0,0.4)]">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Mobile menu trigger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 hover:bg-[#232B28]/5 rounded-full"
+          className="md:hidden p-2 hover:bg-white/5 rounded-full"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -64,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
             <path d="M12 9C12 6.5 14 5 15.5 6.5S14 9 12 9z" />
           </svg>
           <div className="flex flex-col">
-            <span className="font-serif text-sm md:text-base font-bold tracking-[0.15em] uppercase text-[#232B28] group-hover:text-[#B35C37] transition-colors duration-300 leading-none">
+            <span className="font-serif text-sm md:text-base font-bold tracking-[0.15em] uppercase text-[#FAF8F5] group-hover:text-[#B35C37] transition-colors duration-300 leading-none">
               Casa dei Regali
             </span>
             <span className="font-sans text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-[#B35C37] mt-1.5 font-semibold leading-none">
@@ -89,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                   <Link
                     href={link.href}
                     className={`transition-colors hover:text-[#B35C37] flex items-center gap-1 ${
-                      isActive ? 'text-[#B35C37]' : 'text-[#232B28]/80'
+                      isActive ? 'text-[#B35C37]' : 'text-[#FAF8F5]/80'
                     }`}
                   >
                     <span>{link.label}</span>
@@ -98,13 +97,13 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
 
                   {/* Mega Dropdown Panel */}
                   {dropdownOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[560px] bg-[#FAF8F5]/98 backdrop-blur-md border border-[#232B28]/10 rounded-2xl shadow-xl p-6 grid grid-cols-3 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 w-[560px] glass-premium-dark border border-[#B35C37]/20 rounded-2xl shadow-2xl p-6 grid grid-cols-3 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                       {/* Column 1: Apparel */}
                       <div className="flex flex-col gap-3">
-                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-[#232B28]/5 pb-1">
+                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-white/10 pb-1">
                           {locale === 'it' ? 'Abbigliamento' : 'Apparel'}
                         </span>
-                        <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
+                        <div className="flex flex-col gap-2 font-sans text-xs text-[#FAF8F5]/75">
                           <Link href={`/${locale}/shop?category=kurtis`} className="hover:text-[#B35C37] transition-colors">{dict.categories.kurtis}</Link>
                           <Link href={`/${locale}/shop?category=onepiece`} className="hover:text-[#B35C37] transition-colors">{dict.categories.onepiece}</Link>
                           <Link href={`/${locale}/shop?category=summer-dresses`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["summer-dresses"] || "Summer Dresses"}</Link>
@@ -114,10 +113,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
 
                       {/* Column 2: Jewelry */}
                       <div className="flex flex-col gap-3">
-                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-[#232B28]/5 pb-1">
+                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-white/10 pb-1">
                           {locale === 'it' ? 'Gioielli' : 'Jewelry'}
                         </span>
-                        <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
+                        <div className="flex flex-col gap-2 font-sans text-xs text-[#FAF8F5]/75">
                           <Link href={`/${locale}/shop?category=jewelry-oxidized`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-oxidized"] || "Oxidized Jewelry"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-anklets`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-anklets"] || "Anklets"}</Link>
                           <Link href={`/${locale}/shop?category=jewelry-bracelets`} className="hover:text-[#B35C37] transition-colors">{(dict.categories as any)["jewelry-bracelets"] || "Bracelets"}</Link>
@@ -128,10 +127,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
 
                       {/* Column 3: Bags & Accessories */}
                       <div className="flex flex-col gap-3">
-                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-[#232B28]/5 pb-1">
+                        <span className="font-serif text-xs font-bold text-[#B35C37] tracking-wider uppercase border-b border-white/10 pb-1">
                           {locale === 'it' ? 'Borse & Accessori' : 'Bags & Accessories'}
                         </span>
-                        <div className="flex flex-col gap-2 font-sans text-xs text-[#232B28]/75">
+                        <div className="flex flex-col gap-2 font-sans text-xs text-[#FAF8F5]/75">
                           <Link href={`/${locale}/shop?category=handbags`} className="hover:text-[#B35C37] transition-colors">{dict.categories.handbags}</Link>
                         </div>
                       </div>
@@ -146,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                 key={link.href}
                 href={link.href}
                 className={`transition-colors hover:text-[#B35C37] ${
-                  isActive ? 'text-[#B35C37] border-b-2 border-[#B35C37] pb-1' : 'text-[#232B28]/80'
+                  isActive ? 'text-[#B35C37] border-b-2 border-[#B35C37] pb-1' : 'text-[#FAF8F5]/80'
                 }`}
               >
                 {link.label}
@@ -160,17 +159,17 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
           {/* Language Switcher */}
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-[#232B28]/20 hover:bg-[#232B28]/5 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-white/20 hover:bg-white/5 transition-colors cursor-pointer"
             title={locale === 'it' ? 'English' : 'Italiano'}
           >
-            <Globe size={13} className="text-[#232B28]/70" />
+            <Globe size={13} className="text-[#FAF8F5]/70" />
             <span>{locale === 'it' ? 'EN' : 'IT'}</span>
           </button>
 
           {/* Wishlist Icon */}
           <Link
             href={`/${locale}/wishlist`}
-            className="relative p-2 hover:bg-[#232B28]/5 rounded-full text-[#232B28] transition-colors"
+            className="relative p-2 hover:bg-white/5 rounded-full text-[#FAF8F5] transition-colors"
             title={dict.nav.wishlist}
           >
             <Heart size={20} className={wishlistCount > 0 ? 'fill-[#B35C37] text-[#B35C37]' : ''} />
@@ -184,7 +183,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
           {/* Cart Icon */}
           <Link
             href={`/${locale}/cart`}
-            className="relative p-2 hover:bg-[#232B28]/5 rounded-full text-[#232B28] transition-colors"
+            className="relative p-2 hover:bg-white/5 rounded-full text-[#FAF8F5] transition-colors"
             title={dict.nav.cart}
           >
             <ShoppingBag size={20} />
@@ -196,13 +195,13 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
           </Link>
 
           {user ? (
-            <div className="flex items-center gap-2 border-l border-[#232B28]/10 pl-3 md:pl-5">
-              <span className="hidden lg:inline text-xs font-semibold text-[#232B28]/70">
+            <div className="flex items-center gap-2 border-l border-white/10 pl-3 md:pl-5">
+              <span className="hidden lg:inline text-xs font-semibold text-[#FAF8F5]/70">
                 {user.name.split(' ')[0]}
               </span>
               <button
                 onClick={logoutUser}
-                className="px-3 py-1.5 text-[10px] uppercase font-bold text-red-500 hover:bg-red-50 rounded-lg border border-red-200 transition-colors cursor-pointer"
+                className="px-3 py-1.5 text-[10px] uppercase font-bold text-red-400 hover:bg-red-950/20 rounded-lg border border-red-500/30 transition-colors cursor-pointer"
                 title="Logout"
               >
                 Logout
@@ -211,7 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
           ) : (
             <button
               onClick={() => openAuthModal()}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-[#232B28]/20 hover:bg-[#232B28]/5 transition-colors cursor-pointer text-[#232B28]/80 hover:text-[#B35C37]"
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-white/20 hover:bg-white/5 transition-colors cursor-pointer text-[#FAF8F5]/80 hover:text-[#B35C37]"
             >
               <User size={13} />
               <span className="hidden sm:inline">{locale === 'it' ? 'Accedi' : 'Login'}</span>
@@ -222,20 +221,20 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-[73px] left-0 w-full bg-[#FAF8F5] border-b border-[#232B28]/10 shadow-lg p-5 flex flex-col gap-4 z-40 animate-in slide-in-from-top duration-200">
+        <div className="md:hidden absolute top-[73px] left-0 w-full bg-[#0A0D0B] border-b border-white/10 shadow-lg p-5 flex flex-col gap-4 z-40 animate-in slide-in-from-top duration-200">
           {navLinks.map((link) => {
             if (link.hasDropdown) {
               return (
                 <div key={link.href} className="flex flex-col py-1">
                   <button
                     onClick={() => setMobileShopOpen(!mobileShopOpen)}
-                    className="font-sans text-base font-semibold py-2 border-b border-[#232B28]/5 text-[#232B28]/85 flex items-center justify-between text-left"
+                    className="font-sans text-base font-semibold py-2 border-b border-white/5 text-[#FAF8F5]/85 flex items-center justify-between text-left"
                   >
                     <span>{link.label}</span>
                     <span className={`text-xs transition-transform duration-300 ${mobileShopOpen ? 'rotate-180' : ''}`}>▼</span>
                   </button>
                   {mobileShopOpen && (
-                    <div className="pl-4 flex flex-col gap-3.5 py-3 text-sm font-sans text-[#232B28]/70 border-l border-[#B35C37]/30 mt-1">
+                    <div className="pl-4 flex flex-col gap-3.5 py-3 text-sm font-sans text-[#FAF8F5]/70 border-l border-[#B35C37]/30 mt-1">
                       <Link href={`/${locale}/shop`} onClick={() => setMobileMenuOpen(false)} className="font-semibold">{locale === 'it' ? 'Vedi Tutto' : 'View All'}</Link>
                       
                       {/* Subheadings */}
@@ -265,7 +264,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="font-sans text-base font-semibold py-2 border-b border-[#232B28]/5 text-[#232B28]/85 hover:text-[#B35C37]"
+                className="font-sans text-base font-semibold py-2 border-b border-white/5 text-[#FAF8F5]/85 hover:text-[#B35C37]"
               >
                 {link.label}
               </Link>
@@ -273,24 +272,24 @@ export const Navbar: React.FC<NavbarProps> = ({ locale, dict }) => {
           })}
 
           {user ? (
-            <div className="flex flex-col gap-2 pt-4 border-t border-[#232B28]/5 mt-2">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[#232B28]/85">
+            <div className="flex flex-col gap-2 pt-4 border-t border-white/10 mt-2">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#FAF8F5]/85">
                 <User size={16} className="text-[#B35C37]" />
                 <span>{locale === 'it' ? `Ciao, ${user.name}` : `Hello, ${user.name}`}</span>
               </div>
-              <p className="text-[10px] text-[#232B28]/50 italic -mt-1 leading-normal">{user.address}</p>
+              <p className="text-[10px] text-[#FAF8F5]/50 italic -mt-1 leading-normal">{user.address}</p>
               <button
                 onClick={() => {
                   logoutUser();
                   setMobileMenuOpen(false);
                 }}
-                className="w-full mt-2 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-red-500 bg-red-50 border border-red-200 rounded-xl cursor-pointer"
+                className="w-full mt-2 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-red-400 bg-red-950/20 border border-red-500/30 rounded-xl cursor-pointer"
               >
                 Logout
               </button>
             </div>
           ) : (
-            <div className="pt-4 border-t border-[#232B28]/5 mt-2">
+            <div className="pt-4 border-t border-white/10 mt-2">
               <button
                 onClick={() => {
                   openAuthModal();

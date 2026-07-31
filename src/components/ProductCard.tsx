@@ -4,8 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Heart, ShoppingCart } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useStore } from '../context/StoreContext';
 import { formatImageUrl } from '../utils/api';
+import { TiltCard } from './TiltCard';
 
 export interface ProductCardProps {
   product: {
@@ -50,7 +52,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
   const handleAddToCartClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // Default to the first size or 'One Size'
     const defaultSize = product.sizes && product.sizes.length > 0 ? product.sizes[0] : 'One Size';
     
     const action = () => {
@@ -74,60 +75,69 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
   const categoryLabel = (dict.categories as any)[product.category] || product.category;
 
   return (
-    <div className="group relative bg-[#FAF8F5] border border-[#232B28]/10 rounded-xl overflow-hidden card-hover flex flex-col justify-between h-full">
+    <TiltCard className="group relative bg-[#151C19]/45 border-white/10 flex flex-col justify-between h-full hover:border-[#D4AF37]/35 shadow-xs transition-colors duration-500">
       {/* Product Image Panel */}
-      <Link href={`/${locale}/shop/${product.sku}`} className="block relative aspect-3/4 overflow-hidden bg-stone-100">
+      <Link href={`/${locale}/shop/${product.sku}`} className="block relative aspect-3/4 overflow-hidden bg-stone-900 transform-style-3d">
         <Image
           src={formatImageUrl(product.images[0])}
           alt={details.name}
           fill
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+          style={{ transform: 'translateZ(15px)' }}
         />
 
         {/* Category Badge */}
-        <span className="absolute top-3 left-3 bg-[#FAF8F5]/90 backdrop-blur-xs text-[#232B28] font-sans font-semibold text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-full shadow-xs border border-[#232B28]/5">
+        <span 
+          className="absolute top-3 left-3 bg-[#0A0D0B]/90 backdrop-blur-md text-[#D4AF37] font-sans font-semibold text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-full shadow-md border border-[#D4AF37]/20 z-10"
+          style={{ transform: 'translateZ(20px)' }}
+        >
           {categoryLabel}
         </span>
 
         {/* Wishlist Button */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.85 }}
           onClick={handleWishlistClick}
-          className="absolute top-3 right-3 p-2 bg-[#FAF8F5]/90 backdrop-blur-xs hover:bg-white rounded-full shadow-xs text-[#232B28] hover:text-[#B35C37] transition-all duration-300 border border-[#232B28]/5 cursor-pointer"
+          className="absolute top-3 right-3 p-2 bg-[#0A0D0B]/85 backdrop-blur-md hover:bg-white rounded-full shadow-md text-[#FAF8F5] hover:text-[#B35C37] transition-all duration-300 border border-white/5 cursor-pointer z-10"
+          style={{ transform: 'translateZ(20px)' }}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart size={16} className={`transition-colors duration-300 ${isWishlisted ? 'fill-[#B35C37] text-[#B35C37]' : 'text-[#232B28]'}`} />
-        </button>
+          <Heart size={16} className={`transition-colors duration-300 ${isWishlisted ? 'fill-[#B35C37] text-[#B35C37]' : 'text-[#FAF8F5]'}`} />
+        </motion.button>
       </Link>
 
       {/* Product Content Details */}
-      <div className="p-4 flex flex-col flex-grow justify-between">
-        <div className="mb-3">
-          <span className="text-[11px] font-medium text-[#232B28]/60 tracking-wider font-sans uppercase">
+      <div className="p-4 flex flex-col flex-grow justify-between transform-style-3d">
+        <div className="mb-3" style={{ transform: 'translateZ(10px)' }}>
+          <span className="text-[11px] font-medium text-stone-300/60 tracking-wider font-sans uppercase">
             {product.materials.join(' • ')}
           </span>
           <Link href={`/${locale}/shop/${product.sku}`}>
-            <h3 className="font-serif text-[16px] font-bold text-[#232B28] hover:text-[#B35C37] transition-colors leading-tight mt-1 line-clamp-2">
+            <h3 className="font-serif text-[16px] font-bold text-[#FAF8F5] hover:text-[#D4AF37] transition-colors leading-tight mt-1 line-clamp-2">
               {details.name}
             </h3>
           </Link>
         </div>
 
-        <div className="flex items-center justify-between mt-auto pt-2 border-t border-[#232B28]/5">
-          <span className="font-serif font-bold text-lg text-[#B35C37]">
+        <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5" style={{ transform: 'translateZ(15px)' }}>
+          <span className="font-serif font-bold text-lg text-[#D4AF37] glow-text-gold">
             €{product.price.toFixed(2)}
           </span>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.85 }}
             onClick={handleAddToCartClick}
-            className="p-2.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white rounded-full transition-all duration-300 hover:scale-105 cursor-pointer shadow-xs"
+            className="p-2.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white rounded-full transition-all duration-300 cursor-pointer shadow-md"
             title={dict.shop.add_to_cart}
             aria-label={dict.shop.add_to_cart}
           >
             <ShoppingCart size={18} />
-          </button>
+          </motion.button>
         </div>
       </div>
-    </div>
+    </TiltCard>
   );
 };

@@ -5,6 +5,8 @@ import { getDictionary } from '@/dictionaries';
 import { StoreProvider } from '@/context/StoreContext';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { InteractiveGlow } from '@/components/InteractiveGlow';
+import { CustomCursor } from '@/components/CustomCursor';
 import '@/app/globals.css';
 
 const inter = Inter({
@@ -53,9 +55,11 @@ export default async function LocaleLayout({
   const dict = await getDictionary(locale as 'it' | 'en');
 
   return (
-    <html lang={locale} className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-[#FAF8F5] text-[#232B28] font-sans antialiased min-h-screen flex flex-col selection:bg-[#B35C37]/25 selection:text-[#B35C37]">
+    <html lang={locale} className={`${inter.variable} ${playfair.variable} overflow-x-hidden w-full`}>
+      <body className="bg-[#0A0D0B] text-[#FAF8F5] font-sans antialiased min-h-screen flex flex-col selection:bg-[#B35C37]/35 selection:text-[#D4AF37] relative overflow-x-hidden w-full cursor-none">
         <StoreProvider>
+          <InteractiveGlow />
+          <CustomCursor />
           <Navbar locale={locale as 'it' | 'en'} dict={dict} />
           <main className="flex-grow">
             {children}

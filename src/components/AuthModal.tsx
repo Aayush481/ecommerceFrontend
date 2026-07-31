@@ -162,17 +162,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           </div>
         )}
 
-        {/* Form */}
-        <form onSubmit={handleAuthSubmit} className="flex flex-col gap-4 font-sans text-xs text-[#232B28]/80">
+        {/* Form */}        <form onSubmit={handleAuthSubmit} className="flex flex-col gap-4 font-sans text-xs text-[#232B28]/80">
           
           {isSignUp && (
             <div className="flex flex-col gap-1">
-              <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">
+              <label htmlFor="auth-signup-name" className="font-bold text-[#232B28]/70 uppercase tracking-wider">
                 {locale === 'it' ? 'Nome Completo' : 'Full Name'}
               </label>
               <div className="relative">
                 <input
                   type="text"
+                  id="auth-signup-name"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -185,12 +185,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           )}
 
           <div className="flex flex-col gap-1">
-            <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">
+            <label htmlFor="auth-email" className="font-bold text-[#232B28]/70 uppercase tracking-wider">
               {locale === 'it' ? 'Indirizzo Email' : 'Email Address'}
             </label>
             <div className="relative">
               <input
                 type="email"
+                id="auth-email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -203,12 +204,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
           {isSignUp && (
             <div className="flex flex-col gap-1">
-              <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">
+              <label htmlFor="auth-signup-phone" className="font-bold text-[#232B28]/70 uppercase tracking-wider">
                 {locale === 'it' ? 'Numero di Telefono' : 'Phone Number'}
               </label>
               <div className="relative">
                 <input
                   type="tel"
+                  id="auth-signup-phone"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -222,12 +224,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
           {isSignUp && (
             <div className="flex flex-col gap-1">
-              <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">
+              <label htmlFor="auth-signup-address" className="font-bold text-[#232B28]/70 uppercase tracking-wider">
                 {locale === 'it' ? 'Indirizzo di Spedizione' : 'Shipping Address'}
               </label>
               <div className="relative">
                 <input
                   type="text"
+                  id="auth-signup-address"
                   required
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
@@ -240,12 +243,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           )}
 
           <div className="flex flex-col gap-1">
-            <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">
+            <label htmlFor="auth-password" className="font-bold text-[#232B28]/70 uppercase tracking-wider">
               Password
             </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                id="auth-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -265,6 +269,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
           <button
             type="submit"
+            id="auth-submit-btn"
             className="w-full mt-2 py-3.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-bold tracking-wider uppercase rounded-xl transition-colors shadow-md cursor-pointer"
           >
             {isSignUp 
@@ -272,9 +277,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               : (locale === 'it' ? 'Accedi' : 'Log In')
             }
           </button>
-
-
-
         </form>
 
       </div>
