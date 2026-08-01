@@ -36,3 +36,14 @@ export const formatImageUrl = (url: string): string => {
   
   return trimmed;
 };
+
+export const apiFetch = (path: string, options: RequestInit = {}): Promise<Response> => {
+  const headers = new Headers(options.headers || {});
+  headers.set('X-Requested-With', 'XMLHttpRequest');
+
+  return fetch(getApiUrl(path), {
+    ...options,
+    credentials: 'include',
+    headers,
+  });
+};

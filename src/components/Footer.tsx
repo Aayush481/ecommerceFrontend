@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
-import { getApiUrl } from '@/utils/api';
+import { getApiUrl, apiFetch } from '@/utils/api';
 
 interface FooterProps {
   locale: 'it' | 'en';
@@ -20,7 +20,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
 
     setStatus('loading');
     try {
-      const res = await fetch(getApiUrl('/api/newsletter'), {
+      const res = await apiFetch('/api/newsletter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

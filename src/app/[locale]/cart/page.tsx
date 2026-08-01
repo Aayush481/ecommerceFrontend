@@ -7,7 +7,7 @@ import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, CheckCircle } from 'lucid
 import { useStore } from '@/context/StoreContext';
 import { getDictionary } from '@/dictionaries';
 
-import { getApiUrl, formatImageUrl } from '@/utils/api';
+import { getApiUrl, formatImageUrl, apiFetch } from '@/utils/api';
 
 interface CartPageProps {
   params: Promise<{ locale: string }>;
@@ -87,7 +87,7 @@ export default function CartPage({ params }: CartPageProps) {
     setCheckoutError('');
 
     try {
-      const res = await fetch(getApiUrl('/api/orders'), {
+      const res = await apiFetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

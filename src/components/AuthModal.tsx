@@ -48,7 +48,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
       const newUser = { name, email, phone, password, address };
       registered.push(newUser);
       localStorage.setItem('sita_seta_registered_users', JSON.stringify(registered));
-      localStorage.setItem('sita_seta_user', JSON.stringify(newUser));
+      localStorage.setItem('sita_seta_user', JSON.stringify({ name, email, phone, address }));
       
       setSuccess(locale === 'it' ? 'Registrazione completata!' : 'Registration successful!');
       setTimeout(() => {
@@ -82,7 +82,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         return;
       }
 
-      localStorage.setItem('sita_seta_user', JSON.stringify(foundUser));
+      localStorage.setItem('sita_seta_user', JSON.stringify({ name: foundUser.name, email: foundUser.email, phone: foundUser.phone, address: foundUser.address }));
       setSuccess(locale === 'it' ? 'Accesso riuscito!' : 'Login successful!');
       setTimeout(() => {
         onSuccess();

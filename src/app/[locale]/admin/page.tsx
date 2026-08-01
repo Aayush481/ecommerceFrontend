@@ -7,7 +7,7 @@ import {
   Settings, Key, Shield, User, FileText, CheckCircle2, Truck, RefreshCw
 } from 'lucide-react';
 import { getDictionary } from '@/dictionaries';
-import { getApiUrl } from '@/utils/api';
+import { getApiUrl, apiFetch } from '@/utils/api';
 
 interface ImageUploaderProps {
   images: string;
@@ -40,7 +40,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, onChange, dict })
         const file = files[i];
         const formData = new FormData();
         formData.append('image', file);
-        const res = await fetch(getApiUrl('/api/upload'), {
+        const res = await apiFetch('/api/upload', {
           method: 'POST',
           body: formData,
         });
@@ -219,23 +219,30 @@ export default function AdminPage({ params }: AdminPageProps) {
   });
 
   useEffect(() => {
-    const isAuthed = sessionStorage.getItem('admin_authorized') === 'true';
-    if (isAuthed) {
-      setAuthorized(true);
-    }
+    const checkAuth = async () => {
+      try {
+        const res = await apiFetch('/api/admin/profile');
+        if (res.ok) {
+          setAuthorized(true);
+        }
+      } catch {
+        setAuthorized(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(getApiUrl('/api/admin/login'), {
+      const res = await apiFetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: authEmail, password: authPassword }),
       });
 
       if (res.ok) {
-        sessionStorage.setItem('admin_authorized', 'true');
         setAuthorized(true);
         setAuthError('');
         fetchData();
@@ -244,19 +251,11 @@ export default function AdminPage({ params }: AdminPageProps) {
         setAuthError(err.message || (locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password'));
       }
     } catch (err) {
-      console.warn('[AdminLogin] Backend login unreachable. Simulating offline fallback.');
-      
-      // Try to check fallback settings file if it exists, otherwise use default
-      if (authEmail === adminProfile.email && authPassword === 'soniKmno4@') {
-        sessionStorage.setItem('admin_authorized', 'true');
-        setAuthorized(true);
-        setAuthError('');
-        fetchData();
-      } else {
-        setAuthError(locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password');
-      }
+      console.error('[AdminLogin] Backend login error:', err);
+      setAuthError(locale === 'it' ? 'Connessione al server non riuscita' : 'Unable to connect to the server');
     }
   };
+
 
   useEffect(() => {
     getDictionary(locale).then(setDict);
@@ -270,7 +269,7 @@ export default function AdminPage({ params }: AdminPageProps) {
     setErrorNotice('');
     try {
       // Fetch Products
-      const prodRes = await fetch(getApiUrl('/api/products'));
+      const prodRes = await apiFetch('/api/products');
       if (prodRes.ok) {
         const prodData = await prodRes.json();
         setProducts(prodData);
@@ -279,21 +278,21 @@ export default function AdminPage({ params }: AdminPageProps) {
       }
 
       // Fetch Inquiries
-      const inqRes = await fetch(getApiUrl('/api/inquiries'));
+      const inqRes = await apiFetch('/api/inquiries');
       if (inqRes.ok) {
         const inqData = await inqRes.json();
         setInquiries(inqData);
       }
 
       // Fetch Orders
-      const ordRes = await fetch(getApiUrl('/api/orders'));
+      const ordRes = await apiFetch('/api/orders');
       if (ordRes.ok) {
         const ordData = await ordRes.json();
         setOrders(ordData);
       }
 
       // Fetch Admin Profile
-      const profRes = await fetch(getApiUrl('/api/admin/profile'));
+      const profRes = await apiFetch('/api/admin/profile');
       if (profRes.ok) {
         const profData = await profRes.json();
         setAdminProfile(profData);
@@ -305,6 +304,7 @@ export default function AdminPage({ params }: AdminPageProps) {
         setCredentialsFormData(prev => ({ ...prev, email: profData.email }));
       }
     } catch (err) {
+
       console.warn('[AdminDashboard] Express backend unreachable. Operating in read-only fallback mode.');
       setErrorNotice('Express backend not responding. Dynamic databases are simulated.');
       // Local fallback mocks
@@ -509,13 +509,13 @@ export default function AdminPage({ params }: AdminPageProps) {
     try {
       let res;
       if (editingProduct) {
-        res = await fetch(getApiUrl(`/api/products/${editingProduct.sku}`), {
+        res = await apiFetch(`/api/products/${editingProduct.sku}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formattedPayload)
         });
       } else {
-        res = await fetch(getApiUrl('/api/products'), {
+        res = await apiFetch('/api/products', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formattedPayload)
@@ -544,7 +544,7 @@ export default function AdminPage({ params }: AdminPageProps) {
     if (!confirm(`Delete product ${sku}?`)) return;
 
     try {
-      const res = await fetch(getApiUrl(`/api/products/${sku}`), {
+      const res = await apiFetch(`/api/products/${sku}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -558,10 +558,11 @@ export default function AdminPage({ params }: AdminPageProps) {
     }
   };
 
+
   // Update order status call
   const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      const res = await fetch(getApiUrl(`/api/orders/${orderId}/status`), {
+      const res = await apiFetch(`/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -581,7 +582,7 @@ export default function AdminPage({ params }: AdminPageProps) {
   const handleDeleteOrder = async (orderId: string) => {
     if (!confirm(locale === 'it' ? 'Vuoi davvero cancellare questo ordine?' : 'Are you sure you want to delete this order?')) return;
     try {
-      const res = await fetch(getApiUrl(`/api/orders/${orderId}`), {
+      const res = await apiFetch(`/api/orders/${orderId}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -599,7 +600,7 @@ export default function AdminPage({ params }: AdminPageProps) {
   const handleUpdateProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(getApiUrl('/api/admin/profile'), {
+      const res = await apiFetch('/api/admin/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(profileFormData)
@@ -627,7 +628,7 @@ export default function AdminPage({ params }: AdminPageProps) {
     }
 
     try {
-      const res = await fetch(getApiUrl('/api/admin/credentials'), {
+      const res = await apiFetch('/api/admin/credentials', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -651,6 +652,7 @@ export default function AdminPage({ params }: AdminPageProps) {
       setAuthorized(false);
     }
   };
+
 
   // Helper Stats Calculation
   const totalRevenue = orders.reduce((acc, o) => o.status === 'delivered' || o.status === 'shipped' || o.status === 'processing' || o.status === 'pending' ? acc + o.total : acc, 0);
@@ -730,16 +732,6 @@ export default function AdminPage({ params }: AdminPageProps) {
               {locale === 'it' ? 'Accedi' : 'Login'}
             </button>
 
-            <button
-              type="button"
-              onClick={() => {
-                setAuthEmail(adminProfile.email);
-                setAuthPassword('soniKmno4@');
-              }}
-              className="text-xs text-center text-[#B35C37] hover:underline cursor-pointer font-bold -mt-1 py-1"
-            >
-              {locale === 'it' ? 'Usa credenziali demo' : 'Use Demo Credentials'}
-            </button>
           </form>
         </div>
       </div>

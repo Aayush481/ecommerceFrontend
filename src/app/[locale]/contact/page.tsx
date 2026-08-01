@@ -4,7 +4,7 @@ import React, { use, useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { getDictionary } from '@/dictionaries';
 
-import { getApiUrl } from '@/utils/api';
+import { getApiUrl, apiFetch } from '@/utils/api';
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>;
@@ -41,7 +41,7 @@ export default function ContactPage({ params }: ContactPageProps) {
 
     setStatus('loading');
     try {
-      const res = await fetch(getApiUrl('/api/contact'), {
+      const res = await apiFetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,15 +106,7 @@ export default function ContactPage({ params }: ContactPageProps) {
                 <span className="text-[#232B28]/75 mt-0.5">+39 02 1234567</span>
               </div>
             </li>
-            <li className="flex gap-3 items-start">
-              <div className="p-2.5 bg-[#B35C37]/10 rounded-lg text-[#B35C37] flex-shrink-0">
-                <Mail size={18} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-[#232B28]">Email</span>
-                <span className="text-[#232B28]/75 mt-0.5"><a href="mailto:aayush6b12@gmail.com" className="hover:underline">aayush6b12@gmail.com</a></span>
-              </div>
-            </li>
+
             <li className="flex gap-3 items-start">
               <div className="p-2.5 bg-[#B35C37]/10 rounded-lg text-[#B35C37] flex-shrink-0 flex items-center justify-center">
                 <svg className="w-[18px] h-[18px] fill-current" viewBox="0 0 24 24">
