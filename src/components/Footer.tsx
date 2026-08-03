@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import { getApiUrl, apiFetch } from '@/utils/api';
+import dynamic from 'next/dynamic';
 
 interface FooterProps {
   locale: 'it' | 'en';
@@ -13,6 +14,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const footerRef = useRef<HTMLDivElement>(null);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +43,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
   };
 
   return (
-    <footer className="bg-[#232B28] text-[#FAF8F5]/90 py-10 border-t border-[#FAF8F5]/10">
+    <footer ref={footerRef} className="bg-[#232B28] text-[#FAF8F5]/90 py-10 border-t border-[#FAF8F5]/10">
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
         
         {/* Left Side: Logo & Copyright */}
@@ -108,6 +110,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, dict }) => {
             </a>
           </div>
         </div>
+
 
         {/* Right Side: Minimalist Newsletter Signup */}
         <div className="flex flex-col items-center md:items-end gap-2 w-full max-w-sm">

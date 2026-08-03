@@ -68,7 +68,7 @@ const fallbackCatalog = [
     materials: ['Cotton', 'Mulmul'],
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
     images: [
-      'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
+      '/red_dress.jpg'
     ],
     stock: 22,
     featured: true,

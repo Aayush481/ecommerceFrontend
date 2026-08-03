@@ -7,8 +7,8 @@ import { ProductCard } from '@/components/ProductCard';
 import { TiltCard } from '@/components/TiltCard';
 import { FloatingParticles } from '@/components/FloatingParticles';
 import { ScrollParallax } from '@/components/ScrollParallax';
-import { ThreeCanvas } from '@/components/ThreeCanvas';
 import { ScrollReveal, StaggerContainer, StaggerChild, FloatingMesh } from '@/components/MotionWrapper';
+import { ClientDressAnimation } from '@/components/ClientDressAnimation';
 
 import { getApiUrl } from '@/utils/api';
 
@@ -65,7 +65,7 @@ const localMockProducts = [
     materials: ['Cotton', 'Mulmul'],
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
     images: [
-      'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
+      '/red_dress.jpg'
     ],
     stock: 22,
     featured: true,
@@ -283,20 +283,20 @@ export default async function HomePage({ params }: PageProps) {
       badge: 'NEW'
     },
     {
-      id: 'summer-dresses',
-      title: dict.categories["summer-dresses"] || 'Summer Dresses',
-      desc: locale === 'it'
-        ? 'Abiti freschi in cotone leggero e lino traspirante stampati a mano.'
-        : 'Fresh dresses in lightweight cotton and breathable linen, printed by hand.',
-      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800'
-    },
-    {
       id: 'indo-western',
       title: dict.categories["indo-western"] || 'Indo-Western Wear',
       desc: locale === 'it'
         ? 'Tagli e silhouette asimmetrici moderni ispirati alla moda fusion orientale.'
         : 'Asymmetrical modern cuts and silhouettes inspired by Eastern fusion fashion.',
       image: 'https://i.pinimg.com/736x/9f/24/cb/9f24cb58beb1a2db9a45ff85f88c45a2.jpg'
+    },
+    {
+      id: 'summer-dresses',
+      title: dict.categories["summer-dresses"] || 'Summer Dresses',
+      desc: locale === 'it'
+        ? 'Abiti freschi in cotone leggero e lino traspirante stampati a mano.'
+        : 'Fresh dresses in lightweight cotton and breathable linen, printed by hand.',
+      image: '/red_dress.jpg'
     },
     {
       id: 'jewelry-oxidized',
@@ -381,7 +381,6 @@ export default async function HomePage({ params }: PageProps) {
       <section className="relative min-h-[90vh] py-16 flex items-center overflow-hidden border-b border-[#B35C37]/10 bg-[#0A0D0B]">
         {/* Background elements */}
         <FloatingParticles />
-        <ThreeCanvas />
         
         {/* Huge Luxury Title Overlay in background with horizontal scroll parallax */}
         <ScrollParallax speed={-0.2} direction="left" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none select-none">
@@ -452,11 +451,12 @@ export default async function HomePage({ params }: PageProps) {
                   
                   {/* Parallax Layer 1: Varanasi Silk Card */}
                   <div 
-                    className="aspect-4/3 w-full rounded-2xl overflow-hidden bg-stone-900 border border-white/5 relative transform-style-3d shadow-lg"
+                    id="hero-dress-image-container"
+                    className="aspect-4/3 w-full rounded-2xl overflow-hidden bg-stone-900 border border-white/5 relative transform-style-3d shadow-lg transition-opacity duration-300"
                     style={{ transform: 'translateZ(20px)' }}
                   >
                     <Image
-                      src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800"
+                      src="/red_dress.jpg"
                       alt="Terra Fusion Blazer"
                       fill
                       priority
@@ -502,7 +502,7 @@ export default async function HomePage({ params }: PageProps) {
                         <div className="aspect-square w-full rounded-lg overflow-hidden bg-stone-900 relative">
                           <Image
                             src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=400"
-                            alt="Boho Choker"
+                            alt="Teardrop Earrings"
                             fill
                             sizes="20vw"
                             className="object-cover"
@@ -510,8 +510,8 @@ export default async function HomePage({ params }: PageProps) {
                         </div>
                         <div className="flex flex-col text-left">
                           <span className="text-[7px] sm:text-[8px] font-bold text-[#D4AF37] tracking-wider uppercase font-sans">Boho Jewelry</span>
-                          <span className="font-serif text-[9px] sm:text-[11px] font-bold text-white truncate">Mandala Choker</span>
-                          <span className="font-serif text-[8px] sm:text-[10px] text-[#B35C37] font-semibold mt-0.5">€34.99</span>
+                          <span className="font-serif text-[9px] sm:text-[11px] font-bold text-white truncate">Teardrop Earrings</span>
+                          <span className="font-serif text-[8px] sm:text-[10px] text-[#B35C37] font-semibold mt-0.5">€3.00</span>
                         </div>
                       </div>
                     </ScrollParallax>
@@ -607,19 +607,23 @@ export default async function HomePage({ params }: PageProps) {
 
           <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 xs:gap-4 md:gap-8 relative z-10 w-full">
             {categories.map((cat) => (
-              <StaggerChild key={cat.id} className="h-60 sm:h-80 lg:h-96">
+              <StaggerChild key={cat.id} className="h-60 sm:h-80 lg:h-96" id={`category-card-${cat.id}`}>
                 <TiltCard className="group relative h-full clay-premium hover:border-[#D4AF37]/45 transition-colors">
                   <Link
                     href={`/${locale}/shop?category=${cat.id}`}
                     className="block w-full h-full relative overflow-hidden transform-style-3d"
                   >
                     <Image
+                      id={`category-card-img-${cat.id}`}
                       src={cat.image}
                       alt={cat.title}
                       fill
                       sizes="(max-width: 768px) 50vw, 33vw"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      style={{ transform: 'translateZ(10px)' }}
+                      style={{ 
+                        transform: 'translateZ(10px)',
+                        transition: 'opacity 0.4s ease-out'
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D0B]/95 via-[#0A0D0B]/30 to-transparent z-10" />
                     <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white flex flex-col gap-1 sm:gap-2 z-20 transform-style-3d">
@@ -644,7 +648,7 @@ export default async function HomePage({ params }: PageProps) {
       <section className="py-24 bg-[#111614] text-white text-center relative overflow-hidden border-y border-[#B35C37]/15">
         <div className="absolute inset-0 opacity-5">
           <Image
-            src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=1200"
+            src="/red_dress.jpg"
             alt="Fabric details"
             fill
             sizes="100vw"
@@ -692,6 +696,9 @@ export default async function HomePage({ params }: PageProps) {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* 3D Dress scroll animation overlay */}
+      <ClientDressAnimation />
 
     </div>
     </>

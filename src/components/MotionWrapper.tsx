@@ -106,12 +106,14 @@ export const StaggerContainer: React.FC<{ children: React.ReactNode; className?:
 };
 
 // 4. Staggered Grid Child
-export const StaggerChild: React.FC<{ children: React.ReactNode; className?: string }> = ({ 
+export const StaggerChild: React.FC<{ children: React.ReactNode; className?: string; id?: string }> = ({ 
   children, 
-  className = '' 
+  className = '',
+  id
 }) => {
   return (
     <motion.div
+      id={id}
       variants={{
         hidden: { opacity: 0, y: 30 },
         show: { 
