@@ -5,7 +5,7 @@
 export const getApiUrl = (path: string = ''): string => {
   // If running on Next.js server (SSR / SSG), request locally or via environment variable
   if (typeof window === 'undefined') {
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+    const backendUrl = process.env.BACKEND_URL || 'http://127.0.0.1:5000';
     return `${backendUrl}${path}`;
   }
   

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 export const DressScrollAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -104,10 +105,13 @@ export const DressScrollAnimation: React.FC = () => {
       }
     );
 
-    // 4. Async loading of actual 3D GLB Model
+    // 4. Async loading of actual 3D GLB Model with Draco compression support
     let modelScene: THREE.Group | null = null;
     let modelBaseScale = 1.0;
     const gltfLoader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    gltfLoader.setDRACOLoader(dracoLoader);
 
     gltfLoader.load(
       '/woman_3d_model.glb',
@@ -383,6 +387,20 @@ export const DressScrollAnimation: React.FC = () => {
           modelScene.scale.set(modelScale, modelScale, modelScale);
         }
       } else {
+        // If the 3D GLB model has not loaded yet, bypass the 3D animation
+        // and keep the static 2D hero image and target card image visible.
+        if (!modelScene) {
+          heroImageOpacity = 1.0;
+          modelOpacity = 0.0;
+          dressGroup.visible = false;
+          
+          const targetImg = document.getElementById('category-card-img-summer-dresses');
+          if (targetImg) targetImg.style.opacity = '1';
+          
+          startEl.style.opacity = '1';
+          return;
+        }
+
         dressGroup.visible = p < 0.99;
 
         // Position interpolation
@@ -535,6 +553,7 @@ export const DressScrollAnimation: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
+      dracoLoader.dispose();
       renderer.dispose();
       planeGeo.dispose();
       dressMaterial.dispose();
