@@ -4,7 +4,8 @@ import React, { use, useState, useEffect } from 'react';
 import { 
   Plus, Edit, Trash2, Mail, FormInput, ListFilter, AlertTriangle, 
   Eye, UploadCloud, Loader2, X, ShoppingBag, DollarSign, UserCheck, 
-  Settings, Key, Shield, User, FileText, CheckCircle2, Truck, RefreshCw
+  Settings, Key, Shield, User, FileText, CheckCircle2, Truck, RefreshCw,
+  ArrowLeft
 } from 'lucide-react';
 import { getDictionary } from '@/dictionaries';
 import { getApiUrl, apiFetch } from '@/utils/api';
@@ -198,6 +199,32 @@ export default function AdminPage({ params }: AdminPageProps) {
   const [authPassword, setAuthPassword] = useState('');
   const [authError, setAuthError] = useState('');
 
+  // Password Recovery State
+  const [loginMode, setLoginMode] = useState<'login' | 'forgot' | 'reset'>('login');
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotSuccess, setForgotSuccess] = useState('');
+  const [forgotError, setForgotError] = useState('');
+  const [forgotLoading, setForgotLoading] = useState(false);
+
+  const [resetToken, setResetToken] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [resetSuccess, setResetSuccess] = useState('');
+  const [resetError, setResetError] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
+
+  // Listen to resetToken on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('resetToken');
+      if (token) {
+        setResetToken(token);
+        setLoginMode('reset');
+      }
+    }
+  }, []);
+
   // Form State
   const [editingProduct, setEditingProduct] = useState<any | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -253,6 +280,73 @@ export default function AdminPage({ params }: AdminPageProps) {
     } catch (err) {
       console.error('[AdminLogin] Backend login error:', err);
       setAuthError(locale === 'it' ? 'Connessione al server non riuscita' : 'Unable to connect to the server');
+    }
+  };
+
+  const handleForgotPasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setForgotLoading(true);
+    setForgotSuccess('');
+    setForgotError('');
+    try {
+      const res = await apiFetch('/api/admin/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotEmail, locale }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setForgotSuccess(data.message);
+      } else {
+        setForgotError(data.message || (locale === 'it' ? 'Si è verificato un errore.' : 'An error occurred.'));
+      }
+    } catch (err) {
+      console.error(err);
+      setForgotError(locale === 'it' ? 'Errore di connessione al server.' : 'Server connection error.');
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  const handleResetPasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword !== confirmNewPassword) {
+      setResetError(locale === 'it' ? 'Le password non coincidono.' : 'Passwords do not match.');
+      return;
+    }
+    setResetLoading(true);
+    setResetSuccess('');
+    setResetError('');
+    try {
+      const res = await apiFetch('/api/admin/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: resetToken, password: newPassword }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setResetSuccess(locale === 'it' ? 'Password reimpostata con successo! Reindirizzamento al login...' : 'Password reset successfully! Redirecting to login...');
+        setTimeout(() => {
+          // Clear query parameters
+          if (typeof window !== 'undefined') {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('resetToken');
+            window.history.replaceState({}, '', url.toString());
+          }
+          setLoginMode('login');
+          setNewPassword('');
+          setConfirmNewPassword('');
+          setResetSuccess('');
+          setAuthEmail(forgotEmail || authEmail); // prefill email
+        }, 3000);
+      } else {
+        setResetError(data.message || (locale === 'it' ? 'Si è verificato un errore.' : 'An error occurred.'));
+      }
+    } catch (err) {
+      console.error(err);
+      setResetError(locale === 'it' ? 'Errore di connessione al server.' : 'Server connection error.');
+    } finally {
+      setResetLoading(false);
     }
   };
 
@@ -665,9 +759,7 @@ export default function AdminPage({ params }: AdminPageProps) {
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-16 bg-[#FAF8F5] relative overflow-hidden">
         {/* Decorative background blobs */}
         <div className="absolute top-10 left-[10%] bg-[#B35C37]/10 blob-glowing"></div>
-        <div className="absolute bottom-10 right-[10%] bg-[#D4AF37]/10 blob-glowing" style={{ animationDelay: '-4s' }}></div>
-
-        <div className="w-full max-w-md bg-white/70 backdrop-blur-md border border-[#232B28]/10 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col gap-6 relative z-10 animate-in fade-in zoom-in-95 duration-500">
+        <div className="absolute bottom-10 right-[10%] bg-[#D4AF37]/10 blob-glowing" style={{ animationDelay: '-4s' }}></div>        <div className="w-full max-w-md bg-white/70 backdrop-blur-md border border-[#232B28]/10 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col gap-6 relative z-10 animate-in fade-in zoom-in-95 duration-500">
           <div className="flex flex-col items-center gap-2 text-center">
             <div className="flex items-center gap-2 mb-2 hover:scale-105 transition-transform">
               <svg className="w-8 h-8 text-[#B35C37] animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -686,53 +778,187 @@ export default function AdminPage({ params }: AdminPageProps) {
                 </span>
               </div>
             </div>
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#232B28] mt-2">
-              {locale === 'it' ? 'Portele Amministratore' : 'Admin Portal Access'}
-            </h2>
-            <p className="font-sans text-xs text-[#232B28]/60 max-w-[300px]">
-              {locale === 'it' ? 'Inserisci le credenziali proprietario per gestire ordini e catalogo.' : 'Enter owner credentials to manage catalog and customer orders.'}
-            </p>
+
+            {loginMode === 'login' && (
+              <>
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#232B28] mt-2">
+                  {locale === 'it' ? 'Portale Amministratore' : 'Admin Portal Access'}
+                </h2>
+                <p className="font-sans text-xs text-[#232B28]/60 max-w-[300px]">
+                  {locale === 'it' ? 'Inserisci le credenziali proprietario per gestire ordini e catalogo.' : 'Enter owner credentials to manage catalog and customer orders.'}
+                </p>
+              </>
+            )}
+
+            {loginMode === 'forgot' && (
+              <>
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#232B28] mt-2">
+                  {locale === 'it' ? 'Recupero Password' : 'Password Recovery'}
+                </h2>
+                <p className="font-sans text-xs text-[#232B28]/60 max-w-[300px]">
+                  {locale === 'it' ? 'Inserisci la tua email per ricevere un link di ripristino sicuro.' : 'Enter your email to receive a secure password recovery link.'}
+                </p>
+              </>
+            )}
+
+            {loginMode === 'reset' && (
+              <>
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#232B28] mt-2">
+                  {locale === 'it' ? 'Reimposta Password' : 'Reset Password'}
+                </h2>
+                <p className="font-sans text-xs text-[#232B28]/60 max-w-[300px]">
+                  {locale === 'it' ? 'Inserisci una nuova password sicura per il tuo account.' : 'Enter a secure new password for your administrator account.'}
+                </p>
+              </>
+            )}
           </div>
 
-          <form onSubmit={handleLoginSubmit} className="flex flex-col gap-4 font-sans text-xs">
-            {authError && (
-              <div className="border border-red-200 bg-red-50 text-red-700 font-semibold rounded-xl p-3.5 text-center animate-shake">
-                {authError}
+          {loginMode === 'login' && (
+            <form onSubmit={handleLoginSubmit} className="flex flex-col gap-4 font-sans text-xs">
+              {authError && (
+                <div className="border border-red-200 bg-red-50 text-red-700 font-semibold rounded-xl p-3.5 text-center animate-shake">
+                  {authError}
+                </div>
+              )}
+              
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">Email</label>
+                <input
+                  type="email"
+                  required
+                  value={authEmail}
+                  onChange={(e) => setAuthEmail(e.target.value)}
+                  className="border border-[#232B28]/15 rounded-xl px-4 py-3 bg-white focus:outline-none focus:border-[#B35C37] transition-all text-xs"
+                  placeholder="admin@casadeiregali.it"
+                />
               </div>
-            )}
-            
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">Email</label>
-              <input
-                type="email"
-                required
-                value={authEmail}
-                onChange={(e) => setAuthEmail(e.target.value)}
-                className="border border-[#232B28]/15 rounded-xl px-4 py-3 bg-white focus:outline-none focus:border-[#B35C37] transition-all text-xs"
-                placeholder="admin@casadeiregali.it"
-              />
-            </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">Password</label>
-              <input
-                type="password"
-                required
-                value={authPassword}
-                onChange={(e) => setAuthPassword(e.target.value)}
-                className="border border-[#232B28]/15 rounded-xl px-4 py-3 bg-white focus:outline-none focus:border-[#B35C37] transition-all text-xs"
-                placeholder="••••••••"
-              />
-            </div>
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">Password</label>
+                  <button
+                    type="button"
+                    onClick={() => setLoginMode('forgot')}
+                    className="text-stone-500 hover:text-[#B35C37] font-semibold transition-colors cursor-pointer text-[10px] uppercase tracking-wider focus:outline-none"
+                  >
+                    {locale === 'it' ? 'Dimenticata?' : 'Forgot?'}
+                  </button>
+                </div>
+                <input
+                  type="password"
+                  required
+                  value={authPassword}
+                  onChange={(e) => setAuthPassword(e.target.value)}
+                  className="border border-[#232B28]/15 rounded-xl px-4 py-3 bg-white focus:outline-none focus:border-[#B35C37] transition-all text-xs"
+                  placeholder="••••••••"
+                />
+              </div>
 
-            <button
-              type="submit"
-              className="w-full mt-3 py-3.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-bold font-sans tracking-wider text-xs uppercase rounded-xl transition-all cursor-pointer shadow-lg hover:shadow-xl active:scale-[0.98]"
-            >
-              {locale === 'it' ? 'Accedi' : 'Login'}
-            </button>
+              <button
+                type="submit"
+                className="w-full mt-3 py-3.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-bold font-sans tracking-wider text-xs uppercase rounded-xl transition-all cursor-pointer shadow-lg hover:shadow-xl active:scale-[0.98]"
+              >
+                {locale === 'it' ? 'Accedi' : 'Login'}
+              </button>
+            </form>
+          )}
 
-          </form>
+          {loginMode === 'forgot' && (
+            <form onSubmit={handleForgotPasswordSubmit} className="flex flex-col gap-4 font-sans text-xs">
+              {forgotError && (
+                <div className="border border-red-200 bg-red-50 text-red-700 font-semibold rounded-xl p-3.5 text-center animate-shake">
+                  {forgotError}
+                </div>
+              )}
+              {forgotSuccess && (
+                <div className="border border-emerald-200 bg-emerald-50 text-emerald-800 font-semibold rounded-xl p-3.5 text-center">
+                  {forgotSuccess}
+                </div>
+              )}
+              
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">Email</label>
+                <input
+                  type="email"
+                  required
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  className="border border-[#232B28]/15 rounded-xl px-4 py-3 bg-white focus:outline-none focus:border-[#B35C37] transition-all text-xs"
+                  placeholder="admin@casadeiregali.it"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={forgotLoading}
+                className="w-full mt-3 py-3.5 bg-[#B35C37] hover:bg-[#B35C37]/90 disabled:bg-[#B35C37]/50 text-white font-bold font-sans tracking-wider text-xs uppercase rounded-xl transition-all cursor-pointer shadow-lg hover:shadow-xl active:scale-[0.98] flex items-center justify-center gap-2"
+              >
+                {forgotLoading && <Loader2 className="animate-spin" size={14} />}
+                {locale === 'it' ? 'Invia Link di Recupero' : 'Send Reset Link'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setLoginMode('login'); setForgotSuccess(''); setForgotError(''); }}
+                className="flex items-center justify-center gap-1.5 text-stone-500 hover:text-[#B35C37] font-bold font-sans text-[10px] uppercase tracking-wider mx-auto mt-2 transition-colors cursor-pointer"
+              >
+                <ArrowLeft size={10} />
+                {locale === 'it' ? 'Torna al Login' : 'Back to Login'}
+              </button>
+            </form>
+          )}
+
+          {loginMode === 'reset' && (
+            <form onSubmit={handleResetPasswordSubmit} className="flex flex-col gap-4 font-sans text-xs">
+              {resetError && (
+                <div className="border border-red-200 bg-red-50 text-red-700 font-semibold rounded-xl p-3.5 text-center animate-shake">
+                  {resetError}
+                </div>
+              )}
+              {resetSuccess && (
+                <div className="border border-emerald-200 bg-emerald-50 text-emerald-800 font-semibold rounded-xl p-3.5 text-center">
+                  {resetSuccess}
+                </div>
+              )}
+              
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">
+                  {locale === 'it' ? 'Nuova Password' : 'New Password'}
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="border border-[#232B28]/15 rounded-xl px-4 py-3 bg-white focus:outline-none focus:border-[#B35C37] transition-all text-xs"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-[#232B28]/70 uppercase tracking-wider">
+                  {locale === 'it' ? 'Conferma Nuova Password' : 'Confirm New Password'}
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  className="border border-[#232B28]/15 rounded-xl px-4 py-3 bg-white focus:outline-none focus:border-[#B35C37] transition-all text-xs"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={resetLoading}
+                className="w-full mt-3 py-3.5 bg-[#B35C37] hover:bg-[#B35C37]/90 disabled:bg-[#B35C37]/50 text-white font-bold font-sans tracking-wider text-xs uppercase rounded-xl transition-all cursor-pointer shadow-lg hover:shadow-xl active:scale-[0.98] flex items-center justify-center gap-2"
+              >
+                {resetLoading && <Loader2 className="animate-spin" size={14} />}
+                {locale === 'it' ? 'Reimposta Password' : 'Reset Password'}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     );
