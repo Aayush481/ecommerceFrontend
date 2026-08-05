@@ -40,15 +40,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
       const registeredStr = localStorage.getItem('sita_seta_registered_users') || '[]';
       const registered = JSON.parse(registeredStr);
       
-      if (registered.some((u: any) => u.email.toLowerCase() === email.toLowerCase())) {
+      const trimmedEmail = email.trim();
+      if (registered.some((u: any) => u.email.toLowerCase() === trimmedEmail.toLowerCase())) {
         setError(locale === 'it' ? 'Email già registrata' : 'Email already registered');
         return;
       }
 
-      const newUser = { name, email, phone, password, address };
+      const newUser = { 
+        name: name.trim(), 
+        email: trimmedEmail, 
+        phone: phone.trim(), 
+        password: password.trim(), 
+        address: address.trim() 
+      };
       registered.push(newUser);
       localStorage.setItem('sita_seta_registered_users', JSON.stringify(registered));
-      localStorage.setItem('sita_seta_user', JSON.stringify({ name, email, phone, address }));
+      localStorage.setItem('sita_seta_user', JSON.stringify({ name: newUser.name, email: newUser.email, phone: newUser.phone, address: newUser.address }));
       
       setSuccess(locale === 'it' ? 'Registrazione completata!' : 'Registration successful!');
       setTimeout(() => {
@@ -71,11 +78,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
       const registeredStr = localStorage.getItem('sita_seta_registered_users') || '[]';
       const registered = JSON.parse(registeredStr);
       
+      const trimmedEmail = email.trim();
+      const trimmedPassword = password.trim();
+      
       const foundUser = registered.find(
-        (u: any) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+        (u: any) => u.email.toLowerCase() === trimmedEmail.toLowerCase() && u.password.trim() === trimmedPassword
       );
-
-
 
       if (!foundUser) {
         setError(locale === 'it' ? 'Credenziali non valide' : 'Invalid credentials');

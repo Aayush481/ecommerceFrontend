@@ -274,8 +274,14 @@ export default function AdminPage({ params }: AdminPageProps) {
         setAuthError('');
         fetchData();
       } else {
-        const err = await res.json();
-        setAuthError(err.message || (locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password'));
+        let errMsg = locale === 'it' ? 'Credenziali non valide' : 'Invalid email or password';
+        try {
+          const err = await res.json();
+          if (err && err.message) errMsg = err.message;
+        } catch {
+          errMsg = `${locale === 'it' ? 'Errore del server' : 'Server error'} (${res.status})`;
+        }
+        setAuthError(errMsg);
       }
     } catch (err) {
       console.error('[AdminLogin] Backend login error:', err);
@@ -294,11 +300,20 @@ export default function AdminPage({ params }: AdminPageProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: forgotEmail, locale }),
       });
-      const data = await res.json();
-      if (res.ok && data.success) {
+      
+      let data: any = {};
+      let isJson = true;
+      try {
+        data = await res.json();
+      } catch {
+        isJson = false;
+      }
+
+      if (res.ok && isJson && data.success) {
         setForgotSuccess(data.message);
       } else {
-        setForgotError(data.message || (locale === 'it' ? 'Si è verificato un errore.' : 'An error occurred.'));
+        const fallbackMsg = locale === 'it' ? 'Si è verificato un errore.' : 'An error occurred.';
+        setForgotError(data.message || (isJson ? fallbackMsg : `${locale === 'it' ? 'Errore del server' : 'Server error'} (${res.status})`));
       }
     } catch (err) {
       console.error(err);
@@ -323,8 +338,16 @@ export default function AdminPage({ params }: AdminPageProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: resetToken, password: newPassword }),
       });
-      const data = await res.json();
-      if (res.ok && data.success) {
+      
+      let data: any = {};
+      let isJson = true;
+      try {
+        data = await res.json();
+      } catch {
+        isJson = false;
+      }
+
+      if (res.ok && isJson && data.success) {
         setResetSuccess(locale === 'it' ? 'Password reimpostata con successo! Reindirizzamento al login...' : 'Password reset successfully! Redirecting to login...');
         setTimeout(() => {
           // Clear query parameters
@@ -340,7 +363,8 @@ export default function AdminPage({ params }: AdminPageProps) {
           setAuthEmail(forgotEmail || authEmail); // prefill email
         }, 3000);
       } else {
-        setResetError(data.message || (locale === 'it' ? 'Si è verificato un errore.' : 'An error occurred.'));
+        const fallbackMsg = locale === 'it' ? 'Si è verificato un errore.' : 'An error occurred.';
+        setResetError(data.message || (isJson ? fallbackMsg : `${locale === 'it' ? 'Errore del server' : 'Server error'} (${res.status})`));
       }
     } catch (err) {
       console.error(err);
