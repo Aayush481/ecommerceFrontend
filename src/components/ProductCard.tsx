@@ -60,22 +60,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
     e.stopPropagation();
     const defaultSize = product.sizes && product.sizes.length > 0 ? product.sizes[0] : 'One Size';
     
-    const action = () => {
-      addToCart({
-        id,
-        sku: product.sku,
-        name: details.name,
-        price: product.price,
-        image: product.images[0],
-        size: defaultSize,
-      });
-    };
-
-    if (!user) {
-      openAuthModal(action);
-    } else {
-      action();
-    }
+    addToCart({
+      id,
+      sku: product.sku,
+      name: details.name,
+      price: product.price,
+      image: product.images[0],
+      size: defaultSize,
+    });
   };
 
   const categoryLabel = (dict.categories as any)[product.category] || product.category;

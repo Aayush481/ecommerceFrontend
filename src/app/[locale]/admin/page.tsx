@@ -1064,48 +1064,48 @@ export default function AdminPage({ params }: AdminPageProps) {
 
       {/* Metrics Row Section */}
       {!showForm && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10">
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10">
           {/* Card 1: Total Revenue */}
-          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-5 shadow-xs flex items-center gap-4 hover:border-[#B35C37]/20 transition-all">
-            <div className="p-3.5 bg-emerald-50 rounded-xl text-emerald-600">
-              <DollarSign size={24} />
+          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-4 sm:p-5 shadow-xs flex flex-row items-center gap-3 sm:gap-4 hover:border-[#B35C37]/20 transition-all">
+            <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
+              <DollarSign size={20} className="sm:w-6 sm:h-6" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Fatturato Totale' : 'Total Revenue'}</span>
-              <span className="font-serif text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">€{totalRevenue.toFixed(2)}</span>
+              <span className="text-[9px] sm:text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Fatturato Totale' : 'Total Revenue'}</span>
+              <span className="font-serif text-base sm:text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">€{totalRevenue.toFixed(2)}</span>
             </div>
           </div>
 
           {/* Card 2: Orders Count */}
-          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-5 shadow-xs flex items-center gap-4 hover:border-[#B35C37]/20 transition-all">
-            <div className="p-3.5 bg-amber-50 rounded-xl text-amber-600">
-              <ShoppingBag size={24} />
+          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-4 sm:p-5 shadow-xs flex flex-row items-center gap-3 sm:gap-4 hover:border-[#B35C37]/20 transition-all">
+            <div className="p-3 bg-amber-50 rounded-xl text-amber-600">
+              <ShoppingBag size={20} className="sm:w-6 sm:h-6" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Ordini Attivi' : 'Active Orders'}</span>
-              <span className="font-serif text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">{activeOrdersCount} {locale === 'it' ? 'In Corso' : 'Pending'}</span>
+              <span className="text-[9px] sm:text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Ordini Attivi' : 'Active Orders'}</span>
+              <span className="font-serif text-base sm:text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">{activeOrdersCount} {locale === 'it' ? 'In Corso' : 'Pending'}</span>
             </div>
           </div>
 
           {/* Card 3: Products Count */}
-          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-5 shadow-xs flex items-center gap-4 hover:border-[#B35C37]/20 transition-all">
-            <div className="p-3.5 bg-blue-50 rounded-xl text-blue-600">
-              <FileText size={24} />
+          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-4 sm:p-5 shadow-xs flex flex-row items-center gap-3 sm:gap-4 hover:border-[#B35C37]/20 transition-all">
+            <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
+              <FileText size={20} className="sm:w-6 sm:h-6" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Catalogo Prodotti' : 'Catalog Products'}</span>
-              <span className="font-serif text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">{products.length} {locale === 'it' ? 'Articoli' : 'Items'}</span>
+              <span className="text-[9px] sm:text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Catalogo Prodotti' : 'Catalog Products'}</span>
+              <span className="font-serif text-base sm:text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">{products.length} {locale === 'it' ? 'Articoli' : 'Items'}</span>
             </div>
           </div>
 
           {/* Card 4: Inquiries */}
-          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-5 shadow-xs flex items-center gap-4 hover:border-[#B35C37]/20 transition-all">
-            <div className="p-3.5 bg-rose-50 rounded-xl text-rose-600">
-              <Mail size={24} />
+          <div className="bg-white border border-[#232B28]/10 rounded-2xl p-4 sm:p-5 shadow-xs flex flex-row items-center gap-3 sm:gap-4 hover:border-[#B35C37]/20 transition-all">
+            <div className="p-3 bg-rose-50 rounded-xl text-rose-600">
+              <Mail size={20} className="sm:w-6 sm:h-6" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Richieste Clienti' : 'Total Inquiries'}</span>
-              <span className="font-serif text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">{inquiries.length} {locale === 'it' ? 'Messaggi' : 'Inbox'}</span>
+              <span className="text-[9px] sm:text-[10px] font-bold text-[#232B28]/50 uppercase tracking-wider">{locale === 'it' ? 'Richieste Clienti' : 'Total Inquiries'}</span>
+              <span className="font-serif text-base sm:text-lg md:text-2xl font-bold text-[#232B28] mt-0.5">{inquiries.length} {locale === 'it' ? 'Messaggi' : 'Inbox'}</span>
             </div>
           </div>
         </div>
@@ -1463,12 +1463,12 @@ export default function AdminPage({ params }: AdminPageProps) {
           <table className="w-full border-collapse text-left font-sans text-sm">
             <thead>
               <tr className="bg-[#FAF8F5] border-b border-[#232B28]/10 text-[#232B28]/60 font-semibold uppercase tracking-wider text-xs">
-                <th className="p-4">SKU</th>
-                <th className="p-4">{locale === 'it' ? 'Nome' : 'Name'}</th>
-                <th className="p-4">{dict.admin.category}</th>
-                <th className="p-4">{dict.admin.price}</th>
-                <th className="p-4">{dict.admin.stock}</th>
-                <th className="p-4 text-right">Actions</th>
+                <th className="p-4 min-w-[100px]">SKU</th>
+                <th className="p-4 min-w-[200px]">{locale === 'it' ? 'Nome' : 'Name'}</th>
+                <th className="p-4 min-w-[120px]">{dict.admin.category}</th>
+                <th className="p-4 min-w-[80px]">{dict.admin.price}</th>
+                <th className="p-4 min-w-[80px]">{dict.admin.stock}</th>
+                <th className="p-4 text-right min-w-[100px]">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -1476,12 +1476,12 @@ export default function AdminPage({ params }: AdminPageProps) {
                 const name = locale === 'it' ? prod.it.name : prod.en.name;
                 return (
                   <tr key={prod.sku} className="border-b border-[#232B28]/5 hover:bg-stone-50/50 transition-colors">
-                    <td className="p-4 font-bold text-[#232B28]">{prod.sku}</td>
-                    <td className="p-4 font-serif font-bold text-base text-[#232B28]">{name}</td>
-                    <td className="p-4 capitalize">{(dict.categories as any)[prod.category] || prod.category}</td>
-                    <td className="p-4 font-bold text-[#B35C37]">€{prod.price.toFixed(2)}</td>
-                    <td className="p-4 font-medium">{prod.stock}</td>
-                    <td className="p-4 text-right flex justify-end gap-2">
+                    <td className="p-4 font-bold text-[#232B28] whitespace-nowrap">{prod.sku}</td>
+                    <td className="p-4 font-serif font-bold text-base text-[#232B28] min-w-[200px]">{name}</td>
+                    <td className="p-4 capitalize whitespace-nowrap">{(dict.categories as any)[prod.category] || prod.category}</td>
+                    <td className="p-4 font-bold text-[#B35C37] whitespace-nowrap">€{prod.price.toFixed(2)}</td>
+                    <td className="p-4 font-medium whitespace-nowrap">{prod.stock}</td>
+                    <td className="p-4 text-right flex justify-end gap-2 whitespace-nowrap min-w-[100px]">
                       <button
                         onClick={() => openEditForm(prod)}
                         className="p-2 hover:bg-[#232B28]/5 rounded-lg text-[#232B28]/70 hover:text-[#B35C37] transition-colors cursor-pointer"
@@ -1717,25 +1717,27 @@ export default function AdminPage({ params }: AdminPageProps) {
                         <img src={profileFormData.avatar} alt="Avatar Preview" className="w-full h-full object-cover" />
                       </div>
                     )}
-                    <input
-                      type="text"
-                      required
-                      value={profileFormData.avatar}
-                      onChange={(e) => setProfileFormData(prev => ({ ...prev, avatar: e.target.value }))}
-                      placeholder="Image URL or upload a file"
-                      className="flex-grow border border-[#232B28]/15 rounded-xl px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-xs font-mono"
-                    />
-                    <label className="flex-shrink-0 px-4 py-2.5 bg-[#FAF8F5] border border-[#232B28]/15 hover:bg-stone-50 text-[#B35C37] font-bold text-xs uppercase rounded-xl tracking-wider cursor-pointer transition-all flex items-center gap-1.5">
-                      <UploadCloud size={14} />
-                      <span>{avatarUploading ? "..." : "Upload"}</span>
+                    <div className="flex-grow flex flex-col sm:flex-row gap-2 sm:items-center w-full">
                       <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleAvatarUpload}
-                        className="hidden"
-                        disabled={avatarUploading}
+                        type="text"
+                        required
+                        value={profileFormData.avatar}
+                        onChange={(e) => setProfileFormData(prev => ({ ...prev, avatar: e.target.value }))}
+                        placeholder="Image URL or upload a file"
+                        className="flex-grow border border-[#232B28]/15 rounded-xl px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-xs font-mono w-full"
                       />
-                    </label>
+                      <label className="flex-shrink-0 px-4 py-2.5 bg-[#FAF8F5] border border-[#232B28]/15 hover:bg-stone-50 text-[#B35C37] font-bold text-xs uppercase rounded-xl tracking-wider cursor-pointer transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto">
+                        <UploadCloud size={14} />
+                        <span>{avatarUploading ? "..." : "Upload"}</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleAvatarUpload}
+                          className="hidden"
+                          disabled={avatarUploading}
+                        />
+                      </label>
+                    </div>
                   </div>
                 </div>
 
