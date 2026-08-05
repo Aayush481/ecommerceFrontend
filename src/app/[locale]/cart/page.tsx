@@ -39,30 +39,69 @@ export default function CartPage({ params }: CartPageProps) {
 
   if (!dict) return <div className="max-w-7xl mx-auto px-4 py-20 text-center">Loading...</div>;
 
+  if (!user) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-20 text-center flex flex-col items-center gap-6">
+        <div className="p-4 bg-[#B35C37]/10 rounded-full text-[#B35C37]">
+          <ShoppingBag size={48} />
+        </div>
+        <h1 className="font-serif text-3xl font-bold text-[#232B28]">
+          {locale === 'it' ? 'Accesso Richiesto' : 'Login Required'}
+        </h1>
+        <p className="font-sans text-sm text-[#232B28]/70 leading-relaxed">
+          {locale === 'it'
+            ? 'Devi effettuare l\'accesso per visualizzare e gestire il tuo carrello.'
+            : 'You need to be logged in to view and manage your cart.'}
+        </p>
+        <button
+          onClick={() => openAuthModal()}
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-bold text-sm tracking-wider uppercase rounded-xl transition-all shadow-md cursor-pointer"
+        >
+          <span>{locale === 'it' ? 'Accedi o Registrati' : 'Login / Signup'}</span>
+          <ArrowRight size={14} />
+        </button>
+      </div>
+    );
+  }
+
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const shipping = 0; // Free shipping for Italy
   const total = subtotal + shipping;
 
   const handleProceedToCheckout = () => {
-    setShowCheckoutForm(true);
-    setCheckoutError('');
-    if (user) setCustomerEmail(user.email);
+    const action = () => {
+      setShowCheckoutForm(true);
+      setCheckoutError('');
+      if (user) setCustomerEmail(user.email);
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const handleWhatsAppCartOrder = () => {
-    const itemsText = cart.map((item, idx) => `${idx + 1}. ${item.name} (SKU: ${item.sku}, Size: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`).join('\n');
-    const buyerInfo = user
-      ? (locale === 'it'
-        ? `\n\nDettagli Spedizione:\n- Nome: ${user.name}\n- Email: ${user.email}\n- Tel: ${user.phone}\n- Indirizzo: ${user.address}`
-        : `\n\nShipping Details:\n- Name: ${user.name}\n- Email: ${user.email}\n- Phone: ${user.phone}\n- Address: ${user.address}`)
-      : '';
+    const action = () => {
+      const itemsText = cart.map((item, idx) => `${idx + 1}. ${item.name} (SKU: ${item.sku}, Size: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`).join('\n');
+      const buyerInfo = locale === 'it'
+        ? `\n\nDettagli Spedizione:\n- Nome: ${user?.name}\n- Email: ${user?.email}\n- Tel: ${user?.phone}\n- Indirizzo: ${user?.address}`
+        : `\n\nShipping Details:\n- Name: ${user?.name}\n- Email: ${user?.email}\n- Phone: ${user?.phone}\n- Address: ${user?.address}`;
 
-    const message = locale === 'it'
-      ? `Ciao Casa dei Regali! Vorrei effettuare un ordine per i seguenti articoli dal mio carrello:\n\n${itemsText}\n\nTotale dell'ordine: €${total.toFixed(2)}.${buyerInfo}`
-      : `Hello Casa dei Regali! I would like to place an order for the following items from my cart:\n\n${itemsText}\n\nOrder Total: €${total.toFixed(2)}.${buyerInfo}`;
-    
-    const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      const message = locale === 'it'
+        ? `Ciao Casa dei Regali! Vorrei effettuare un ordine per i seguenti articoli dal mio carrello:\n\n${itemsText}\n\nTotale dell'ordine: €${total.toFixed(2)}.${buyerInfo}`
+        : `Hello Casa dei Regali! I would like to place an order for the following items from my cart:\n\n${itemsText}\n\nOrder Total: €${total.toFixed(2)}.${buyerInfo}`;
+      
+      const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const handleConfirmOrder = async (e: React.FormEvent) => {

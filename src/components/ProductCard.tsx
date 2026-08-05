@@ -42,16 +42,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
   const handleWishlistClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (isWishlisted) {
-      removeFromWishlist(id);
+    
+    const action = () => {
+      if (isWishlisted) {
+        removeFromWishlist(id);
+      } else {
+        addToWishlist({
+          id,
+          sku: product.sku,
+          name: details.name,
+          price: product.price,
+          image: product.images[0],
+        });
+      }
+    };
+
+    if (!user) {
+      openAuthModal(action);
     } else {
-      addToWishlist({
-        id,
-        sku: product.sku,
-        name: details.name,
-        price: product.price,
-        image: product.images[0],
-      });
+      action();
     }
   };
 
@@ -60,14 +69,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
     e.stopPropagation();
     const defaultSize = product.sizes && product.sizes.length > 0 ? product.sizes[0] : 'One Size';
     
-    addToCart({
-      id,
-      sku: product.sku,
-      name: details.name,
-      price: product.price,
-      image: product.images[0],
-      size: defaultSize,
-    });
+    const action = () => {
+      addToCart({
+        id,
+        sku: product.sku,
+        name: details.name,
+        price: product.price,
+        image: product.images[0],
+        size: defaultSize,
+      });
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const categoryLabel = (dict.categories as any)[product.category] || product.category;

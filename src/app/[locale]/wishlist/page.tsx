@@ -16,7 +16,7 @@ export default function WishlistPage({ params }: WishlistPageProps) {
   const { locale: rawLocale } = use(params);
   const locale = rawLocale as 'it' | 'en';
   const [dict, setDict] = useState<any>(null);
-  const { wishlist, removeFromWishlist } = useStore();
+  const { wishlist, removeFromWishlist, user, openAuthModal } = useStore();
 
   // Load dictionary client-side
   React.useEffect(() => {
@@ -24,6 +24,31 @@ export default function WishlistPage({ params }: WishlistPageProps) {
   }, [locale]);
 
   if (!dict) return <div className="max-w-7xl mx-auto px-4 py-20 text-center">Loading...</div>;
+
+  if (!user) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-20 text-center flex flex-col items-center gap-6">
+        <div className="p-4 bg-red-50 rounded-full text-red-500">
+          <Heart size={48} />
+        </div>
+        <h1 className="font-serif text-3xl font-bold text-[#232B28]">
+          {locale === 'it' ? 'Accesso Richiesto' : 'Login Required'}
+        </h1>
+        <p className="font-sans text-sm text-[#232B28]/70 leading-relaxed">
+          {locale === 'it'
+            ? 'Devi effettuare l\'accesso per visualizzare la tua lista dei desideri.'
+            : 'You need to be logged in to view your wishlist.'}
+        </p>
+        <button
+          onClick={() => openAuthModal()}
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#B35C37] hover:bg-[#B35C37]/90 text-white font-sans font-bold text-sm tracking-wider uppercase rounded-xl transition-all shadow-md cursor-pointer"
+        >
+          <span>{locale === 'it' ? 'Accedi o Registrati' : 'Login / Signup'}</span>
+          <ArrowRight size={14} />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">

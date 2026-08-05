@@ -41,44 +41,66 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   const isWishlisted = isInWishlist(id);
 
   const handleWishlistToggle = () => {
-    if (isWishlisted) {
-      removeFromWishlist(id);
+    const action = () => {
+      if (isWishlisted) {
+        removeFromWishlist(id);
+      } else {
+        addToWishlist({
+          id,
+          sku: product.sku,
+          name: details.name,
+          price: product.price,
+          image: product.images[0],
+        });
+      }
+    };
+
+    if (!user) {
+      openAuthModal(action);
     } else {
-      addToWishlist({
+      action();
+    }
+  };
+
+  const handleAddToCart = () => {
+    const action = () => {
+      addToCart({
         id,
         sku: product.sku,
         name: details.name,
         price: product.price,
         image: product.images[0],
+        size: selectedSize,
       });
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
     }
   };
 
-  const handleAddToCart = () => {
-    addToCart({
-      id,
-      sku: product.sku,
-      name: details.name,
-      price: product.price,
-      image: product.images[0],
-      size: selectedSize,
-    });
-  };
-
   const handleWhatsAppBuyNow = () => {
-    const productUrl = typeof window !== 'undefined' ? window.location.href : '';
-    const buyerInfo = user 
-      ? (locale === 'it'
-        ? `\n\nDettagli Spedizione:\n- Nome: ${user.name}\n- Email: ${user.email}\n- Tel: ${user.phone}\n- Indirizzo: ${user.address}`
-        : `\n\nShipping Details:\n- Name: ${user.name}\n- Email: ${user.email}\n- Phone: ${user.phone}\n- Address: ${user.address}`)
-      : '';
+    const action = () => {
+      const productUrl = typeof window !== 'undefined' ? window.location.href : '';
+      const buyerInfo = locale === 'it'
+        ? `\n\nDettagli Spedizione:\n- Nome: ${user?.name}\n- Email: ${user?.email}\n- Tel: ${user?.phone}\n- Indirizzo: ${user?.address}`
+        : `\n\nShipping Details:\n- Name: ${user?.name}\n- Email: ${user?.email}\n- Phone: ${user?.phone}\n- Address: ${user?.address}`;
 
-    const message = locale === 'it'
-      ? `Ciao Casa dei Regali! Vorrei acquistare ora: ${details.name} (SKU: ${product.sku}, Taglia: ${selectedSize}) al prezzo di €${product.price.toFixed(2)}.${buyerInfo}${productUrl ? `\nLink del prodotto: ${productUrl}` : ''}`
-      : `Hello Casa dei Regali! I would like to buy now: ${details.name} (SKU: ${product.sku}, Size: ${selectedSize}) for €${product.price.toFixed(2)}.${buyerInfo}${productUrl ? `\nProduct Link: ${productUrl}` : ''}`;
-    
-    const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      const message = locale === 'it'
+        ? `Ciao Casa dei Regali! Vorrei acquistare ora: ${details.name} (SKU: ${product.sku}, Taglia: ${selectedSize}) al prezzo di €${product.price.toFixed(2)}.${buyerInfo}${productUrl ? `\nLink del prodotto: ${productUrl}` : ''}`
+        : `Hello Casa dei Regali! I would like to buy now: ${details.name} (SKU: ${product.sku}, Size: ${selectedSize}) for €${product.price.toFixed(2)}.${buyerInfo}${productUrl ? `\nProduct Link: ${productUrl}` : ''}`;
+      
+      const whatsappUrl = `https://wa.me/393898373685?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    };
+
+    if (!user) {
+      openAuthModal(action);
+    } else {
+      action();
+    }
   };
 
   const sizeChartData = [
