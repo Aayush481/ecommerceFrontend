@@ -75,7 +75,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
   const categoryLabel = (dict.categories as any)[product.category] || product.category;
 
   return (
-    <TiltCard className="group relative bg-[#151C19]/45 border-white/10 flex flex-col justify-between h-full hover:border-[#D4AF37]/35 shadow-xs transition-colors duration-500">
+    <TiltCard className="group relative bg-black border-white/10 flex flex-col justify-between h-full hover:border-[#D4AF37]/35 shadow-xs transition-colors duration-500">
       {/* Product Image Panel */}
       <Link href={`/${locale}/shop/${product.sku}`} className="block relative aspect-3/4 overflow-hidden bg-stone-900 transform-style-3d">
         <Image
