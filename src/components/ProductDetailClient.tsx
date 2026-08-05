@@ -31,7 +31,13 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   const id = product._id || product.sku;
-  const details = locale === 'it' ? product.it : product.en;
+  const primaryDetails = locale === 'it' ? product.it : product.en;
+  const secondaryDetails = locale === 'it' ? product.en : product.it;
+  const details = {
+    name: primaryDetails?.name || secondaryDetails?.name || '',
+    description: primaryDetails?.description || secondaryDetails?.description || '',
+    tags: primaryDetails?.tags || secondaryDetails?.tags || []
+  };
   const isWishlisted = isInWishlist(id);
 
   const handleWishlistToggle = () => {
@@ -103,7 +109,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       <div>
         <Link
           href={`/${locale}/shop`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-[#232B28]/60 hover:text-[#B35C37] transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-stone-400 hover:text-[#B35C37] transition-colors"
         >
           <ArrowLeft size={16} />
           <span>{locale === 'it' ? 'Torna al catalogo' : 'Back to shop'}</span>
@@ -114,7 +120,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
         
         {/* Gallery Column */}
         <div className="flex flex-col gap-4">
-          <div className="relative aspect-3/4 w-full overflow-hidden rounded-2xl bg-stone-100 border border-[#232B28]/5">
+          <div className="relative aspect-3/4 w-full overflow-hidden rounded-2xl bg-stone-900 border border-white/5">
             <Image
               src={formatImageUrl(activeImage)}
               alt={details.name}
@@ -131,8 +137,8 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 <button
                   key={idx}
                   onClick={() => setActiveImage(img)}
-                  className={`relative w-20 h-24 overflow-hidden rounded-lg bg-stone-100 border cursor-pointer ${
-                    activeImage === img ? 'border-[#B35C37] border-2 shadow-xs' : 'border-[#232B28]/10'
+                  className={`relative w-20 h-24 overflow-hidden rounded-lg bg-stone-900 border cursor-pointer ${
+                    activeImage === img ? 'border-[#B35C37] border-2 shadow-xs' : 'border-white/10'
                   }`}
                 >
                   <Image
@@ -149,18 +155,18 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
 
         {/* Details Column */}
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2 border-b border-[#232B28]/10 pb-5">
+          <div className="flex flex-col gap-2 border-b border-white/10 pb-5">
             <span className="font-sans text-xs font-semibold text-[#B35C37] uppercase tracking-widest bg-[#B35C37]/5 self-start px-3 py-1 rounded-full border border-[#B35C37]/10">
               {(dict.categories as any)[product.category] || product.category}
             </span>
-            <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-[#232B28] leading-tight mt-1">
+            <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-[#FAF8F5] leading-tight mt-1">
               {details.name}
             </h1>
             <div className="flex items-center gap-4 mt-2">
               <span className="font-serif text-2xl md:text-3xl font-extrabold text-[#B35C37]">
                 €{product.price.toFixed(2)}
               </span>
-              <span className="text-xs text-[#232B28]/50 font-medium">
+              <span className="text-xs text-stone-400 font-medium">
                 {dict.product.sku}: {product.sku}
               </span>
             </div>
@@ -168,18 +174,18 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
 
           {/* Product description */}
           <div className="flex flex-col gap-3">
-            <h3 className="font-serif text-lg font-bold text-[#232B28]">{locale === 'it' ? 'Descrizione' : 'Description'}</h3>
-            <p className="font-sans text-sm text-[#232B28]/80 leading-relaxed">
+            <h3 className="font-serif text-lg font-bold text-[#FAF8F5]">{locale === 'it' ? 'Descrizione' : 'Description'}</h3>
+            <p className="font-sans text-sm text-stone-300 leading-relaxed">
               {details.description}
             </p>
           </div>
 
           {/* Materials */}
           <div className="flex flex-col gap-2.5">
-            <span className="font-serif text-sm font-bold text-[#232B28]">{dict.product.materials_label}:</span>
+            <span className="font-serif text-sm font-bold text-[#FAF8F5]">{dict.product.materials_label}:</span>
             <div className="flex flex-wrap gap-2 text-xs font-semibold">
               {product.materials.map((mat, idx) => (
-                <span key={idx} className="bg-[#232B28]/5 border border-[#232B28]/10 px-3 py-1.5 rounded-md text-[#232B28]/80">
+                <span key={idx} className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-md text-stone-300">
                   {mat}
                 </span>
               ))}
@@ -190,7 +196,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
           {product.sizes && product.sizes.length > 0 && (
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
-                <span className="font-serif text-sm font-bold text-[#232B28]">{dict.product.sizes_label}:</span>
+                <span className="font-serif text-sm font-bold text-[#FAF8F5]">{dict.product.sizes_label}:</span>
                 {product.category !== 'jewelry' && (
                   <button
                     onClick={() => setShowSizeGuide(!showSizeGuide)}
@@ -210,8 +216,8 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                     onClick={() => setSelectedSize(sz)}
                     className={`px-4 py-2.5 border rounded-lg text-xs font-bold tracking-wider font-sans transition-all cursor-pointer ${
                       selectedSize === sz
-                        ? 'bg-[#232B28] text-white border-[#232B28] shadow-xs'
-                        : 'bg-white border-[#232B28]/15 hover:bg-stone-50 text-[#232B28]/80'
+                        ? 'bg-[#B35C37] text-white border-[#B35C37] shadow-xs'
+                        : 'bg-transparent border-white/15 hover:bg-white/5 text-[#FAF8F5]/80'
                     }`}
                   >
                     {sz}
@@ -226,12 +232,12 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
             <div className="border border-[#B35C37]/20 bg-[#B35C37]/5 rounded-xl p-5 flex flex-col gap-4 animate-in fade-in duration-200">
               <div className="flex items-center gap-2 border-b border-[#B35C37]/15 pb-2">
                 <Ruler size={16} className="text-[#B35C37]" />
-                <h4 className="font-serif text-sm font-bold text-[#232B28]">{dict.product.size_chart_title}</h4>
+                <h4 className="font-serif text-sm font-bold text-[#FAF8F5]">{dict.product.size_chart_title}</h4>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-sans text-xs">
                   <thead>
-                    <tr className="border-b border-[#232B28]/10 text-[#232B28]/60 font-semibold uppercase tracking-wider">
+                    <tr className="border-b border-white/10 text-stone-400 font-semibold uppercase tracking-wider">
                       <th className="py-2">{dict.product.size_chart_in}</th>
                       <th className="py-2">{dict.product.size_chart_it}</th>
                       <th className="py-2">{dict.product.size_chart_chest}</th>
@@ -239,7 +245,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                   </thead>
                   <tbody>
                     {sizeChartData.map((row) => (
-                      <tr key={row.in} className="border-b border-[#232B28]/5 text-[#232B28]/85 font-medium">
+                      <tr key={row.in} className="border-b border-white/5 text-stone-200 font-medium">
                         <td className="py-2.5 font-bold">{row.in}</td>
                         <td className="py-2.5">{row.it}</td>
                         <td className="py-2.5">{row.chest}</td>
@@ -248,7 +254,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                   </tbody>
                 </table>
               </div>
-              <p className="font-sans text-[10px] text-[#232B28]/60 italic leading-normal">
+              <p className="font-sans text-[10px] text-stone-400 italic leading-normal">
                 {locale === 'it' 
                   ? '* Nota: I nostri capi sono realizzati con un taglio morbido. Se preferisci una vestibilità più asciutta, consigliamo di ordinare una taglia in meno.'
                   : '* Note: Our clothing features a relaxed fit. If you prefer a tighter silhouette, we recommend sizing down.'
@@ -258,7 +264,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
           )}
 
           {/* Availability and warning info */}
-          <div className="flex items-center gap-2.5 text-xs font-semibold text-[#232B28]/60">
+          <div className="flex items-center gap-2.5 text-xs font-semibold text-stone-400">
             <AlertCircle size={15} />
             <span>
               {dict.product.stock}:{' '}
@@ -271,7 +277,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
           </div>
 
           {/* Action Call buttons */}
-          <div className="flex flex-col gap-3.5 mt-4 border-t border-[#232B28]/10 pt-6">
+          <div className="flex flex-col gap-3.5 mt-4 border-t border-white/10 pt-6">
             <div className="flex gap-4">
               <button
                 onClick={handleAddToCart}
@@ -284,10 +290,10 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
 
               <button
                 onClick={handleWishlistToggle}
-                className="p-4 bg-white border border-[#232B28]/15 rounded-xl hover:bg-stone-50 text-[#232B28] hover:text-[#B35C37] transition-all cursor-pointer"
+                className="p-4 bg-transparent border border-white/15 rounded-xl hover:bg-white/5 text-[#FAF8F5] hover:text-[#B35C37] transition-all cursor-pointer"
                 title={dict.shop.add_to_wishlist}
               >
-                <Heart size={18} className={isWishlisted ? 'fill-[#B35C37] text-[#B35C37]' : ''} />
+                <Heart size={18} className={isWishlisted ? 'fill-[#B35C37] text-[#B35C37]' : 'text-[#FAF8F5]'} />
               </button>
             </div>
 
@@ -303,7 +309,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
             </button>
             
             {/* Premium Trust Signals */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5 mt-5 border-t border-[#232B28]/10 pt-5 text-[11px] font-sans font-semibold text-[#232B28]/70">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5 mt-5 border-t border-white/10 pt-5 text-[11px] font-sans font-semibold text-stone-300">
               <div className="flex items-center gap-2.5">
                 <svg className="w-5 h-5 text-[#B35C37] flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <circle cx="12" cy="12" r="10" />
@@ -311,7 +317,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 </svg>
                 <div className="flex flex-col text-left">
                   <span>{locale === 'it' ? 'Spedizione Rapida' : 'Express Delivery'}</span>
-                  <span className="text-[9px] text-[#232B28]/45 font-medium">{locale === 'it' ? 'Spedito in 24-48 ore con tracking' : 'Shipped in 24-48h with tracking'}</span>
+                  <span className="text-[9px] text-stone-400/80 font-medium">{locale === 'it' ? 'Spedito in 24-48 ore con tracking' : 'Shipped in 24-48h with tracking'}</span>
                 </div>
               </div>
               
@@ -322,7 +328,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 </svg>
                 <div className="flex flex-col text-left">
                   <span>{locale === 'it' ? 'Pagamento Sicuro' : 'Secure Transaction'}</span>
-                  <span className="text-[9px] text-[#232B28]/45 font-medium">{locale === 'it' ? 'Crittografia SSL a 256 bit' : '256-bit SSL encryption'}</span>
+                  <span className="text-[9px] text-stone-400/80 font-medium">{locale === 'it' ? 'Crittografia SSL a 256 bit' : '256-bit SSL encryption'}</span>
                 </div>
               </div>
 
@@ -332,7 +338,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 </svg>
                 <div className="flex flex-col text-left">
                   <span>{locale === 'it' ? 'Qualità Certificata' : 'Handcrafted Authenticity'}</span>
-                  <span className="text-[9px] text-[#232B28]/45 font-medium">{locale === 'it' ? 'Tessuti di origine artigianale' : 'Artisanal premium sourced materials'}</span>
+                  <span className="text-[9px] text-stone-400/80 font-medium">{locale === 'it' ? 'Tessuti di origine artigianale' : 'Artisanal premium sourced materials'}</span>
                 </div>
               </div>
 
@@ -342,7 +348,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
                 </svg>
                 <div className="flex flex-col text-left">
                   <span>{locale === 'it' ? 'Supporto Dedicato' : 'Style Support'}</span>
-                  <span className="text-[9px] text-[#232B28]/45 font-medium">{locale === 'it' ? 'Consulenza ed assistenza via WhatsApp' : 'Live chat assistance via WhatsApp'}</span>
+                  <span className="text-[9px] text-stone-400/80 font-medium">{locale === 'it' ? 'Consulenza ed assistenza via WhatsApp' : 'Live chat assistance via WhatsApp'}</span>
                 </div>
               </div>
             </div>

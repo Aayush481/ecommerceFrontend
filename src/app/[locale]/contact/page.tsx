@@ -82,11 +82,11 @@ export default function ContactPage({ params }: ContactPageProps) {
           </h2>
           <p className="font-sans text-sm text-[#232B28]/70 leading-relaxed">
             {locale === 'it' 
-              ? 'Vieni a trovarci nel cuore del quadrilatero della moda a Milano. Potrai toccare con mano le nostre collezioni in seta di Varanasi e cotone Khadi artigianale.'
-              : 'Visit us in the heart of Milan fashion district. Experience the premium Varanasi silk and handspun Khadi cotton collections in person.'
+              ? 'Vieni a trovarci nel cuore di Vicenza. Potrai toccare con mano le nostre collezioni in seta di Varanasi e cotone Khadi artigianale.'
+              : 'Visit us in the heart of Vicenza. Experience the premium Varanasi silk and handspun Khadi cotton collections in person.'
             }
           </p>
-
+ 
           <ul className="flex flex-col gap-5 font-sans text-sm text-[#232B28]/80">
             <li className="flex gap-3 items-start">
               <div className="p-2.5 bg-[#B35C37]/10 rounded-lg text-[#B35C37] flex-shrink-0">
@@ -94,7 +94,7 @@ export default function ContactPage({ params }: ContactPageProps) {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-[#232B28]">{locale === 'it' ? 'Indirizzo' : 'Address'}</span>
-                <span className="text-[#232B28]/75 mt-0.5">Milano, Via della Seta 42, 20121, Italia</span>
+                <span className="text-[#232B28]/75 mt-0.5">Vicenza, Via della Seta 42, 36100, Italia</span>
               </div>
             </li>
             <li className="flex gap-3 items-start">
@@ -103,7 +103,7 @@ export default function ContactPage({ params }: ContactPageProps) {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-[#232B28]">{locale === 'it' ? 'Telefono' : 'Phone'}</span>
-                <span className="text-[#232B28]/75 mt-0.5">+39 02 1234567</span>
+                <span className="text-[#232B28]/75 mt-0.5">+39 0444 1234567</span>
               </div>
             </li>
 

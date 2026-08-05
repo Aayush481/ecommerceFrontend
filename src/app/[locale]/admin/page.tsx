@@ -192,6 +192,35 @@ export default function AdminPage({ params }: AdminPageProps) {
   const [editingCredentials, setEditingCredentials] = useState(false);
   const [profileFormData, setProfileFormData] = useState({ name: '', bio: '', avatar: '' });
   const [credentialsFormData, setCredentialsFormData] = useState({ email: '', password: '', confirmPassword: '' });
+  const [avatarUploading, setAvatarUploading] = useState(false);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const file = e.target.files[0];
+    
+    setAvatarUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const res = await apiFetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        setProfileFormData(prev => ({ ...prev, avatar: data.url }));
+      } else {
+        alert('Failed to upload avatar image');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Upload failed. Backend offline?');
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
 
   // Authorization State
   const [authorized, setAuthorized] = useState(false);
@@ -443,7 +472,7 @@ export default function AdminPage({ params }: AdminPageProps) {
       setInquiries([
         {
           type: 'contact',
-          email: 'customer@milano.it',
+          email: 'customer@vicenza.it',
           name: 'Francesca Rossi',
           subject: 'Domanda taglie Kurti',
           message: 'Vorrei sapere se la taglia S veste aderente o morbida.',
@@ -458,7 +487,7 @@ export default function AdminPage({ params }: AdminPageProps) {
       setOrders([
         {
           _id: 'ord-692a-3b5f',
-          email: 'customer@milano.it',
+          email: 'customer@vicenza.it',
           items: [
             { id: 'prod-001', sku: 'KUR-VAR-001', name: 'Varanasi Silk Ethnic Kurti', price: 89.99, size: 'M', quantity: 1, image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=800' }
           ],
@@ -798,7 +827,7 @@ export default function AdminPage({ params }: AdminPageProps) {
                   Casa dei Regali
                 </span>
                 <span className="font-sans text-[8px] tracking-[0.3em] uppercase text-[#B35C37] mt-1 font-semibold leading-none">
-                  Milano
+                  Vicenza
                 </span>
               </div>
             </div>
@@ -1681,14 +1710,33 @@ export default function AdminPage({ params }: AdminPageProps) {
                 </div>
 
                 <div className="flex flex-col gap-1.5 text-sm">
-                  <label className="font-bold text-[#232B28]/70">Avatar Image URL</label>
-                  <input
-                    type="text"
-                    required
-                    value={profileFormData.avatar}
-                    onChange={(e) => setProfileFormData(prev => ({ ...prev, avatar: e.target.value }))}
-                    className="border border-[#232B28]/15 rounded-xl px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-xs"
-                  />
+                  <label className="font-bold text-[#232B28]/70">Avatar Image</label>
+                  <div className="flex gap-3 items-center">
+                    {profileFormData.avatar && (
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#232B28]/15 flex-shrink-0 bg-stone-50 shadow-xs">
+                        <img src={profileFormData.avatar} alt="Avatar Preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <input
+                      type="text"
+                      required
+                      value={profileFormData.avatar}
+                      onChange={(e) => setProfileFormData(prev => ({ ...prev, avatar: e.target.value }))}
+                      placeholder="Image URL or upload a file"
+                      className="flex-grow border border-[#232B28]/15 rounded-xl px-4 py-2.5 bg-white focus:outline-none focus:border-[#B35C37] text-xs font-mono"
+                    />
+                    <label className="flex-shrink-0 px-4 py-2.5 bg-[#FAF8F5] border border-[#232B28]/15 hover:bg-stone-50 text-[#B35C37] font-bold text-xs uppercase rounded-xl tracking-wider cursor-pointer transition-all flex items-center gap-1.5">
+                      <UploadCloud size={14} />
+                      <span>{avatarUploading ? "..." : "Upload"}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarUpload}
+                        className="hidden"
+                        disabled={avatarUploading}
+                      />
+                    </label>
+                  </div>
                 </div>
 
                 <div className="flex justify-end gap-3 border-t border-[#232B28]/10 pt-5 mt-2">

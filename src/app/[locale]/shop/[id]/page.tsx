@@ -155,7 +155,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Product Not Found | Casa dei Regali' };
   }
 
-  const details = locale === 'it' ? product.it : product.en;
+  const primaryDetails = locale === 'it' ? product.it : product.en;
+  const secondaryDetails = locale === 'it' ? product.en : product.it;
+  const details = {
+    name: primaryDetails?.name || secondaryDetails?.name || '',
+    description: primaryDetails?.description || secondaryDetails?.description || '',
+    tags: primaryDetails?.tags || secondaryDetails?.tags || []
+  };
   return {
     title: `${details.name} | Casa dei Regali`,
     description: details.description.substring(0, 160),
@@ -181,7 +187,13 @@ export default async function ProductPage({ params }: PageProps) {
     );
   }
 
-  const details = locale === 'it' ? product.it : product.en;
+  const primaryDetails = locale === 'it' ? product.it : product.en;
+  const secondaryDetails = locale === 'it' ? product.en : product.it;
+  const details = {
+    name: primaryDetails?.name || secondaryDetails?.name || '',
+    description: primaryDetails?.description || secondaryDetails?.description || '',
+    tags: primaryDetails?.tags || secondaryDetails?.tags || []
+  };
 
   // JSON-LD Structured Schema Markup for SEO
   const jsonLd = {

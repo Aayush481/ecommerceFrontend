@@ -1,6 +1,6 @@
 # Casa dei Regali E-commerce
 
-An exclusive fusion of fine Indian craftsmanship and contemporary silhouette. Fusing ethnic Indian elegance with Italian geometric minimalism. This store services customer orders in Italy (from Vicenza/Milano) and provides a luxury catalog of clothing, jewelry, and handbags.
+An exclusive fusion of fine Indian craftsmanship and contemporary silhouette. Fusing ethnic Indian elegance with Italian geometric minimalism. This store services customer orders in Italy (from Vicenza) and provides a luxury catalog of clothing, jewelry, and handbags.
 
 ## Client Navigation Routes
 All paths are prefixed with `/[locale]` where locale is `it` (default) or `en`.

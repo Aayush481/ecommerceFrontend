@@ -659,11 +659,11 @@ export default async function HomePage({ params }: PageProps) {
           <span className="font-serif italic text-lg text-[#D4AF37] glow-text-gold">Casa dei Regali</span>
           <blockquote className="font-serif text-2xl md:text-3xl font-bold leading-relaxed italic text-[#FAF8F5]">
             {locale === 'it'
-              ? '"L\'eleganza non è farsi notare, ma farsi ricordare. Abbiamo unito i colori accesi del sole indiano con le linee fluide e minimaliste della sartoria milanese."'
-              : '"Elegance is not about being noticed, but being remembered. We have merged the bright colors of the Indian sun with the clean, minimalist lines of Milanese design."'}
+              ? '"L\'eleganza non è farsi notare, ma farsi ricordare. Abbiamo unito i colori accesi del sole indiano con le linee fluide e minimaliste della sartoria vicentina."'
+              : '"Elegance is not about being noticed, but being remembered. We have merged the bright colors of the Indian sun with the clean, minimalist lines of Vicenza design."'}
           </blockquote>
           <span className="font-sans text-xs tracking-widest uppercase font-semibold text-white/50">
-            - Casa dei Regali Design Studio Milano
+            - Casa dei Regali Design Studio Vicenza
           </span>
         </ScrollReveal>
       </section>

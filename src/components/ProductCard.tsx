@@ -30,7 +30,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, locale, dict 
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist, user, openAuthModal } = useStore();
 
   const id = product._id || product.sku;
-  const details = locale === 'it' ? product.it : product.en;
+  const primaryDetails = locale === 'it' ? product.it : product.en;
+  const secondaryDetails = locale === 'it' ? product.en : product.it;
+  const details = {
+    name: primaryDetails?.name || secondaryDetails?.name || '',
+    description: primaryDetails?.description || secondaryDetails?.description || '',
+    tags: primaryDetails?.tags || secondaryDetails?.tags || []
+  };
   const isWishlisted = isInWishlist(id);
 
   const handleWishlistClick = (e: React.MouseEvent) => {
